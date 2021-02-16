@@ -1,13 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Weather} from './components/weather/Weather';
 
-function App() {
-  return (
-    <div className="App">
-      Dev
-    </div>
-  );
-}
-
-export default App;
+export const App = () => {
+    return (
+        <div>
+            <Weather/>
+        </div>
+    )
+};
