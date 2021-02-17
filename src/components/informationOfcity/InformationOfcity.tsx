@@ -11,7 +11,9 @@ export const InformationOfCity = () => {
 
     return <>
         <div className={s.title__container}>
-            <div className={s.title__wrapper}><h1 className={s.title}>{`${data.city.name}, ${data.city.country}`}</h1></div>
+            <div className={s.title__wrapper}>
+                <h1 className={s.title}>{`${data.city.name}, ${data.city.country}`}</h1>
+            </div>
         </div>
         <div className={s.info__container}>
             {data.list.map(obj => {
