@@ -32,6 +32,7 @@ export const InformationOfCity = () => {
                             <div className={s.info__block_bottom}>
                                 <span>{obj.weather[0].description.split('')[0].toUpperCase() + obj.weather[0].description.slice(1)}</span>
                             </div>
+                            <div>1</div>
                         </div>
                     </div>
                 }

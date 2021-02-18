@@ -31,6 +31,7 @@ const initApp = async (appRoot: HTMLElement) => {
 }
 
 const renderApp = (appRoots: HTMLElement[] = []) => {
+    debugger
     if (appRoots && appRoots.length > 0) {
         appRoots.forEach(initApp)
     }
