@@ -6,13 +6,6 @@ import reportWebVitals from './reportWebVitals'
 import {Provider} from 'react-redux'
 import {store} from './data/store'
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
-    document.getElementById('root')
-)
-
 const ROOT_SELECTORS = ['[data-app="weather-widget"]']
 
 const getAppNodes = (selectors: string[]) => selectors
