@@ -9,7 +9,7 @@ export const Weather = (props: any) => {
 
     useEffect(() => {
         dispatch(getWeatherDataTC(props.city))
-    }, [])
+    }, [props.city])
 
     return <div>
         <InformationOfCity />

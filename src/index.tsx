@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals'
 import {Provider} from 'react-redux'
 import {store} from './data/store'
 
-const ROOT_SELECTORS = ['[data-app="weather-widget"]']
+const ROOT_SELECTORS = ['[data-app="weather-widget"]', '[data-app="news-widget"]']
 
 const getAppNodes = (selectors: string[]) => selectors
     .map(selector => Array.prototype.slice.call(document.querySelectorAll(selector)))
