@@ -1,10 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import {App} from './App'
-import reportWebVitals from './reportWebVitals'
-import {Provider} from 'react-redux'
-import {store} from './data/store'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import {App} from './App';
+import reportWebVitals from './reportWebVitals';
 
 const ROOT_SELECTORS = ['[data-app="weather-widget"]']
 
@@ -16,9 +14,7 @@ const initApp = async (appRoot: HTMLElement) => {
     const props = appRoot.dataset
 
     ReactDOM.render(
-        <Provider store={store}>
-            <App {...props} />
-        </Provider>,
+            <App {...props} />,
         appRoot
     )
 }

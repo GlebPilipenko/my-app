@@ -1,17 +1,11 @@
-import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
-import {getWeatherDataTC} from '../../data/weatherReducer/WeatherReducer'
-import {InformationOfCity} from '../informationOfcity/InformationOfcity'
+import React, {Dispatch, SetStateAction} from 'react';
+import { WeatherAPIType } from '../../api/weatherAPI';
+import {InformationOfCity} from '../informationOfCity/InformationOfCity';
 
-export const Weather = (props: any) => {
-
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getWeatherDataTC(props.city))
-    }, [])
-
-    return <div>
-        <InformationOfCity />
-    </div>
+type PropsType = {
+    data: WeatherAPIType
 }
+
+export const Weather: React.FC<PropsType> = (props) => {
+    return <InformationOfCity data={props.data}/>;
+};

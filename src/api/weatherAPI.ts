@@ -1,74 +1,96 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const instance = axios.create({
     baseURL: `https://api.openweathermap.org/data/2.5/`,
-})
+});
 
 export const weatherAPI = {
-    getWeather(city: string) {
-        return instance.get<WeatherResponseType>(`forecast?lang=ru&q=${city}&appid=c0aad8686833a90e780aed90426bd795`)
+    getWeather(coordinates: string[]) {
+        return instance
+            .get<WeatherAPIType>(
+                `onecall?lang=ru&lat=${coordinates[0]}&lon=${coordinates[1].trim()}&units=metric&exclude=minutely,hourly&appid=37d6a339766026bb63f314e133d07998`);
     }
+};
+
+type CurrentType = {
+    dt: number,
+    sunrise: number,
+    sunset: number,
+    temp: number,
+    feels_like: number,
+    pressure: number,
+    humidity: number,
+    dew_point: number,
+    uvi: number,
+    clouds: number,
+    visibility: number,
+    wind_speed: number,
+    wind_deg: number
+    weather: WeatherType[]
 }
 
-// https://api.openweathermap.org/data/2.5/forecast?q=Minsk&appid=c0aad8686833a90e780aed90426bd795
-
-type CoordType = {
-    lon: number
-    lat: number
-}
-
-type CityType = {
-    id: number
-    name: string
-    cord: CoordType
-    country: string
-    population: null | number
-    timezone: number
-    sunrise: number
-    sunset: number
-}
-
-type WindType = {
-    speed: number
-    deg: number
-}
-
-type WeatherType = {
-    id: number
-    main: string
-    description: string
+export type WeatherType = {
+    id: number,
+    main: string,
+    description: string,
     icon: string
 }
 
-type MainType = {
-    temp:  null | number
-    feels_like:  null | number
-    temp_min: null | number
-    temp_max: null | number
-    pressure: number
-    humidity: number
-    sea_level: number
-    grnd_level: number
-    temp_kf: number
-}
-
-type ListType = {
-    dt: number
-    main: MainType
+export type DailyType = {
+    dt: number,
+    sunrise: number,
+    sunset: number,
+    temp: TempType,
+    feels_like: Feels_LikeType,
+    pressure: number,
+    humidity: number,
+    dew_point: number,
+    wind_speed: number,
+    wind_deg: number,
     weather: WeatherType[]
-    clouds: { all: number }
-    wind: WindType
-    visibility: null | number
-    pop: number
-    sys: { pop: string }
-    dt_txt: string
+    clouds: number,
+    pop: number,
+    uvi: number
 }
 
-// Full Type
-export type WeatherResponseType = {
-    cod: string
-    message: string
-    cnt: number
-    list: ListType[]
-    city: CityType
+type TempType = {
+    day: number,
+    min: number,
+    max: number,
+    night: number,
+    eve: number,
+    morn: number
 }
+
+type Feels_LikeType = {
+    day: number,
+    night: number,
+    eve: number,
+    morn: number
+}
+
+export type WeatherAPIType = {
+    lat: number,
+    lon: number,
+    timezone: string,
+    timezone_offset: number,
+    current: CurrentType,
+    daily: [
+        {
+            dt: number,
+            sunrise: number,
+            sunset: number,
+            temp: TempType,
+            feels_like: Feels_LikeType,
+            pressure: number,
+            humidity: number,
+            dew_point: number,
+            wind_speed: number,
+            wind_deg: number,
+            weather: WeatherType[]
+            clouds: number,
+            pop: number,
+            uvi: number
+        },
+    ]
+};
