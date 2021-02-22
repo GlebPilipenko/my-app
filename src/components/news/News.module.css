@@ -1,15 +1,15 @@
 .article__container {
     display: flex;
     justify-content: center;
+    background: tomato;
 }
 
 .article__block {
-    width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding-bottom: 50px;
+    padding: 50px 100px;
 }
 
 .author__block {
@@ -26,6 +26,11 @@
 
 .url__block {
     margin-bottom: 25px;
+}
+
+.url__block a {
+    color: white;
+    text-decoration: none;
 }
 
 .article__imgWrapper {

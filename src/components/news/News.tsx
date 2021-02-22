@@ -55,7 +55,7 @@ export const News: React.FC<PropsType> = (props) => {
                         <div>{article.description}</div>
                     </div>
                     <div className={s.url__block}>
-                        <div><a target='_blank' href={article.url}><span>{article.url}</span></a></div>
+                        <a target='_blank' href={article.url}>Link: {article.url}</a>
                     </div>
                     <div className={s.article__imgWrapper}>
                         <img src={article.urlToImage} className={s.article__img} alt="news"/>
@@ -63,5 +63,5 @@ export const News: React.FC<PropsType> = (props) => {
                 </div>
             </div>;
         })}
-    </Carousel>;
-};
+            </Carousel>;
+        };
