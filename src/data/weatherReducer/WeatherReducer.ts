@@ -1,5 +1,5 @@
-import {weatherAPI, WeatherResponseType} from '../../api/weatherAPI'
-import {Dispatch} from 'redux'
+import {weatherAPI, WeatherResponseType} from '../../api/weatherAPI';
+import {Dispatch} from 'redux';
 
 const initState = {
     cod: '',
@@ -47,36 +47,36 @@ const initState = {
         sunrise: 0,
         sunset: 0,
     }
-}
+};
 
 type InitStateType = typeof initState
 
 export const weatherReducer = (state = initState, action: ActionsType): InitStateType => {
     switch (action.type) {
         case 'weather/GetWeatherData':
-            const {cod, message, cnt, list, city} = action.data
+            const {cod, message, cnt, list, city} = action.data;
             return {
                 ...state,
                 // Object & Array
                 list, city,
                 // Primitives
                 cod, message, cnt
-            }
+            };
         default:
-            return state
+            return state;
     }
-}
+};
 
 const actions = {
     getWeatherDataAC: (data: WeatherResponseType) => ({
         type: 'weather/GetWeatherData', data
     })
-}
+};
 
 export const getWeatherDataTC = (city: string) => async (dispatch: Dispatch) => {
-    const res = await weatherAPI.getWeather(city)
-    dispatch(actions.getWeatherDataAC(res.data))
-}
+    const res = await weatherAPI.getWeather(city);
+    dispatch(actions.getWeatherDataAC(res.data));
+};
 
 type ActionsType =
     | ReturnType<typeof actions.getWeatherDataAC>

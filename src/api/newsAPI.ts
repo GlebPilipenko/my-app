@@ -1,20 +1,20 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const instance = axios.create({
     baseURL: `https://newsapi.org/v2/`,
-})
+});
 
 export const newsAPI = {
 
     getNewsCity(city: string | undefined) {
-        return instance.get<ResponseType>(`everything?q=${city}&pageSize=5&apiKey=3f5e76e0b91f43839b035a730b7ca455`)
+        return instance.get<ResponseType>(`everything?q=${city}&pageSize=5&apiKey=3f5e76e0b91f43839b035a730b7ca455`);
     },
 
     getNewsCountry(country: string | undefined) {
         return instance.get<ResponseType>(`everything?q=${country}&pageSize=5&apiKey=3f5e76e0b91f43839b035a730b7ca455`)
-            .then(countryResult => countryResult)
+            .then(countryResult => countryResult);
     }
-}
+};
 
 type SourceType = {
     id: string

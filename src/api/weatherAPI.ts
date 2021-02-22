@@ -1,14 +1,14 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const instance = axios.create({
     baseURL: `https://api.openweathermap.org/data/2.5/`,
-})
+});
 
 export const weatherAPI = {
     getWeather(city: string) {
-        return instance.get<WeatherResponseType>(`forecast?lang=ru&q=${city}&appid=c0aad8686833a90e780aed90426bd795`)
+        return instance.get<WeatherResponseType>(`forecast?lang=ru&q=${city}&appid=c0aad8686833a90e780aed90426bd795`);
     }
-}
+};
 
 // https://api.openweathermap.org/data/2.5/forecast?q=Minsk&appid=c0aad8686833a90e780aed90426bd795
 
@@ -41,8 +41,8 @@ type WeatherType = {
 }
 
 type MainType = {
-    temp:  null | number
-    feels_like:  null | number
+    temp: null | number
+    feels_like: null | number
     temp_min: null | number
     temp_max: null | number
     pressure: number

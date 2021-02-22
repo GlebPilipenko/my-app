@@ -1,17 +1,18 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
-import {RootStateType} from '../../data/store'
-import {WeatherResponseType} from '../../api/weatherAPI'
-import s from './InformationOfcity.module.css'
-import {getTemperatureToCelsius} from '../../utils/СonvertTemperatureToCelsius'
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {RootStateType} from '../../data/store';
+import {WeatherResponseType} from '../../api/weatherAPI';
+import s from './InformationOfcity.module.css';
+import {getTemperatureToCelsius} from '../../utils/СonvertTemperatureToCelsius';
 
 export const InformationOfCity = () => {
 
-    const data = useSelector<RootStateType, WeatherResponseType>(state => state.weather)
+    const data = useSelector<RootStateType, WeatherResponseType>(state => state.weather);
 
     return <>
         <div className={s.title__container}>
-            <div className={s.title__wrapper}><h1 className={s.title}>{`${data.city.name}, ${data.city.country}`}</h1></div>
+            <div className={s.title__wrapper}><h1 className={s.title}>{`${data.city.name}, ${data.city.country}`}</h1>
+            </div>
         </div>
         <div className={s.info__container}>
             {data.list.map(obj => {
@@ -31,9 +32,9 @@ export const InformationOfCity = () => {
                                 <span>{obj.weather[0].description.split('')[0].toUpperCase() + obj.weather[0].description.slice(1)}</span>
                             </div>
                         </div>
-                    </div>
+                    </div>;
                 }
             })}
         </div>
-    </>
-}
+    </>;
+};
