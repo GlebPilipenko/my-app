@@ -33,7 +33,9 @@ export const News: React.FC<PropsType> = (props) => {
 
     useEffect(() => {
         new Promise((resolve, reject) => newsAPI.getNewsCity(props.city)
-            .then(cityResult => cityResult.data.totalResults === 0 ? resolve(newsAPI.getNewsCountry(props.country)) : resolve(cityResult)))
+            .then(cityResult => cityResult.data.totalResults === 0
+                ? resolve(newsAPI.getNewsCountry(props.country))
+                : resolve(cityResult)))
             .then((result: any) => {
                 const {status, totalResults, articles} = result.data;
                 setState({status, totalResults, articles});
@@ -42,26 +44,29 @@ export const News: React.FC<PropsType> = (props) => {
 
     return <Carousel showThumbs={false} infiniteLoop={true}>
         {state.articles.map((article: ArticlesType, index: number) => {
-            return <div className={s.article__container}
+            return <div key={index} className={s.article__container}
                         style={{minHeight: '300px', color: '#eee'}}>
                 <div className={s.article__block}>
-                    <div className={s.author__block}>
+                    <div className={`${s.author__block} ${s.text}`}>
                         <div>{article.author}</div>
                     </div>
-                    <div className={s.title__block}>
-                        <div>{article.title}</div>
+                    <div className={`${s.title__block} ${s.text}`}>
+                        {article.title}
                     </div>
-                    <div className={s.description__block}>
-                        <div>{article.description}</div>
+                    <div className={`${s.description__block} ${s.text}`}>
+                        {article.description}
                     </div>
                     <div className={s.url__block}>
-                        <a target='_blank' href={article.url}>Link: {article.url}</a>
+                        <a className={s.text} target='_blank'
+                           href={article.url}>Link: {article.url}</a>
                     </div>
                     <div className={s.article__imgWrapper}>
-                        <img src={article.urlToImage} className={s.article__img} alt="news"/>
+                        <img src={article.urlToImage} className={s.article__img}
+                             alt="news"/>
                     </div>
                 </div>
             </div>;
         })}
-            </Carousel>;
-        };
+    </Carousel>;
+};
+;
