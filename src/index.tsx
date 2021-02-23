@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './App';
 import reportWebVitals from './reportWebVitals';
-import {Provider} from 'react-redux';
-import {store} from './data/store';
 
 const ROOT_SELECTORS = ['[data-app="weather-widget"]', '[data-app="news-widget"]'];
 
@@ -13,12 +11,11 @@ const getAppNodes = (selectors: string[]) => selectors
     .find(nodes => !!nodes.length);
 
 const initApp = async (appRoot: HTMLElement) => {
-    const props = appRoot.dataset;
 
+    const props = appRoot.dataset;
+    debugger
     ReactDOM.render(
-        <Provider store={store}>
-            <App {...props} />
-        </Provider>,
+        <App {...props} />,
         appRoot
     );
 };
