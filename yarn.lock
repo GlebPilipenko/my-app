@@ -9113,7 +9113,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.8.3.tgz"
   "version" "0.8.3"
 
-"react-responsive-carousel@^3.2.12":
+"react-responsive-carousel@3.2.12":
   "integrity" "sha512-Wdqpu7+xvn3RPy0Q0pIVOms8SsooYmsFLPgSSxOt+G0WvXHpNOZmnLUsI8EgRRhSww8GUXERKlIYy7MZLdOHPA=="
   "resolved" "https://registry.npmjs.org/react-responsive-carousel/-/react-responsive-carousel-3.2.12.tgz"
   "version" "3.2.12"

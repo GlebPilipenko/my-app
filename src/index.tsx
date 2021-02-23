@@ -13,7 +13,6 @@ const getAppNodes = (selectors: string[]) => selectors
 const initApp = async (appRoot: HTMLElement) => {
 
     const props = appRoot.dataset;
-    debugger
     ReactDOM.render(
         <App {...props} />,
         appRoot

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {weatherAPI, WeatherAPIType } from '../../api/weatherAPI';
+import {weatherAPI, WeatherAPIType} from '../../api/weatherAPI';
 import {InformationOfCity} from '../informationOfCity/InformationOfCity';
 
 type PropsType = {
@@ -83,5 +83,7 @@ export const Weather: React.FC<PropsType> = (props) => {
         })();
     }, []);
 
-    return <InformationOfCity state={state}/>;
+    return <div>
+        <InformationOfCity state={state}/>
+    </div>;
 };

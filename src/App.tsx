@@ -4,25 +4,29 @@ import s from './App.module.css';
 import {weatherAPI, WeatherAPIType} from './api/weatherAPI';
 import {News} from './components/news/News';
 
+enum WidgetTitles {
+    WeatherWidget = 'weather-widget',
+    NewsWidget = 'news-widget',
+}
+
 type PropsType = {
-    app?: string
-    coordinates?: string
-    city?: string
-    country?: string
+    app?: WidgetTitles;
+    coordinates?: string;
+    city?: string;
+    country?: string;
 }
 
 export const App: React.FC<PropsType> = (props) => {
-
-    enum WidgetTitles {
-        WeatherWidget = 'weather-widget',
-        NewsWidget = 'news-widget'
-    }
-
-    return <div className={s.wrapper}>
-        {
-            // props.app === WidgetTitles.WeatherWidget && <div><Weather city={props.city}/></div>
-            props.app === WidgetTitles.NewsWidget &&
-            <div><News city={props.city} country={props.country}/></div>
-        }
-    </div>;
+    return <>
+        {(function () {
+            switch (props.app) {
+                case `${WidgetTitles.WeatherWidget}`:
+                    return <Weather coordinates={props.coordinates}/>;
+                case `${WidgetTitles.NewsWidget}`:
+                    return <News country={props.country} city={props.city}/>;
+                default:
+                    return null;
+            }
+        })()}
+    </>;
 };
