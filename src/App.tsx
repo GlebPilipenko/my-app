@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Weather} from './components/weather/Weather';
 import s from './App.module.css';
 import {weatherAPI, WeatherAPIType} from './api/weatherAPI';
