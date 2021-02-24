@@ -10,6 +10,7 @@ const getAppNodes = (selectors: string[]) => selectors
     .map(selector => Array.prototype.slice.call(
         document.querySelectorAll(selector))).find(nodes => !!nodes.length);
 
+
 const initApp = async (appRoot: HTMLElement) => {
     const props = appRoot.dataset;
 

@@ -1,27 +1,29 @@
 import axios from 'axios';
 
-const instance = axios.create({
+const newsApi = axios.create({
     baseURL: `${process.env.REACT_APP_NEWS_BASE_URL}`,
 });
 
+const apikey = process.env.REACT_APP_NEWS_API_KEY;
+
+const getQueryParams = (query: string | undefined, apikey: string | undefined) => {
+    return `everything?q=${query}&pageSize=5&apiKey=${apikey}`;
+};
+
 export const newsAPI = {
     getNewsCity(city: string | undefined) {
-        return instance.get<NewsAPIType>(
-            `everything?q=${city}&pageSize=5&apiKey=${process.env.REACT_APP_API_KEY}`
-        );
+        return newsApi.get<NewsAPIType>(getQueryParams(city, apikey));
     },
     getNewsCountry(country: string | undefined) {
-        return instance.get<NewsAPIType>(
-            `everything?q=${country}&pageSize=5&apiKey=${process.env.REACT_APP_API_KEY}`
-        )
+        return newsApi.get<NewsAPIType>(getQueryParams(country, apikey))
             .then(countryResult => countryResult);
-    }
+    },
 };
 
 type SourceType = {
     id: string;
     name: string;
-}
+};
 
 export type ArticlesType = {
     source: SourceType;
@@ -32,10 +34,10 @@ export type ArticlesType = {
     urlToImage: string;
     publishedAt: string;
     content: string;
-}
+};
 
 export type NewsAPIType = {
     status: string;
     totalResults: number;
     articles: ArticlesType[];
-}
+};
