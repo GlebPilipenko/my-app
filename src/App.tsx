@@ -6,7 +6,7 @@ import {News} from './components/news/News';
 enum WidgetTitles {
     WeatherWidget = 'weather-widget',
     NewsWidget = 'news-widget',
-};
+}
 
 type PropsType = {
     app?: WidgetTitles;
@@ -19,11 +19,7 @@ export const App: React.FC<PropsType> = (props) => {
     console.log(props);
 
     return <div className={style.wrapper}>
-        {/*<>*/}
-        {/*    <Weather city={props.city} />*/}
-        {/*    <News country={props.country} city={props.city} />*/}
-        {/*</>*/}
-        {(function () {
+        {(() => {
             switch (props.app) {
                 case `${WidgetTitles.WeatherWidget}`:
                     return <Weather city={props.city} />;
