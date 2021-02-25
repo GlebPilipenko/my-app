@@ -89,8 +89,6 @@ body {
 }
 
 .wrapper {
-    width: 100%;
-    min-height: 100vh;
     background: url("https://7themes.su/_ph/37/779925393.jpg?1613568141") no-repeat center;
     background-size: cover;
 }

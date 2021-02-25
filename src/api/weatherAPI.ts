@@ -6,11 +6,13 @@ const weatherApi = axios.create({
 
 const apikey = process.env.REACT_APP_WEATHER_API_KEY;
 
+const getQuery = (city: string | undefined, apikey: string | undefined) => {
+    return `forecast?q=${city}&units=metric&appid=${apikey}`;
+};
+
 export const getWeather = {
     weatherApi(city: string | undefined) {
-        return weatherApi.get<WeatherAPIType>(
-            `forecast?q=${city}&units=metric&appid=${apikey}`
-        );
+        return weatherApi.get<WeatherAPIType>(getQuery(city, apikey));
     }
 };
 
