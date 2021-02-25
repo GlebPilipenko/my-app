@@ -1,7 +1,3 @@
-.text {
-    color: black;
-}
-
 .article__container {
     display: flex;
     justify-content: center;
@@ -79,4 +75,8 @@
 
 .control-dots {
     background: white;
+}
+
+.text {
+    color: black;
 }

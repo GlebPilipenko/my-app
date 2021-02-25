@@ -14,11 +14,8 @@ type PropsType = {
     country?: string;
 };
 
-export const App: React.FC<PropsType> = (props) => {
-
-    console.log(props);
-
-    return <div className={style.wrapper}>
+export const App: React.FC<PropsType> = (props) => (
+    <div className={style.wrapper}>
         {(() => {
             switch (props.app) {
                 case `${WidgetTitles.WeatherWidget}`:
@@ -29,5 +26,5 @@ export const App: React.FC<PropsType> = (props) => {
                     return null;
             }
         })()}
-    </div>;
-};
+    </div>
+);

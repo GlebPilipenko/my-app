@@ -10,15 +10,11 @@ const getQueryParams = (query: string | undefined, apikey: string | undefined) =
     return `everything?q=${query}&pageSize=5&apiKey=${apikey}`;
 };
 
-export const newsAPI = {
-    getNewsCity(city: string | undefined) {
-        return newsApi.get<NewsAPIType>(getQueryParams(city, apikey));
-    },
-    getNewsCountry(country: string | undefined) {
-        return newsApi.get<NewsAPIType>(getQueryParams(country, apikey))
-            .then(countryResult => countryResult);
-    },
-};
+export const getNewsCity = (city: string | undefined) => newsApi.get<NewsAPIType>(
+    getQueryParams(city, apikey));
+
+export const getNewsCountry = (country: string | undefined) => newsApi.get<NewsAPIType>(
+    getQueryParams(country, apikey));
 
 type SourceType = {
     id: string;

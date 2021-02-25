@@ -10,7 +10,8 @@ const getQuery = (city: string | undefined, apikey: string | undefined) => {
     return `forecast?q=${city}&units=metric&appid=${apikey}`;
 };
 
-export const getWeather = (city: string | undefined) => weatherApi.get<WeatherAPIType>(getQuery(city, apikey));
+export const getWeather = (city: string | undefined) => weatherApi
+    .get<WeatherAPIType>(getQuery(city, apikey));
 
 type MainType = {
     temp: number;
