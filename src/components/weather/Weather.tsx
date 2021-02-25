@@ -7,12 +7,11 @@ type PropsType = {
 };
 
 export const Weather: React.FC<PropsType> = (props) => {
-
     const [state, setState] = useState<null | WeatherAPIType>(null);
 
     useEffect(() => {
         (async () => {
-            const res = await getWeather.weatherApi(props.city);
+            const res = await getWeather(props.city);
             setState(res.data);
         })();
     }, [props.city]);
