@@ -7,13 +7,13 @@
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap;
-    max-width: 950px;
+    max-width: 1100px;
     width: 100%;
     margin: 0 auto;
 }
 
 .info__wrapper {
-    margin: 20px 0 0 ;
+    margin: 20px 0;
 }
 
 .info__block {
@@ -35,9 +35,11 @@
         margin: 0;
         padding: 0 20px;
     }
+
     .info__wrapper {
         width: 100%;
     }
+
     .info__block {
         margin: 0;
     }
