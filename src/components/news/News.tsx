@@ -19,7 +19,7 @@ type PropsType = {
 export const News: React.FC<PropsType> = ({city, country}) => {
     const [state, setState] = useState<NewsAPIType | null>(() => null);
     const [error, setError] = useState<any>(null);
-    const defaultImg = 'https://art-u3.infcdn.net/articles_uploads/4/4422/default.jpg';
+    const defaultImg = process.env.REACT_APP_DEFAULT_IMG_URL
     const changeState = (res: any) => {
         setState(res.data);
     };
