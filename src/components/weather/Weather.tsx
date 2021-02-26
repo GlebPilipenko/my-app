@@ -11,7 +11,7 @@ type PropsType = {
 export const Weather: React.FC<PropsType> = ({city}) => {
     const [state, setState] = useState<null | WeatherAPIType>(null);
     const [error, setError] = useState<any>(null);
-    const getErrorMessage = (error: any) => {
+    const getErrorMessage = (error: string) => {
         const message = `${error[0].toUpperCase()}${error.slice(1)}`;
 
         if (message === 'Nothing to geocode') {
