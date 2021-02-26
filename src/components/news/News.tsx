@@ -31,7 +31,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
                 const resCountry = await getNewsCountry(country);
                 const dataCity = resCity.data;
                 const dataCountry = resCountry.data;
-
+                debugger
                 if (dataCity.totalResults === 0 || undefined) {
                     if (dataCountry.totalResults === 0 || undefined) {
                         setError(`No news, enter the correct city or country.`);
