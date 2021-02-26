@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {getWeather, WeatherAPIType} from '../../api/weatherAPI';
 import {ErrorMessage} from '../common/errorMessage/ErrorMessage';
 import {InformationOfCity} from '../informationOfCity/InformationOfCity';
-import style from './Weather.module.css';
 
 type PropsType = {
     city?: string;
