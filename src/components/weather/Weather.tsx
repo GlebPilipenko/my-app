@@ -15,19 +15,25 @@ export const Weather: React.FC<PropsType> = ({city}) => {
         (async () => {
             try {
                 const res = await getWeather(city);
-                console.log(res);
                 if (res.data.list.length > 0) {
                     setState(res.data);
                 }
             } catch (e) {
-                !e.response ? setError('Your request is blocked')
+                !e.response
+                    ? setError('Weather request error, please try again later')
                     : setError(e.response.data.message);
             }
         })();
     }, [city]);
 
     if (!state) {
-        return <div className={style.error__block}>{error}</div>;
+        return (
+            <div className={style.error__container}>
+                <div className={style.error__block}>
+                    {error}
+                </div>
+            </div>
+        );
     }
 
     return <InformationOfCity state={state} />;

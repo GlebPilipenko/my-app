@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+html {
+    min-width: 320px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: black;
+}
+
 /* box sizing */
 *,
 *::before,
@@ -65,17 +76,6 @@ select {
     font: inherit;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
-html {
-    min-width: 320px;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    color: white;
-}
-
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -84,8 +84,3 @@ body {
         scroll-behavior: auto !important;
     }
 }
-
-/*.wrapper {*/
-/*    background: url("https://7themes.su/_ph/37/779925393.jpg?1613568141") no-repeat center;*/
-/*    background-size: cover;*/
-/*}*/
