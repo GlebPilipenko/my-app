@@ -8,7 +8,6 @@ import {
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import style from './News.module.css';
-import axios from 'axios';
 import {getFormatedDate, getDateToTimeStamp} from '../../utils/GetFormatedDate';
 
 type PropsType = {
@@ -21,8 +20,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
     const [error, setError] = useState<any>(null);
 
     const changeState = (res: any) => {
-        const {status, totalResults, articles} = res.data;
-        setState({status, totalResults, articles});
+        setState(res.data);
     };
 
     useEffect(() => {
