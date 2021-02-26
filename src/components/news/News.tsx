@@ -9,7 +9,7 @@ import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import style from './News.module.css';
 import {getFormatedDate, getDateToTimeStamp} from '../../utils/GetFormatedDate';
-import {ErrorMessage} from '../common/errorMessage/ErrorMessage'
+import {ErrorMessage} from '../common/errorMessage/ErrorMessage';
 
 type PropsType = {
     city?: string;
@@ -19,7 +19,7 @@ type PropsType = {
 export const News: React.FC<PropsType> = ({city, country}) => {
     const [state, setState] = useState<NewsAPIType | null>(() => null);
     const [error, setError] = useState<any>(null);
-
+    const defaultImg = 'https://art-u3.infcdn.net/articles_uploads/4/4422/default.jpg';
     const changeState = (res: any) => {
         setState(res.data);
     };
@@ -65,6 +65,11 @@ export const News: React.FC<PropsType> = ({city, country}) => {
             <Carousel showThumbs={false} infiniteLoop={true}>
                 {state.articles.map((article: ArticlesType, index: number) => {
                     const date = new Date(article.publishedAt).toString();
+                    const getDefaultImgUrl = () => {
+                        return article.urlToImage === null
+                            ? defaultImg
+                            : article.urlToImage;
+                    };
 
                     return (
                         <div key={index} className={style.article__container}
@@ -106,7 +111,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
                                 </div>
                                 <div className={style.article__img_container}>
                                     <img className={style.article__img}
-                                         src={article.urlToImage}
+                                         src={getDefaultImgUrl()}
                                          alt='news' />
                                 </div>
                             </div>
