@@ -36,6 +36,17 @@ export const News: React.FC<PropsType> = ({city, country}) => {
 
                         return;
                     }
+                    if (resCity.data.totalResults === 0) {
+                        const resCountry = await getNewsCountry(country);
+
+                        if (resCountry.data.totalResults === 0) {
+                            setError(`Sorry, no news...`);
+                        } else {
+                            setState(resCountry.data);
+                        }
+
+                        return;
+                    }
                 }
 
                 if (country) {
@@ -54,54 +65,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
                     : setError(e.response.data.message);
             }
         })();
-        // (async () => {
-        //     const getNewsCityСonditions = async () => {
-        //         const resCity = await getNewsCity(city);
-        //         const isUndefinedCity = isUndefined(resCity.data);
-        //
-        //         if (resCity.data.totalResults === 0 || isUndefinedCity.length > 0) {
-        //             getNewsCountryСonditions();
-        //         } else {
-        //             setState(resCity.data);
-        //         }
-        //     };
-        //     const getNewsCountryСonditions = async () => {
-        //         const resCountry = await getNewsCountry(country);
-        //         const isUndefinedCounty = isUndefined(resCountry.data);
-        //
-        //         if (resCountry.data.totalResults === 0 || isUndefinedCounty.length > 0) {
-        //             setError(`No news, enter the correct city or country.`);
-        //         } else {
-        //             setState(resCountry.data);
-        //         }
-        //     };
-        //     const isUndefined = (data: NewsAPIType) => {
-        //         return data.articles.map((obj: ArticlesType) => obj.title
-        //             .includes('undefined')).filter((el: boolean) => el);
-        //     };
-        //
-        //     try {
-        //         if (city) {
-        //
-        //         }
-        //         if (city === undefined && country === undefined) {
-        //             return;
-        //         }
-        //         if (city === undefined && country !== undefined) {
-        //             await getNewsCountryСonditions();
-        //         } else {
-        //             await getNewsCityСonditions();
-        //         }
-        //     } catch (e) {
-        //         e.response === undefined && setError('Your request is blocked');
-        //     }
-        // })();
     }, [city, country]);
-
-    if (city === undefined && country === undefined) {
-        return <ErrorMessage
-            errorMessage={'There are no attributes for correct display.'} />;
-    }
 
     if (!state) {
         return <ErrorMessage errorMessage={error} />;
