@@ -22,6 +22,38 @@ export const News: React.FC<PropsType> = ({city, country}) => {
     const defaultImg = process.env.REACT_APP_DEFAULT_IMG_URL;
 
     useEffect(() => {
+        /*(async () => {
+            try {
+                if (!city && !country) {
+                    setError(`Sorry, no news...`);
+                }
+
+                if (city) {
+                    const resCity = await getNewsCity(city);
+
+                    if (resCity.data.totalResults !== 0) {
+                        setState(resCity.data);
+
+                        return;
+                    }
+                }
+
+                if (country) {
+                    const resCountry = await getNewsCountry(country);
+
+                    if (resCountry.data.totalResults === 0) {
+                        setError(`Sorry, no news...`);
+
+                        return;
+                    }
+
+                    setState(resCountry.data);
+                }
+            } catch (e) {
+                !e.response ? setError('Your request is blocked')
+                    : setError(e.response.data.message);
+            }
+        })();*/
         const isUndefined = (data: NewsAPIType) => {
             return data.articles.map((obj: ArticlesType) => obj.title
                 .includes('undefined')).filter((el: boolean) => el);
