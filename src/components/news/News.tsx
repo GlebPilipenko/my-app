@@ -18,42 +18,56 @@ type PropsType = {
 
 export const News: React.FC<PropsType> = ({city, country}) => {
     const [state, setState] = useState<NewsAPIType | null>(() => null);
-    const [error, setError] = useState<any>(null);
-    const defaultImg = process.env.REACT_APP_DEFAULT_IMG_URL
-    const changeState = (res: any) => {
-        setState(res.data);
-    };
+    const [error, setError] = useState<null | string>(null);
+    const defaultImg = process.env.REACT_APP_DEFAULT_IMG_URL;
 
     useEffect(() => {
-        (async () => {
-            try {
-                const resCity = await getNewsCity(city);
-                const resCountry = await getNewsCountry(country);
-                const dataCity = resCity.data;
-                const dataCountry = resCountry.data;
+        const isUndefined = (data: NewsAPIType) => {
+            return data.articles.map((obj: ArticlesType) => obj.title
+                .includes('undefined')).filter((el: boolean) => el);
+        };
+        const getNewsCityСonditions = async () => {
+            const resCity = await getNewsCity(city);
+            const isUndefinedCity = isUndefined(resCity.data);
 
-                if (dataCity.totalResults === 0 || undefined) {
-                    if (dataCountry.totalResults === 0 || undefined) {
-                        setError(`No news, enter the correct city or country.`);
-                    } else {
-                        changeState(resCountry);
-                    }
-                } else {
-                    changeState(resCity);
-                }
-            } catch (e) {
-                !e.response && setError('Your request is blocked');
+            if (resCity.data.totalResults === 0 || isUndefinedCity.length > 0) {
+                getNewsCountryСonditions();
+            } else {
+                setState(resCity.data);
             }
-        })();
+        };
+        const getNewsCountryСonditions = async () => {
+            const resCountry = await getNewsCountry(country);
+            const isUndefinedCounty = isUndefined(resCountry.data);
+
+            if (resCountry.data.totalResults === 0 || isUndefinedCounty.length > 0) {
+                setError(`No news, enter the correct city or country.`);
+            } else {
+                setState(resCountry.data);
+            }
+        };
+
+        try {
+            if (city === undefined && country === undefined) {
+                return;
+            }
+            if (city === undefined && country !== undefined) {
+                getNewsCountryСonditions();
+            } else {
+                getNewsCityСonditions();
+            }
+        } catch (e) {
+            e.response && setError('Your request is blocked');
+        }
     }, [city, country]);
+
+    if (city === undefined && country === undefined) {
+        return <ErrorMessage
+            errorMessage={'There are no attributes for correct display.'} />;
+    }
 
     if (!state) {
         return <ErrorMessage errorMessage={error} />;
-    }
-
-    if (!city && !country) {
-        return <ErrorMessage
-            errorMessage={'There are no attributes for correct display.'} />;
     }
 
     if (state.totalResults === 0) {

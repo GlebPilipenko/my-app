@@ -7,7 +7,7 @@ const newsApi = axios.create({
 const apikey = process.env.REACT_APP_NEWS_API_KEY;
 
 const getQueryParams = (query: string | undefined, apikey: string | undefined) => {
-    return `everything?qInTitle="${query}"&pageSize=5&apiKey=${apikey}`;
+    return `everything?qInTitle="${query}"&language=en&pageSize=5&apiKey=${apikey}`;
 };
 
 export const getNewsCity = (city: string | undefined) => newsApi.get<NewsAPIType>(

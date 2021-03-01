@@ -10,5 +10,5 @@ export const getFormatedDate = (dt: string | number) => {
 };
 
 export const getDateToTimeStamp = (strDate: string) => {
-    return Date.parse(strDate) / 1000;
+    return Date.parse(strDate) / oneThousand;
 };

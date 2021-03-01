@@ -14,17 +14,17 @@ type PropsType = {
     country?: string;
 };
 
-export const App: React.FC<PropsType> = (props) => (
-    <div className={style.wrapper}>
-        {(() => {
-            switch (props.app) {
-                case `${WidgetTitles.WeatherWidget}`:
-                    return <Weather city={props.city} />;
-                case `${WidgetTitles.NewsWidget}`:
-                    return <News country={props.country} city={props.city} />;
-                default:
-                    return null;
-            }
-        })()}
-    </div>
-);
+export const App: React.FC<PropsType> = (props) => {
+    switch (props.app) {
+        case `${WidgetTitles.WeatherWidget}`:
+            return <div className={style.wrapper}>
+                <Weather city={props.city} />
+            </div>;
+        case `${WidgetTitles.NewsWidget}`:
+            return <div className={style.wrapper}>
+                <News country={props.country} city={props.city} />
+            </div>;
+        default:
+            return null;
+    }
+};
