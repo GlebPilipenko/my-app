@@ -20,6 +20,11 @@ export const InformationOfCity: React.FC<PropsType> = ({state}) => {
             <div className={style.info__container}>
                 {state.list.map((list: ListType, index: number) => {
                     const time = list.dt_txt.split(' ')[1];
+
+                    if (time !== noonTime) {
+                        return null;
+                    }
+
                     const iconQuery = list.weather.map((obj: WeatherType) => {
                         return `${obj.icon}.png`;
                     });
@@ -27,10 +32,6 @@ export const InformationOfCity: React.FC<PropsType> = ({state}) => {
                     const sentence = list.weather[0].description;
                     const description = `${sentence[0]
                         .toUpperCase()}${sentence.slice(1)}`;
-
-                    if (time !== noonTime) {
-                        return null;
-                    }
 
                     return (
                         <div key={index} className={style.info__wrapper}>
