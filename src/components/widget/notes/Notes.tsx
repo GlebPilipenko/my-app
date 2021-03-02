@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 
 type PropsType = {
     city?: string;
@@ -6,68 +6,77 @@ type PropsType = {
 };
 
 type TasksType = {
-    title: string;
-    description: string;
-    city: string;
-    country: string;
+    title: string | undefined;
+    description: string | undefined;
+    city: string | undefined;
+    country: string | undefined;
 };
 
 export const Notes: React.FC<PropsType> = ({country, city}) => {
-        let [tasks, setTasks] = useState<TasksType[]>([]);
-        const lsObject = JSON.parse(localStorage.getItem('tasks')!);
-        const findCity = lsObject.filter((obj: any) => obj.city === city);
-        const [showForm, setShowForm] = useState<boolean>(false);
-        const [title, setTitle] = useState<string>('');
-        const [description, setDescription] = useState<string>('');
-        const changeVisibilityForm = () => setShowForm(true);
-        const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-            setTitle(e.currentTarget.value);
-        };
-        const changeTxtAreaValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
-            setDescription(e.currentTarget.value);
-        };
-        const saveNotes = () => {
-            const newTasks = {title, description, country, city};
+    let [tasks, setTasks] = useState<TasksType[]>([]);
+    const [showForm, setShowForm] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const changeVisibilityForm = () => setShowForm(true);
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value);
+    };
+    const changeTxtAreaValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setDescription(e.currentTarget.value);
+    };
+    const saveNotes = () => {
+        const newTask = {title, description, country, city};
+        const lsObject = getLocalStorageObject(newTask);
 
-            localStorage.setItem('tasks', JSON.stringify([...tasks, newTasks]));
-            setTasks([...lsObject, newTasks]);
-            setShowForm(false);
-        };
+        localStorage.setItem('tasks', JSON.stringify([...lsObject, newTask]));
+        setShowForm(false);
+    };
+    const getLocalStorageObject = useCallback((newTask?: TasksType) => {
+        const lsObject = JSON.parse(localStorage.getItem('tasks') || '[]');
+        const findCity = lsObject.filter((obj: TasksType) => obj.city === city);
 
-        if (!tasks.length) {
-            tasks = lsObject;
-        }
+        if (!newTask) {
+            setTasks(findCity);
+        } else
+            setTasks([...findCity, newTask]);
 
-        if (!findCity.length) {
-            return <div>{city}</div>;
-        }
+        return lsObject;
+    }, [city]);
 
-        return (
-            <div>
-                <div>
-                    <button onClick={changeVisibilityForm}>ADD</button>
-                    {tasks.map((obj: TasksType, index: number) => {
-                        return (
-                            <div key={index}>
-                                <p>{obj.title}</p>
-                                <p>{obj.description}</p>
-                            </div>
-                        );
-                    })}
-                    {
-                        !showForm ? null :
-                            <div>
-                                <input type="text" value={title}
-                                       onChange={changeInputValue} />
-                                <textarea cols={30} rows={10}
-                                          value={description}
-                                          onChange={changeTxtAreaValue}>
-                                </textarea>
-                                <button onClick={saveNotes}>SAVE</button>
-                            </div>
-                    }
-                </div>
-            </div>
-        );
+    useEffect(() => {
+        getLocalStorageObject();
+    }, [getLocalStorageObject]);
+
+    if (!city && !country) {
+        return <div>Error</div>
     }
-;
+
+    return (
+        <div>
+            <div>
+                <button onClick={changeVisibilityForm}>ADD</button>
+                {tasks.map((obj: TasksType, index: number) => {
+                    return (
+                        <div key={index}>
+                            <p>{obj.title}</p>
+                            <p>{obj.description}</p>
+                            <button>X</button>
+                        </div>
+                    );
+                })}
+                {
+                    !showForm ? null :
+                        <div>
+                            <input type="text" value={title}
+                                   onChange={changeInputValue} />
+                            <textarea cols={30} rows={10}
+                                      value={description}
+                                      onChange={changeTxtAreaValue}>
+                                </textarea>
+                            <button onClick={saveNotes}>SAVE</button>
+                        </div>
+                }
+            </div>
+        </div>
+    );
+};
