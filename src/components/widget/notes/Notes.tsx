@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import style from './Notes.module.css';
 
 type PropsType = {
     city?: string;
@@ -48,34 +49,46 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     }, [getLocalStorageObject]);
 
     if (!city && !country) {
-        return <div>Error</div>
+        return <div>Temporary Error</div>;
     }
 
     return (
-        <div>
-            <div>
-                <button onClick={changeVisibilityForm}>ADD</button>
+        <div className={style.wrapper}>
+            <div className={style.container}>
+                <button className={style.btn} onClick={changeVisibilityForm}>
+                    Create note
+                </button>
+                {
+                    !showForm ? null :
+                        <div className={style.form__container}>
+                            <div className={style.input}>
+                                <input type="text" value={title} size={20}
+                                       onChange={changeInputValue} />
+                            </div>
+                            <div>
+                                <textarea cols={21} rows={3} value={description}
+                                          className={style.textarea}
+                                          onChange={changeTxtAreaValue}>
+                                </textarea>
+                            </div>
+                            <button
+                                className={`${style.btn} ${style.btn__save}`}
+                                onClick={saveNotes}>
+                                Save
+                            </button>
+                        </div>
+                }
                 {tasks.map((obj: TasksType, index: number) => {
+                    const title = `${obj.title}`;
+                    const description = `${obj.description}`;
+
                     return (
-                        <div key={index}>
-                            <p>{obj.title}</p>
-                            <p>{obj.description}</p>
-                            <button>X</button>
+                        <div className={style.info__container} key={index}>
+                            <p className={style.title}>{title}</p>
+                            <p className={style.description}>{description}</p>
                         </div>
                     );
                 })}
-                {
-                    !showForm ? null :
-                        <div>
-                            <input type="text" value={title}
-                                   onChange={changeInputValue} />
-                            <textarea cols={30} rows={10}
-                                      value={description}
-                                      onChange={changeTxtAreaValue}>
-                                </textarea>
-                            <button onClick={saveNotes}>SAVE</button>
-                        </div>
-                }
             </div>
         </div>
     );
