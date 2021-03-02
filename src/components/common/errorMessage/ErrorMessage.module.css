@@ -1,0 +1,8 @@
+.error__container {
+     padding: 20px 23px;
+}
+
+.error__block {
+    color: tomato;
+    font-size: 20px;
+}

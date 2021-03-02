@@ -1,27 +1,19 @@
 import React from 'react';
 import {ListType, WeatherAPIType, WeatherType} from '../../api/weatherAPI';
 import style from './InformationOfCity.module.css';
+import {getFormatedDate} from '../../utils/GetFormatedDate';
 
 type PropsType = {
     state: WeatherAPIType | null;
 };
 
-export const InformationOfCity: React.FC<PropsType> = ({ state }) => {
-    const oneThousand = 1000;
+export const InformationOfCity: React.FC<PropsType> = ({state}) => {
     const url = process.env.REACT_APP_WEATHER_IMG_URL_CITY;
     const noonTime = '12:00:00';
 
     if (!state) {
         return null;
     }
-
-    const getFormatedDate = (date: Date) => {
-        const mm = date.getMonth() + 1;
-        const yyyy = date.getFullYear();
-        let dd = date.getDate();
-
-        return `${mm}/${dd}/${yyyy}`;
-    };
 
     return (
         <div className={style.information__wrapper}>
@@ -33,29 +25,29 @@ export const InformationOfCity: React.FC<PropsType> = ({ state }) => {
                         return null;
                     }
 
+                    const iconQuery = list.weather.map((obj: WeatherType) => {
+                        return `${obj.icon}.png`;
+                    });
+                    const temperature = `${Math.floor(list.main.feels_like)}°`;
+                    const sentence = list.weather[0].description;
+                    const description = `${sentence[0]
+                        .toUpperCase()}${sentence.slice(1)}`;
+
                     return (
                         <div key={index} className={style.info__wrapper}>
                             <div className={style.info__block}>
                                 <div className={style.info__block_top}>
                                     {state.city.name}
                                     <br />
-                                    {getFormatedDate(new Date(+list.dt * oneThousand))}
+                                    {getFormatedDate(list.dt)}
                                 </div>
                                 <div className={style.info__block_middle}>
-                                    <img
-                                        src={`${url}${list.weather.map(
-                                            (obj: WeatherType) => obj.icon)}.png`
-                                        }
-                                        alt="weather"
-                                    />
-                                    <span>
-                                        {`${Math.floor(list.main.feels_like)}°`}
-                                    </span>
+                                    <img src={`${url}${iconQuery}`}
+                                         alt="weather" />
+                                    <span>{temperature}</span>
                                 </div>
                                 <div className={style.info__block_bottom}>
-                                    {`${list.weather[0].description[0]
-                                        .toUpperCase()}${list.weather[0]
-                                        .description.slice(1)}`}
+                                    {description}
                                 </div>
                             </div>
                         </div>

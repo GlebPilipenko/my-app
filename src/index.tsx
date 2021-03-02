@@ -4,11 +4,17 @@ import './index.css';
 import {App} from './App';
 import reportWebVitals from './reportWebVitals';
 
-const ROOT_SELECTORS = ['[data-app="weather-widget"]'];
+const ROOT_SELECTORS = ['[data-app="weather-widget"]', '[data-app="news-widget"]'];
 
-const getAppNodes = (selectors: string[]) => selectors
-    .map(selector => Array.prototype.slice.call(
-        document.querySelectorAll(selector))).find(nodes => !!nodes.length);
+const getAppNodes = (selectors: string[]) => {
+    const arrayOfArrays = selectors.map(selector => {
+        return Array.prototype.slice.call(
+            document.querySelectorAll(selector));
+    });
+    return arrayOfArrays
+        .filter(nodes => !!nodes.length).flat();
+};
+
 
 const initApp = async (appRoot: HTMLElement) => {
     const props = appRoot.dataset;
