@@ -36,6 +36,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
 
                         return;
                     }
+
                     if (resCity.data.totalResults === 0) {
                         const resCountry = await getNewsCountry(country);
 
