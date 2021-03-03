@@ -79,9 +79,11 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     return (
         <div className={style.wrapper}>
             <div className={style.container}>
-                <button className={style.btn} onClick={changeVisibilityForm}>
-                    Create note
-                </button>
+                <div className={style.btn__container}>
+                    <button className={style.btn} onClick={changeVisibilityForm}>
+                        Create note
+                    </button>
+                </div>
                 {
                     !showForm ? null :
                         <div className={style.form__container}>
@@ -111,26 +113,30 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                             </button>
                         </div>
                 }
+                <div className={style.place__container}>
+                    <p className={style.country}>{country}</p>
+                    <p className={style.city}
+                       onClick={changeVisibilityInfo}>
+                        {city}
+                    </p>
+                </div>
                 {tasks.map((obj: TasksType, index: number) => {
                     const title = `• ${obj.title}`;
                     const description = `${obj.description}`;
-                    const country = `${obj.country?.toUpperCase()
-                        [0]}${obj.country?.slice(1)}`;
-                    const city = `${obj.city?.toUpperCase()
-                        [0]}${obj.city?.slice(1)}`;
 
                     return (
                         <div>
-                            <h3>{country}</h3>
-                            <h4 onClick={changeVisibilityInfo}>{city}</h4>
                             {showInfo &&
-                                <div className={style.info__container} key={index}>
-                                    <p className={style.title}>{title}</p>
+                            <div className={style.info__container} key={index}>
+                                <p className={style.title}>{title}</p>
+                                <div className={style.description__container}>
                                     <p className={style.description}>{description}</p>
-                                    <button onClick={() => removeNote(title)}>
+                                    <button className={style.remove__btn}
+                                            onClick={() => removeNote(title)}>
                                         Delete
                                     </button>
                                 </div>
+                            </div>
                             }
                         </div>
                     );
