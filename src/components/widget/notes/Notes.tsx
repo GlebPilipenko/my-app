@@ -17,6 +17,7 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     let [tasks, setTasks] = useState<TasksType[]>([]);
     const [showForm, setShowForm] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
+    const [cityTitle, setCityTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const changeVisibilityForm = () => setShowForm(true);
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +26,31 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     const changeTxtAreaValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.currentTarget.value);
     };
+    const changeInputCityValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setCityTitle(e.currentTarget.value);
+    };
     const saveNotes = () => {
+
+        if (!city) {
+            city = cityTitle;
+        }
+
         const newTask = {title, description, country, city};
         const lsObject = getLocalStorageObject(newTask);
 
         localStorage.setItem('tasks', JSON.stringify([...lsObject, newTask]));
+        setTitle('');
+        setCityTitle('');
+        setDescription('');
         setShowForm(false);
+    };
+    const removeNote = (title: string) => {
+        const filteredTasks = tasks.filter((obj: TasksType) => {
+            return obj.title !== title.slice(1).trim();
+        });
+
+        setTasks([...filteredTasks]);
+        localStorage.setItem('tasks', JSON.stringify([...filteredTasks]));
     };
     const getLocalStorageObject = useCallback((newTask?: TasksType) => {
         const lsObject = JSON.parse(localStorage.getItem('tasks') || '[]');
@@ -38,8 +58,9 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
 
         if (!newTask) {
             setTasks(findCity);
-        } else
+        } else {
             setTasks([...findCity, newTask]);
+        }
 
         return lsObject;
     }, [city]);
@@ -47,10 +68,6 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     useEffect(() => {
         getLocalStorageObject();
     }, [getLocalStorageObject]);
-
-    if (!city && !country) {
-        return <div>Temporary Error</div>;
-    }
 
     return (
         <div className={style.wrapper}>
@@ -67,6 +84,12 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                                        className={style.input}
                                        onChange={changeInputValue} />
                             </div>
+                            {!city && <div className={style.input__container}>
+                                <h4>Add your city</h4>
+                                <input type="text" value={cityTitle} size={20}
+                                       className={style.input}
+                                       onChange={changeInputCityValue} />
+                            </div>}
                             <div className={style.textarea__container}>
                                 <h4>Add your description</h4>
                                 <textarea cols={21} rows={3} value={description}
@@ -89,6 +112,9 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                         <div className={style.info__container} key={index}>
                             <p className={style.title}>{title}</p>
                             <p className={style.description}>{description}</p>
+                            <button onClick={() => removeNote(title)}>
+                                Delete
+                            </button>
                         </div>
                     );
                 })}
