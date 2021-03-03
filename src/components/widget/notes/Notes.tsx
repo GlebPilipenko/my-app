@@ -17,12 +17,14 @@ type TasksType = {
 export const Notes: React.FC<PropsType> = ({country, city}) => {
     let [tasks, setTasks] = useState<TasksType[]>([]);
     const [showForm, setShowForm] = useState<boolean>(false);
-    const [showInfo, setShowinfo] = useState<any>(false);
+    const [showInfo, setShowInfo] = useState<any>(false);
     const [title, setTitle] = useState<string>('');
     const [cityTitle, setCityTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    // const [cityProps, setCityProps] = useState<string | undefined>(city);
+    // const [countryProps, setCountryProps] = useState<string | undefined>(country);
     const changeVisibilityForm = () => setShowForm(true);
-    const changeVisibilityInfo = () => setShowinfo(!showInfo);
+    const changeVisibilityInfo = () => setShowInfo(!showInfo);
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
@@ -33,18 +35,23 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
         setCityTitle(e.currentTarget.value);
     };
     const saveNotes = () => {
+        const newTask = {title, description, country, city};
+        const lsObject = getLocalStorageObject(newTask);
 
         if (!city) {
             city = cityTitle;
         }
 
-        const newTask = {title, description, country, city};
-        const lsObject = getLocalStorageObject(newTask);
+        if (!country) {
+            country = ''
+        }
 
         localStorage.setItem('tasks', JSON.stringify([...lsObject, newTask]));
         setTitle('');
         setCityTitle('');
         setDescription('');
+        // setCityProps(city)
+        // setCountryProps(country)
         setShowForm(false);
     };
     const removeNote = (title: string) => {
@@ -115,10 +122,13 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                         </div>
                 }
                 <div className={style.place__container}>
-                    <p className={style.country}>{country}</p>
+                    <p className={style.country}>
+                        {tasks.length ? country : ''}
+                    </p>
                     <p className={style.city}
                        onClick={changeVisibilityInfo}>
-                        {city}
+                        {console.log(tasks)}
+                        {tasks.length ? city : ''}
                     </p>
                 </div>
                 {tasks.map((obj: TasksType, index: number) => {
