@@ -61,11 +61,14 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                 {
                     !showForm ? null :
                         <div className={style.form__container}>
-                            <div className={style.input}>
+                            <div className={style.input__container}>
+                                <h4>Add your title</h4>
                                 <input type="text" value={title} size={20}
+                                       className={style.input}
                                        onChange={changeInputValue} />
                             </div>
-                            <div>
+                            <div className={style.textarea__container}>
+                                <h4>Add your description</h4>
                                 <textarea cols={21} rows={3} value={description}
                                           className={style.textarea}
                                           onChange={changeTxtAreaValue}>
@@ -79,7 +82,7 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                         </div>
                 }
                 {tasks.map((obj: TasksType, index: number) => {
-                    const title = `${obj.title}`;
+                    const title = `• ${obj.title}`;
                     const description = `${obj.description}`;
 
                     return (
