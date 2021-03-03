@@ -1,10 +1,8 @@
 .wrapper {
     width: 100%;
-    margin: 0 auto;
 }
 
 .container {
-    display: block;
     max-width: 500px;
     margin: 0 auto;
     padding: 30px 20px 0;
@@ -13,14 +11,15 @@
 }
 
 .btn__container {
+    width: 100%;
     display: flex;
     justify-content: center;
 }
 
 .btn {
+    width: 100%;
     padding: 5px 0;
-    margin-top: 15px;
-    min-width: 210px;
+    margin: 15px 0 15px;
     border: 1px solid darkgrey;
     border-radius: 3px;
     outline: none;
@@ -40,31 +39,34 @@
     background-color: #088344;
 }
 
+.form__container {
+    width: inherit;
+    margin-bottom: 15px;
+}
+
 .input__container {
-    margin-top: 25px;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .input {
+    width: 100%;
     outline: 0;
     outline-offset: 0;
 }
 
 .textarea__container {
-    margin-top: 25px;
+    width: 100%;
 }
 
 .textarea {
+    width: 100%;
     outline: 0;
-    outline-offset: 0;}
-
-.form__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    outline-offset: 0;
 }
 
 .place__container {
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .country {
@@ -72,13 +74,17 @@
 }
 
 .city {
-    margin-top: 5px;
     font-size: 28px;
 }
 
 .info__container {
-    margin-top: 15px;
     width: 100%;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
 .description__container {
@@ -95,10 +101,6 @@
     background-color: #1c78db;
     color: white;
     font-size: 12px;
-}
-
-.title {
-    font-size: 20px;
 }
 
 .description {

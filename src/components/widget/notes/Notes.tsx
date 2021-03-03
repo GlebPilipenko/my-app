@@ -80,7 +80,8 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
         <div className={style.wrapper}>
             <div className={style.container}>
                 <div className={style.btn__container}>
-                    <button className={style.btn} onClick={changeVisibilityForm}>
+                    <button className={style.btn}
+                            onClick={changeVisibilityForm}>
                         Create note
                     </button>
                 </div>
@@ -89,19 +90,19 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                         <div className={style.form__container}>
                             <div className={style.input__container}>
                                 <h4>Add your title</h4>
-                                <input type="text" value={title} size={20}
+                                <input type="text" value={title}
                                        className={style.input}
                                        onChange={changeInputValue} />
                             </div>
                             {!city && <div className={style.input__container}>
                                 <h4>Add your city</h4>
-                                <input type="text" value={cityTitle} size={20}
+                                <input type="text" value={cityTitle}
                                        className={style.input}
                                        onChange={changeInputCityValue} />
                             </div>}
                             <div className={style.textarea__container}>
                                 <h4>Add your description</h4>
-                                <textarea cols={21} rows={3} value={description}
+                                <textarea value={description}
                                           className={style.textarea}
                                           onChange={changeTxtAreaValue}>
                                 </textarea>
@@ -125,7 +126,7 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                     const description = `${obj.description}`;
 
                     return (
-                        <div>
+                        <>
                             {showInfo &&
                             <div className={style.info__container} key={index}>
                                 <p className={style.title}>{title}</p>
@@ -138,7 +139,7 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                                 </div>
                             </div>
                             }
-                        </div>
+                        </>
                     );
                 })}
             </div>
