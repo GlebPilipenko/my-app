@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import style from './Notes.module.css';
 
+
 type PropsType = {
     city?: string;
     country?: string;
@@ -16,10 +17,12 @@ type TasksType = {
 export const Notes: React.FC<PropsType> = ({country, city}) => {
     let [tasks, setTasks] = useState<TasksType[]>([]);
     const [showForm, setShowForm] = useState<boolean>(false);
+    const [showInfo, setShowinfo] = useState<any>(false);
     const [title, setTitle] = useState<string>('');
     const [cityTitle, setCityTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const changeVisibilityForm = () => setShowForm(true);
+    const changeVisibilityInfo = () => setShowinfo(!showInfo);
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
@@ -55,15 +58,19 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
     const getLocalStorageObject = useCallback((newTask?: TasksType) => {
         const lsObject = JSON.parse(localStorage.getItem('tasks') || '[]');
         const findCity = lsObject.filter((obj: TasksType) => obj.city === city);
+        const findCountry = lsObject.filter((obj: TasksType) => obj.country === country);
 
         if (!newTask) {
             setTasks(findCity);
+            if (!city && country) {
+                setTasks(findCountry);
+            }
         } else {
             setTasks([...findCity, newTask]);
         }
 
         return lsObject;
-    }, [city]);
+    }, [city, country]);
 
     useEffect(() => {
         getLocalStorageObject();
@@ -107,14 +114,24 @@ export const Notes: React.FC<PropsType> = ({country, city}) => {
                 {tasks.map((obj: TasksType, index: number) => {
                     const title = `• ${obj.title}`;
                     const description = `${obj.description}`;
+                    const country = `${obj.country?.toUpperCase()
+                        [0]}${obj.country?.slice(1)}`;
+                    const city = `${obj.city?.toUpperCase()
+                        [0]}${obj.city?.slice(1)}`;
 
                     return (
-                        <div className={style.info__container} key={index}>
-                            <p className={style.title}>{title}</p>
-                            <p className={style.description}>{description}</p>
-                            <button onClick={() => removeNote(title)}>
-                                Delete
-                            </button>
+                        <div>
+                            <h3>{country}</h3>
+                            <h4 onClick={changeVisibilityInfo}>{city}</h4>
+                            {showInfo &&
+                                <div className={style.info__container} key={index}>
+                                    <p className={style.title}>{title}</p>
+                                    <p className={style.description}>{description}</p>
+                                    <button onClick={() => removeNote(title)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            }
                         </div>
                     );
                 })}
