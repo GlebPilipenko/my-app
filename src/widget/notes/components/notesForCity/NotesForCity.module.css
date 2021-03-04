@@ -1,0 +1,28 @@
+.info__container {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.country {
+    font-size: 36px;
+}
+
+.city {
+    font-size: 28px;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.description__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.description {
+    margin-right: 15px;
+    font-size: 12px;
+}
