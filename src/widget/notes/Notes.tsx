@@ -2,8 +2,9 @@ import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {NotesForCity} from './components/notesForCity/NotesForCity';
 import {NotesForm} from './components/notesForm/NotesForm';
 import {Button} from './components/button/Button';
-import style from './Notes.module.css';
 import {ErrorMessage} from '../../common/errorMessage/ErrorMessage';
+import style from './Notes.module.css';
+import {serviceLocalStorage} from '../../services/LocalStorage';
 
 type PropsType = {
     city?: string;
@@ -19,11 +20,11 @@ export type NotesType = {
 
 export const Notes: React.FC<PropsType> = ({
 country,
-city,
+city
 }) => {
-    let [notes, setNotes] = useState<NotesType[] | any>([]);
+    let [notes, setNotes] = useState<NotesType[]>([]);
     const [showForm, setShowForm] = useState<boolean>(false);
-    const [showInfo, setShowInfo] = useState<any>(false);
+    const [showInfo, setShowInfo] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
     const [cityTitle, setCityTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -39,22 +40,21 @@ city,
         setCityTitle(e.currentTarget.value);
     }, [setCityTitle]);
     const removeNote = (title: string | undefined) => {
+        const lsObject = getLocalStorageObject();
         const trimmedString = title?.slice(1).trim();
-        const filteredNotes = notes.filter((obj: NotesType) => {
+        const filteredNotes = lsObject.filter((obj: NotesType) => {
 
             if (title?.includes('•')) {
-                return obj.title !== trimmedString;
-            } else {
                 return obj.title !== trimmedString;
             }
         });
 
         localStorage.setItem('widget.Notes', JSON.stringify([...filteredNotes]));
-        setNotes([...filteredNotes]);
+        setNotes(filteredNotes.filter((el: any) => el.city === city));
     };
     const addNotes = () => {
         const newTask = {title, description, country, city};
-        const lsObject = getLocalStorageObject(newTask);
+        const lsObject = getLocalStorageObject(newTask, city, setNotes);
 
         localStorage.setItem('widget.Notes', JSON.stringify(
             [...lsObject, newTask]));
@@ -64,30 +64,21 @@ city,
         setDescription('');
         setShowForm(false);
     };
-    const getLocalStorageObject = useCallback((newTask?: NotesType) => {
-        const lsObject = JSON.parse(localStorage.getItem('widget.Notes') || '[]');
-        const findCity = lsObject.filter((obj: NotesType) => obj.city === city);
-
-        if (!newTask) {
-            setNotes([...findCity]);
-        } else {
-            setNotes([...findCity, newTask]);
-        }
-
-        return lsObject;
-    }, [city]);
+    const getLocalStorageObject = useCallback
+    ((newTask?: NotesType, city?: string | undefined, setNotes?: Function) => {
+        return serviceLocalStorage(newTask, city, setNotes);
+    }, []);
 
     useEffect(() => {
-        getLocalStorageObject();
-    }, [getLocalStorageObject]);
+        getLocalStorageObject({} as NotesType, city, setNotes);
+    }, [getLocalStorageObject, city, setNotes]);
 
     if (!city && !country) {
         return <ErrorMessage errorMessage={'Sorry, no notes...'} />;
     }
 
     if (!city && country) {
-        const lsObject = JSON.parse(localStorage
-            .getItem('widget.Notes') || '[]');
+        const lsObject = JSON.parse(localStorage.getItem('widget.Notes') || '[]');
 
         notes = lsObject;
 

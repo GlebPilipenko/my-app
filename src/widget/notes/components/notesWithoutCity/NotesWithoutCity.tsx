@@ -11,11 +11,11 @@ type NotesWithoutCities = {
 };
 
 export const NotesWithoutCity: React.FC<NotesWithoutCities> = ({
-   notes,
-   country,
-   showInfo,
-   removeNote,
-   changeVisibilityInfo,
+notes,
+country,
+showInfo,
+removeNote,
+changeVisibilityInfo
 }) => {
     const filteredCity: any[] = [];
     const copyNotes = notes.map(city => city.city);
@@ -52,9 +52,8 @@ export const NotesWithoutCity: React.FC<NotesWithoutCities> = ({
                                         <p className={style.description}>
                                             {description}
                                         </p>
-                                        <button
-                                            className={style.remove__btn}
-                                            onClick={() => removeNote(title)}>
+                                        <button className={style.remove__btn}
+                                                onClick={() => removeNote(title)}>
                                             Delete
                                         </button>
                                     </div>

@@ -10,20 +10,20 @@ type PropsType = {
     changeInputCityValue: (e: ChangeEvent<HTMLInputElement>) => void;
     changeTxtAreaValue: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
-    addNotes: () => void
+    addNotes: () => void;
 };
 
 export const NotesForm: React.FC<PropsType> = ({
-                                                   city,
-                                                   title,
-                                                   cityTitle,
-                                                   description,
-                                                   showForm,
-                                                   changeInputCityValue,
-                                                   changeTxtAreaValue,
-                                                   changeInputValue,
-                                                   addNotes
-                                               }) => {
+city,
+title,
+cityTitle,
+description,
+showForm,
+changeInputCityValue,
+changeTxtAreaValue,
+changeInputValue,
+addNotes
+}) => {
     return (
         <>
             {!showForm ? null :
