@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100%;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px 20px 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.place__container {
+    margin-bottom: 15px;
+}
+
+.country {
+    font-size: 36px;
+}
+
+.city {
+    font-size: 28px;
+}
+
+.remove__btn {
+    padding: 3px 15px;
+    border: 1px solid darkgrey;
+    border-radius: 2px;
+    outline: none;
+    background-color: #1c78db;
+    color: white;
+    font-size: 12px;
+}

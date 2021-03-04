@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getWeather, WeatherAPIType} from '../../api/weatherAPI';
-import {ErrorMessage} from '../common/errorMessage/ErrorMessage';
+import {ErrorMessage} from '../../common/errorMessage/ErrorMessage';
 import {InformationOfCity} from '../informationOfCity/InformationOfCity';
 
 type PropsType = {
@@ -9,7 +9,7 @@ type PropsType = {
 
 export const Weather: React.FC<PropsType> = ({city}) => {
     const [state, setState] = useState<null | WeatherAPIType>(null);
-    const [error, setError] = useState<any>(null);
+    const [error, setError] = useState<null | string>(null);
     const getErrorMessage = (error: string) => {
         const message = `${error[0].toUpperCase()}${error.slice(1)}`;
 

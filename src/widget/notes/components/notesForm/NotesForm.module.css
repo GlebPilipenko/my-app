@@ -1,0 +1,48 @@
+.form__container {
+    width: inherit;
+    margin-bottom: 15px;
+}
+
+.input__container {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input {
+    width: 100%;
+    outline: 0;
+    outline-offset: 0;
+}
+
+.textarea__container {
+    width: 100%;
+}
+
+.textarea {
+    width: 100%;
+    outline: 0;
+    outline-offset: 0;
+}
+
+.btn {
+    width: 100%;
+    padding: 5px 0;
+    margin: 15px 0 15px;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+    background-color: #ff6347;
+}
+
+.btn:hover {
+    background-color: #ee482a;
+}
+
+.btn__save {
+    background-color: #07a052;
+}
+
+.btn__save:hover {
+    background-color: #088344;
+}
