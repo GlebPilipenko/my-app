@@ -1,4 +1,4 @@
-import {NotesType} from '../widget/notes/Notes';
+import {NotesType} from '../widgets/notes/Notes';
 
 export const serviceLocalStorage = (
     newTask?: NotesType, city?: string | undefined, setNotes?: Function) => {

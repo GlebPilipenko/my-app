@@ -1,8 +1,8 @@
 import React from 'react';
-import {Weather} from './widget/weather/Weather';
+import {Weather} from './widgets/weather/Weather';
 import style from './App.module.css';
-import {News} from './widget/news/News';
-import {Notes} from './widget/notes/Notes'
+import {News} from './widgets/news/News';
+import {Notes} from './widgets/notes/Notes'
 
 enum WidgetTitles {
     WeatherWidget = 'weather-widget',

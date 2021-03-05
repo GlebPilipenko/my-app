@@ -1,7 +1,7 @@
 import React from 'react';
-import {ListType, WeatherAPIType, WeatherType} from '../../api/weatherAPI';
+import {ListType, WeatherAPIType, WeatherType} from '../../../../api/weatherAPI';
 import style from './InformationOfCity.module.css';
-import {getFormatedDate} from '../../utils/GetFormatedDate';
+import {getFormatedDate} from '../../../../utils/GetFormatedDate';
 
 type PropsType = {
     state: WeatherAPIType | null;
