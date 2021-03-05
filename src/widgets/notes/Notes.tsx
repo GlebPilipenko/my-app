@@ -4,7 +4,12 @@ import {NotesForm} from './components/notesForm/NotesForm';
 import {Button} from './components/button/Button';
 import {ErrorMessage} from '../../common/errorMessage/ErrorMessage';
 import style from './Notes.module.css';
-import {serviceLocalStorage} from '../../services/LocalStorage';
+import {
+    serviceLocalStorage,
+    setDataToLocalStorage
+} from '../../services/localStorage';
+import {NotesWithoutCity} from './components/notesWithoutCity/NotesWithoutCity';
+import {getParseLocalStorageData} from '../../services/localStorage';
 
 type PropsType = {
     city?: string;
@@ -12,24 +17,28 @@ type PropsType = {
 };
 
 export type NotesType = {
-    title: string | undefined;
-    description: string | undefined;
     city: string | undefined;
+    title: string | undefined;
     country: string | undefined;
+    description: string | undefined;
 };
 
 export const Notes: React.FC<PropsType> = ({
-country,
-city
+    city,
+    country,
 }) => {
     let [notes, setNotes] = useState<NotesType[]>([]);
-    const [showForm, setShowForm] = useState<boolean>(false);
-    const [showInfo, setShowInfo] = useState<boolean>(false);
+
     const [title, setTitle] = useState<string>('');
     const [cityTitle, setCityTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+
+    const [showForm, setShowForm] = useState<boolean>(false);
+    const [showInfo, setShowInfo] = useState<boolean>(false);
+
     const changeVisibilityForm = () => setShowForm(true);
     const changeVisibilityInfo = () => setShowInfo(!showInfo);
+
     const changeInputValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     }, []);
@@ -39,83 +48,121 @@ city
     const changeInputCityValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setCityTitle(e.currentTarget.value);
     }, [setCityTitle]);
-    const removeNote = (title: string | undefined) => {
-        const lsObject = getLocalStorageObject();
-        const trimmedString = title?.slice(1).trim();
-        const filteredNotes = lsObject.filter((obj: NotesType) => {
 
-            if (title?.includes('•')) {
-                return obj.title !== trimmedString;
-            }
-        });
-
-        localStorage.setItem('widget.Notes', JSON.stringify([...filteredNotes]));
-        setNotes(filteredNotes.filter((el: any) => el.city === city));
-    };
     const addNotes = () => {
-        const newTask = {title, description, country, city};
-        const lsObject = getLocalStorageObject(newTask, city, setNotes);
+        const newNote = {title, description, country, city};
+        const findedNotes = serviceLocalStorage(
+            'widget.Notes', newNote, city, setNotes
+        );
 
-        localStorage.setItem('widget.Notes', JSON.stringify(
-            [...lsObject, newTask]));
-
+        setNotes([...findedNotes, newNote]);
+        setDataToLocalStorage(
+            'widget.Notes', JSON.stringify([...findedNotes, newNote])
+        );
         setTitle('');
         setCityTitle('');
         setDescription('');
         setShowForm(false);
     };
-    const getLocalStorageObject = useCallback
-    ((newTask?: NotesType, city?: string | undefined, setNotes?: Function) => {
-        return serviceLocalStorage(newTask, city, setNotes);
-    }, []);
+    const removeNote = (title: string | undefined) => {
+        const findedNotes = serviceLocalStorage('widget.Notes');
+        const trimmedString = title?.slice(1).trim();
+        const filteredNotes = findedNotes.filter((obj: NotesType) => {
+
+            if (title?.includes('•')) {
+                return obj.title !== trimmedString;
+            }
+
+        });
+        setNotes(filteredNotes.filter((el: NotesType) => el.city === city));
+        setDataToLocalStorage('widget.Notes', JSON.stringify(filteredNotes));
+    };
 
     useEffect(() => {
-        getLocalStorageObject({} as NotesType, city, setNotes);
-    }, [getLocalStorageObject, city, setNotes]);
+        serviceLocalStorage('widget.Notes');
+    }, []);
 
-    if (!city && !country) {
-        return <ErrorMessage errorMessage={'Sorry, no notes...'} />;
-    }
+    notes = getParseLocalStorageData('widget.Notes', []);
 
-    if (!city && country) {
-        const lsObject = JSON.parse(localStorage.getItem('widget.Notes') || '[]');
+    if (!city) {
+        if (!notes.length) {
 
-        notes = lsObject;
+            return (
+                <ErrorMessage
+                    errorMessage={'Sorry, you have no notes for the city and' +
+                    ' country...'} />
+            );
+        }
 
         return (
-            <div className={style.wrapper}>
-                <div className={style.container}>
-                    <NotesForCity notes={notes} showInfo={showInfo} city={city}
-                                  country={country} removeNote={removeNote}
-                                  changeVisibilityInfo={changeVisibilityInfo} />
-                </div>
-            </div>
+            <NotesWithoutCity
+                notes={notes}
+                country={country}
+                showInfo={showInfo}
+                removeNote={removeNote}
+                changeVisibilityInfo={changeVisibilityInfo} />
         );
     }
+
+    if (!city && !country) <ErrorMessage errorMessage={'Sorry, no notes...'} />;
 
     return (
         <div className={style.wrapper}>
             <div className={style.container}>
                 <Button changeVisibilityForm={changeVisibilityForm} />
-                <NotesForm title={title} cityTitle={cityTitle} city={city}
-                           description={description} showForm={showForm}
-                           changeInputCityValue={changeInputCityValue}
-                           changeTxtAreaValue={changeTxtAreaValue}
+                <NotesForm title={title} city={city}
+                           addNotes={addNotes}
+                           showForm={showForm}
+                           cityTitle={cityTitle}
+                           description={description}
                            changeInputValue={changeInputValue}
-                           addNotes={addNotes} />
-                <div className={style.place__container}>
-                    <p className={style.country}>
-                        {notes.length ? country : ''}
-                    </p>
-                    <p className={style.city}
-                       onClick={changeVisibilityInfo}>
-                        {notes.length ? city : ''}
-                    </p>
-                </div>
-                <NotesForCity notes={notes} showInfo={showInfo} city={city}
-                              country={country} removeNote={removeNote}
+                           changeTxtAreaValue={changeTxtAreaValue}
+                           changeInputCityValue={changeInputCityValue} />
+                <NotesForCity notes={notes} city={city}
+                              country={country}
+                              showInfo={showInfo}
+                              removeNote={removeNote}
                               changeVisibilityInfo={changeVisibilityInfo} />
             </div>
         </div>
     );
 };
+
+
+// if (!city && country) {
+//     const lsObject = getParseLocalStorageData('widget.Notes', []);
+//
+//     notes = lsObject;
+//
+//     return (
+//         <div className={style.wrapper}>
+//             <div className={style.container}>
+//                 <NotesForCity notes={notes} city={city}
+//                               showInfo={showInfo}
+//                               country={country}
+//                               removeNote={removeNote}
+//                               changeVisibilityInfo={changeVisibilityInfo} />
+//             </div>
+//         </div>
+//     );
+// }
+
+
+// const getLocalStorageArray = useCallback(
+//     (widgetName = 'widget.Notes', newTask?: NotesType,
+//      city?: string | undefined, setNotes?: Function
+//     ) => {
+//
+//         return serviceLocalStorage(widgetName);
+// }, []);
+
+
+// <div className={style.place__container}>
+//     <p className={style.country}>
+//         {notes.length ? country : ''}
+//     </p>
+//     <p className={style.city}
+//        onClick={changeVisibilityInfo}>
+//         {notes.length ? city : ''}
+//     </p>
+// </div>

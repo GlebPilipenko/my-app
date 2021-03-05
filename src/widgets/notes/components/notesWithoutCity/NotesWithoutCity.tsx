@@ -3,43 +3,44 @@ import {NotesType} from '../../Notes';
 import style from '../notesForCity/NotesForCity.module.css';
 
 type NotesWithoutCities = {
+    showInfo: boolean;
     notes: NotesType[];
     country: string | undefined;
-    showInfo: boolean;
-    removeNote: (title: string | undefined) => void;
     changeVisibilityInfo: () => void;
+    removeNote: (title: string | undefined) => void;
 };
 
 export const NotesWithoutCity: React.FC<NotesWithoutCities> = ({
-notes,
-country,
-showInfo,
-removeNote,
-changeVisibilityInfo
+    notes,
+    country,
+    showInfo,
+    removeNote,
+    changeVisibilityInfo,
 }) => {
-    const filteredCity: any[] = [];
-    const copyNotes = notes.map(city => city.city);
+    const findNotesForCountry: any[] = [];
+    const copyNotes = notes.map(country => country.country);
 
     for (const el of copyNotes) {
-        if (!filteredCity.includes(el)) {
-            filteredCity.push(el);
+        if (!findNotesForCountry.includes(el)) {
+            findNotesForCountry.push(el);
         }
     }
 
     return (
         <>
-            <p className={style.country}>{country}</p>
-            {filteredCity.map((city: string, index: number) => {
+            {findNotesForCountry.map((country: string, index: number) => {
                 return <>
-                    <p key={index} className={style.city}
-                       onClick={changeVisibilityInfo}>{city}
+                    <p key={index}
+                       className={style.city}
+                       onClick={changeVisibilityInfo}>
+                        {country}
                     </p>
                     {!showInfo ? null : notes
                         .map((obj: NotesType, index: number) => {
                             const title = `• ${obj.title}`;
                             const description = obj.description;
 
-                            if (obj.city !== city) {
+                            if (obj.country !== country) {
                                 return null;
                             }
 

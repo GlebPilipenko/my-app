@@ -2,13 +2,13 @@ import React from 'react';
 import {Weather} from './widgets/weather/Weather';
 import style from './App.module.css';
 import {News} from './widgets/news/News';
-import {Notes} from './widgets/notes/Notes'
+import {Notes} from './widgets/notes/Notes';
 
 enum WidgetTitles {
     WeatherWidget = 'weather-widget',
     NewsWidget = 'news-widget',
     NotesWidget = 'notes-widget',
-}
+};
 
 type PropsType = {
     app?: WidgetTitles;

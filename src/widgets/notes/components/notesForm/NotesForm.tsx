@@ -2,28 +2,29 @@ import React, {ChangeEvent} from 'react';
 import style from './NotesForm.module.css';
 
 type PropsType = {
-    city: string | undefined;
     title: string;
+    showForm: boolean;
     cityTitle: string;
     description: string;
-    showForm: boolean;
+    addNotes: () => void;
+    city: string | undefined;
+    changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
     changeInputCityValue: (e: ChangeEvent<HTMLInputElement>) => void;
     changeTxtAreaValue: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-    changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
-    addNotes: () => void;
 };
 
 export const NotesForm: React.FC<PropsType> = ({
-city,
-title,
-cityTitle,
-description,
-showForm,
-changeInputCityValue,
-changeTxtAreaValue,
-changeInputValue,
-addNotes
+    city,
+    title,
+    addNotes,
+    showForm,
+    cityTitle,
+    description,
+    changeInputValue,
+    changeTxtAreaValue,
+    changeInputCityValue,
 }) => {
+
     return (
         <>
             {!showForm ? null :
@@ -45,7 +46,7 @@ addNotes
                         <textarea value={description}
                                   onChange={changeTxtAreaValue}
                                   className={style.textarea}>
-                            </textarea>
+                        </textarea>
                     </div>
                     <button
                         className={`${style.btn} ${style.btn__save}`}
