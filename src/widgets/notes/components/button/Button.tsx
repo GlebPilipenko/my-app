@@ -6,6 +6,7 @@ type PropsType = {
 };
 
 export const Button: React.FC<PropsType> = ({changeVisibilityForm}) => {
+
     return (
         <div className={style.btn__container}>
             <button className={style.btn}

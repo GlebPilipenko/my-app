@@ -53,7 +53,8 @@ export const NotesForm: React.FC<PropsType> = ({
                         onClick={addNotes}>
                         Save
                     </button>
-                </div>}
+                </div>
+            }
         </>
     );
 };

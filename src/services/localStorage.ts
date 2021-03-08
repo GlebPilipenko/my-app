@@ -5,11 +5,10 @@ enum LocalStorageTitles {
     NotesWidget = 'widget.Notes',
 }
 
-export const setDataToLocalStorage = (localStorageName: string, stringiData: string) => {
-    return localStorage.setItem(localStorageName, stringiData);
+export const setDataToLocalStorage = (localStorageName: string, stringData: string) => {
+    return localStorage.setItem(localStorageName, stringData);
 };
-export const getParseLocalStorageData = (
-    localStorageName: string, defaultValue: []) => {
+export const getParseLocalStorageData = (localStorageName: string) => {
     return JSON.parse(localStorage.getItem(localStorageName) || '[]');
 };
 
