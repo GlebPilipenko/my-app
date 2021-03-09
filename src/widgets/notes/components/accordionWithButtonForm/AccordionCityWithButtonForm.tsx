@@ -1,25 +1,10 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Button} from '../button/Button';
 import {NotesForm} from '../notesForm/NotesForm';
-import {NotesType} from '../../Notes';
+import {NotesType} from '../../types';
 import notesStyle from '../../Notes.module.css';
 import style from './AccordionCityWithButtonForm.module.css';
-
-type PropsType = {
-    title: string;
-    findedCity: any[];
-    showForm: boolean;
-    cityTitle: string;
-    notes: NotesType[];
-    description: string;
-    addNotes: () => void;
-    city: string | undefined;
-    changeVisibilityForm: () => void;
-    removeNote: (title: string | undefined) => void;
-    changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
-    changeInputCityValue: (e: ChangeEvent<HTMLInputElement>) => void;
-    changeTxtAreaValue: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-};
+import { PropsType } from './types/type';
 
 export const AccordionWithButtonForm: React.FC<PropsType> = ({
     city,
@@ -46,13 +31,20 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
             }
         });
     };
-    const getCityWithInformationAccordion = () => {
+    const renderNotesAccordion = () => {
         return findedCity.map((findedCity: string, index) => {
             return (
                 <React.Fragment key={index}>
-                    <div onClick={() => showFilteredNotes(findedCity)}>
-                        {findedCity}
-                    </div>
+                    {/*{!city && (*/}
+                    {/*    <div onClick={() => showFilteredNotes(findedCity)}>*/}
+                    {/*        {findedCity}*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
+                    {
+                        <div onClick={() => showFilteredNotes(findedCity)}>
+                            {findedCity}
+                        </div>
+                    }
                     <div>
                         {(!city || !findedCity.includes(city)) && notes
                             .filter((el: NotesType) => el.city === findedCity)
@@ -88,15 +80,18 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
         <div className={notesStyle.wrapper}>
             <div className={notesStyle.container}>
                 <Button changeVisibilityForm={changeVisibilityForm} />
-                <NotesForm title={title} city={city}
-                           addNotes={addNotes}
-                           showForm={showForm}
-                           cityTitle={cityTitle}
-                           description={description}
-                           changeInputValue={changeInputValue}
-                           changeTxtAreaValue={changeTxtAreaValue}
-                           changeInputCityValue={changeInputCityValue} />
-                {getCityWithInformationAccordion()}
+                <NotesForm
+                    city={city}
+                    title={title}
+                    addNotes={addNotes}
+                    showForm={showForm}
+                    cityTitle={cityTitle}
+                    description={description}
+                    changeInputValue={changeInputValue}
+                    changeTxtAreaValue={changeTxtAreaValue}
+                    changeInputCityValue={changeInputCityValue}
+                />
+                {renderNotesAccordion()}
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import {NotesType} from '../Notes';
+import {NotesType} from '../types';
 import {getParseLocalStorageData} from '../../../services/localStorage';
 
 export const getNotes = (localStorageName: string, newNote?: NotesType,

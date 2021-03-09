@@ -2,48 +2,42 @@ import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {ErrorMessage} from '../../common/errorMessage/ErrorMessage';
 import {
     getParseLocalStorageData,
-    serviceLocalStorage,
     setDataToLocalStorage
 } from '../../services/localStorage';
 import {FormWithNotes} from './components/formWithNotes/FormWithNotes';
 import {
     AccordionWithButtonForm
 } from './components/accordionWithButtonForm/AccordionCityWithButtonForm';
+import { getNotes } from './service/getNotes';
+import { LocalStorageTitles } from './enums/Enums'
+import { NotesComponentsType, NotesType } from './types';
+import { UseInputValue } from '../../hooks/useInputValue';
+import { NotesForm } from './components/notesForm/NotesForm';
 
-type PropsType = {
-    city?: string;
-    country?: string;
-};
+export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
+    const notesWidget = LocalStorageTitles.NotesWidget
 
-export type NotesType = {
-    city: string | undefined;
-    title: string | undefined;
-    country: string | undefined;
-    description: string | undefined;
-};
-
-export const Notes: React.FC<PropsType> = ({
-    city,
-    country,
-}) => {
-    let [notes, setNotes] = useState<NotesType[]>(
-        getParseLocalStorageData('widget.Notes'));
-    const copyNotes = notes.map(city => city.city);
     const findedCity: any[] = [];
+    const findedCountry: any[] = [];
+
+    const [notes, setNotes] = useState<NotesType[]>(
+        getParseLocalStorageData('widget.Notes'));
+    const arrayCities = notes.map(({city}) => city);
+    const arrayCountries = notes.map(({country}) => country);
+
+    const [showForm, setShowForm] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
     const [cityTitle, setCityTitle] = useState<string>('');
-    const [showForm, setShowForm] = useState<boolean>(false);
     const [description, setDescription] = useState<string>('');
+
     const addNotes = () => {
         city = !city ? cityTitle : city;
         const newNote = {title, description, country, city};
-        const findedNotes = serviceLocalStorage(
-            'widget.Notes', newNote, city, setNotes
-        );
+        const findedNotes = getNotes('widget.Notes', newNote, city, setNotes);
 
         setNotes([...findedNotes, newNote]);
         setDataToLocalStorage(
-            'widget.Notes', JSON.stringify([...findedNotes, newNote])
+            notesWidget, JSON.stringify([...findedNotes, newNote])
         );
 
         setTitle('');
@@ -54,8 +48,7 @@ export const Notes: React.FC<PropsType> = ({
     const changeVisibilityForm = () => setShowForm(true);
     const removeNote = (title: string | undefined) => {
         const trimmedString = title?.slice(1).trim();
-        const filteredNotes = serviceLocalStorage('widget.Notes')
-            .filter((obj: NotesType) => {
+        const filteredNotes = getNotes(notesWidget).filter((obj: NotesType) => {
 
                 if (!title?.includes('•')) {
                     return null;
@@ -71,11 +64,12 @@ export const Notes: React.FC<PropsType> = ({
             setNotes(filteredNotes.filter((el: NotesType) => el.city === city));
         }
 
-        setDataToLocalStorage('widget.Notes', JSON.stringify(filteredNotes));
+        setDataToLocalStorage(notesWidget, JSON.stringify(filteredNotes));
     };
+
     const changeInputValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
-    }, [title]);
+    }, []);
     const changeTxtAreaValue = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.currentTarget.value);
     }, [setDescription]);
@@ -83,30 +77,116 @@ export const Notes: React.FC<PropsType> = ({
         setCityTitle(e.currentTarget.value);
     }, [setCityTitle]);
 
-    for (const el of copyNotes) {
+    for (const el of arrayCities) {
         if (!findedCity.includes(el)) {
             findedCity.push(el);
         }
     }
 
+    for (const el of arrayCountries) {
+        if (!findedCountry.includes(el)) {
+            findedCountry.push(el);
+        }
+    }
+
     useEffect(() => {
-        serviceLocalStorage('widget.Notes', {} as NotesType, city);
+        getNotes(notesWidget, {} as NotesType, city);
     }, [city]);
+
+    if (city && !country) {
+        return (
+            <ErrorMessage
+                errorMessage={'Sorry, no notes...'}
+            />
+        )
+    }
+
+    if (city && (country && !findedCountry.includes(country))) {
+        const filteredNotesByCountry = getNotes(notesWidget)
+            .filter((obj: NotesType) => obj.country === country);
+
+        if (filteredNotesByCountry.length === 0) {
+            // debugger
+            return (
+                <FormWithNotes
+                    city={city}
+                    notes={notes}
+                    title={title}
+                    country={country}
+                    showForm={showForm}
+                    addNotes={addNotes}
+                    cityTitle={cityTitle}
+                    removeNote={removeNote}
+                    description={description}
+                    findedCountry={findedCountry}
+                    changeInputValue={changeInputValue}
+                    changeTxtAreaValue={changeTxtAreaValue}
+                    changeInputCityValue={changeInputCityValue}
+                    changeVisibilityForm={changeVisibilityForm}
+                />
+            )
+        }
+    }
 
     if (!city || (!findedCity.includes(city) && findedCity.length)) {
 
+        if (country && !findedCountry.includes(country)) {
+            return (
+                <FormWithNotes
+                    city={city}
+                    notes={notes}
+                    title={title}
+                    showForm={showForm}
+                    addNotes={addNotes}
+                    cityTitle={cityTitle}
+                    removeNote={removeNote}
+                    description={description}
+                    changeInputValue={changeInputValue}
+                    changeTxtAreaValue={changeTxtAreaValue}
+                    changeInputCityValue={changeInputCityValue}
+                    changeVisibilityForm={changeVisibilityForm}
+                />
+            )
+        }
+
+
         if (!city && !country) {
-            return <ErrorMessage errorMessage={'Sorry, no notes...'} />;
+            return (
+                <ErrorMessage
+                    errorMessage={'Sorry, no notes...'}
+                />
+            );
         }
 
         if (!notes.length) {
             return (
                 <ErrorMessage
-                    errorMessage={'Sorry, you have no notes for the city...'} />
+                    errorMessage={'Sorry, you have no notes for the city...'}
+                />
             );
         }
 
-        return <AccordionWithButtonForm
+        return (
+            <AccordionWithButtonForm
+                city={city}
+                notes={notes}
+                title={title}
+                showForm={showForm}
+                addNotes={addNotes}
+                cityTitle={cityTitle}
+                removeNote={removeNote}
+                findedCity={findedCity}
+                description={description}
+                changeInputValue={changeInputValue}
+                changeTxtAreaValue={changeTxtAreaValue}
+                changeInputCityValue={changeInputCityValue}
+                changeVisibilityForm={changeVisibilityForm}
+            />
+        );
+    }
+
+    return (
+        <FormWithNotes
             city={city}
             notes={notes}
             title={title}
@@ -114,23 +194,11 @@ export const Notes: React.FC<PropsType> = ({
             addNotes={addNotes}
             cityTitle={cityTitle}
             removeNote={removeNote}
-            findedCity={findedCity}
             description={description}
             changeInputValue={changeInputValue}
             changeTxtAreaValue={changeTxtAreaValue}
             changeInputCityValue={changeInputCityValue}
-            changeVisibilityForm={changeVisibilityForm} />;
-    }
-
-    return <FormWithNotes city={city} notes={notes}
-                          title={title}
-                          showForm={showForm}
-                          addNotes={addNotes}
-                          cityTitle={cityTitle}
-                          removeNote={removeNote}
-                          description={description}
-                          changeInputValue={changeInputValue}
-                          changeTxtAreaValue={changeTxtAreaValue}
-                          changeInputCityValue={changeInputCityValue}
-                          changeVisibilityForm={changeVisibilityForm} />;
+            changeVisibilityForm={changeVisibilityForm}
+        />
+    );
 };
