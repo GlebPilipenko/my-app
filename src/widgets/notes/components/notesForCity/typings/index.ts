@@ -1,4 +1,4 @@
-import { NotesType } from '../../../types';
+import { NotesType } from '../../../typings';
 
 export type PropsType = {
     country?: string;

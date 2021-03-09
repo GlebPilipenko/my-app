@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Button.module.css';
-import { PropsType } from './types/type';
+import { PropsType } from './typings';
 
 export const Button: React.FC<PropsType> = ({changeVisibilityForm}) => (
     <div className={style.btn__container}>

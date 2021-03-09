@@ -1,12 +1,11 @@
 import React from 'react';
-import { NotesType } from '../../types';
-import { PropsType } from './types/type'
+import { NotesType } from '../../typings';
+import { PropsType } from './typings'
 import style from './NotesForCity.module.css';
 
 export const NotesForCity: React.FC<PropsType> = ({
     city,
     notes,
-    country,
     removeNote,
 }) => (
     <React.Fragment>

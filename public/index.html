@@ -39,30 +39,26 @@
 -->
 <!--<div data-city="minsk" data-app="weather-widget"></div>-->
 <!--<div data-city="minsk" data-country="belarus" data-app="news-widget"></div>-->
-<div data-city="brest" data-country="ukraine" data-app="notes-widget"></div>
+<div data-city="" data-country="belarus" data-app="notes-widget"></div>
 
 <!--
 + 1.) !city, !country, !ls.length => message
-
 + 2.) !city, country, !ls.length => btn, 3 inputs...
+
 - 3.) !city, country !== country localStorage, ls.length, btn, 3 inputs,
 (ERROR, after add note, i can think about it...)
-
-+ 4.) !city, country === country localStorage, ls.length, map => notes,
-btn, 3 inputs
-+ 5.) !city, !country, ls.length => message
-+ 6.) city, country, !ls.length, btn + 2 inputs, add, delete...
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- 4.) !city, country === country localStorage, ls.length, map => notes, btn,
+accordion, 3 inputs, (if i change city i see old city, but i can see only button)
 - 7.) city, country !== country localStorage, ls.length, btn, + 2 inputs,
 (ERROR, i see btn, but i can't see map => notes)
 
++ 5.) !city, !country, ls.length => message
++ 6.) city, country, !ls.length, btn + 2 inputs, add, delete...
 + 8.) city, !country, !ls.length => message
 + 9.) city, !country, ls.length => message
-
 + 10.) city, country === country localStorage, ls.length, map =>
 notes, btn, + 2 inputs, cities accordion, (WARNING, maybe problems...)
-+ 11.) Если для города заметок нет, а для страны есть - выводить для страны (в
+- 11.) Если для города заметок нет, а для страны есть - выводить для страны (в
 этом случае нужно указывать для какого города была создана заметка
 (accordion)).
 

@@ -10,9 +10,7 @@ import {
 } from './components/accordionWithButtonForm/AccordionCityWithButtonForm';
 import { getNotes } from './service/getNotes';
 import { LocalStorageTitles } from './enums/Enums'
-import { NotesComponentsType, NotesType } from './types';
-import { UseInputValue } from '../../hooks/useInputValue';
-import { NotesForm } from './components/notesForm/NotesForm';
+import { NotesComponentsType, NotesType } from './typings/';
 
 export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
     const notesWidget = LocalStorageTitles.NotesWidget
@@ -93,6 +91,14 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         getNotes(notesWidget, {} as NotesType, city);
     }, [city]);
 
+    if (!notes.length) {
+        return (
+            <ErrorMessage
+                errorMessage={'Sorry, you have no notes for the city...'}
+            />
+        );
+    }
+
     if (city && !country) {
         return (
             <ErrorMessage
@@ -101,32 +107,42 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         )
     }
 
-    if (city && (country && !findedCountry.includes(country))) {
-        const filteredNotesByCountry = getNotes(notesWidget)
-            .filter((obj: NotesType) => obj.country === country);
-
-        if (filteredNotesByCountry.length === 0) {
-            // debugger
-            return (
-                <FormWithNotes
-                    city={city}
-                    notes={notes}
-                    title={title}
-                    country={country}
-                    showForm={showForm}
-                    addNotes={addNotes}
-                    cityTitle={cityTitle}
-                    removeNote={removeNote}
-                    description={description}
-                    findedCountry={findedCountry}
-                    changeInputValue={changeInputValue}
-                    changeTxtAreaValue={changeTxtAreaValue}
-                    changeInputCityValue={changeInputCityValue}
-                    changeVisibilityForm={changeVisibilityForm}
-                />
-            )
-        }
+    if (!city && !country) {
+        return (
+            <ErrorMessage
+                errorMessage={'Sorry, no notes...'}
+            />
+        );
     }
+
+    // if (city && (country && !findedCountry.includes(country))) {
+    //     const filteredNotesByCountry = getNotes(notesWidget)
+    //         .filter((obj: NotesType) => obj.country === country);
+    //
+    //         debugger
+    //
+    //     if (filteredNotesByCountry.length === 0) {
+    //
+    //         return (
+    //             <FormWithNotes
+    //                 city={city}
+    //                 notes={notes}
+    //                 title={title}
+    //                 country={country}
+    //                 showForm={showForm}
+    //                 addNotes={addNotes}
+    //                 cityTitle={cityTitle}
+    //                 removeNote={removeNote}
+    //                 description={description}
+    //                 findedCountry={findedCountry}
+    //                 changeInputValue={changeInputValue}
+    //                 changeTxtAreaValue={changeTxtAreaValue}
+    //                 changeInputCityValue={changeInputCityValue}
+    //                 changeVisibilityForm={changeVisibilityForm}
+    //             />
+    //         )
+    //     }
+    // }
 
     if (!city || (!findedCity.includes(city) && findedCity.length)) {
 
@@ -147,23 +163,6 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
                     changeVisibilityForm={changeVisibilityForm}
                 />
             )
-        }
-
-
-        if (!city && !country) {
-            return (
-                <ErrorMessage
-                    errorMessage={'Sorry, no notes...'}
-                />
-            );
-        }
-
-        if (!notes.length) {
-            return (
-                <ErrorMessage
-                    errorMessage={'Sorry, you have no notes for the city...'}
-                />
-            );
         }
 
         return (

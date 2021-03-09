@@ -1,10 +1,9 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import style from '../../Notes.module.css';
 import {Button} from '../button/Button';
 import {NotesForm} from '../notesForm/NotesForm';
 import {NotesForCity} from '../notesForCity/NotesForCity';
-import {NotesType} from '../../types';
-import {PropsType} from './types/type';
+import {PropsType} from './typings';
 
 export const FormWithNotes: React.FC<PropsType> = ({
     city,
@@ -16,21 +15,11 @@ export const FormWithNotes: React.FC<PropsType> = ({
     cityTitle,
     removeNote,
     description,
-    findedCountry,
     changeInputValue,
     changeTxtAreaValue,
     changeVisibilityForm,
     changeInputCityValue,
 }) => {
-    // debugger
-
-    if (!findedCountry) {
-        return null;
-    }
-
-    if (!country) {
-        return  null;
-    }
 
     return (
         <div className={style.wrapper}>
@@ -49,16 +38,12 @@ export const FormWithNotes: React.FC<PropsType> = ({
                     changeTxtAreaValue={changeTxtAreaValue}
                     changeInputCityValue={changeInputCityValue}
                 />
-                {findedCountry.includes(country) && (
-                    <>
-                        <NotesForCity
-                            city={city}
-                            notes={notes}
-                            country={country}
-                            removeNote={removeNote}
-                        />
-                    </>
-                )}
+                <NotesForCity
+                    city={city}
+                    notes={notes}
+                    country={country}
+                    removeNote={removeNote}
+                />
             </div>
         </div>
     );

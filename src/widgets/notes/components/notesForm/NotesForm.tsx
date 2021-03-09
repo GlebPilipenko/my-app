@@ -1,6 +1,6 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
+import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import { PropsType } from './type/types';
 
 export const NotesForm: React.FC<PropsType> = ({
     city,
