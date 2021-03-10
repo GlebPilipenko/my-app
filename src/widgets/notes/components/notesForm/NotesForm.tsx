@@ -13,7 +13,6 @@ export const NotesForm: React.FC<PropsType> = ({
     changeTxtAreaValue,
     changeInputCityValue,
 }) => {
-
     if (!showForm) {
         return null;
     }

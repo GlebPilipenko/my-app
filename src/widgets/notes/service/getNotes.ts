@@ -10,7 +10,6 @@ export const getNotes = (localStorageName: string, newNote?: NotesType,
 
     if (setNotes) {
         if (!newNote?.city) {
-        // if (!newNote || !newNote.city) {
             setNotes(findedNotes);
         } else {
             setNotes([...findedNotes, newNote]);

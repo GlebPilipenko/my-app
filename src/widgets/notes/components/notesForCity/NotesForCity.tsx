@@ -10,7 +10,7 @@ export const NotesForCity: React.FC<PropsType> = ({
     filteredNotesByCountry,
 }) => {
     const filteredNotesByCity = filteredNotesByCountry
-        .filter((note: NotesType) => note.city === city)
+        .filter((note: NotesType) => note.city === city);
 
     return (
         <React.Fragment>
