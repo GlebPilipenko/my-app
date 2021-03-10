@@ -1,9 +1,8 @@
-import { ChangeEvent } from 'react';
-import { NotesType } from '../../../typings';
+import {ChangeEvent} from 'react';
+import {NotesType} from '../../../typings';
 
 export type PropsType = {
     title: string;
-    country?: string;
     notes: NotesType[];
     showForm: boolean;
     cityTitle: string;
@@ -11,6 +10,7 @@ export type PropsType = {
     addNotes: () => void;
     findedCountry?: string[];
     city: string | undefined;
+    country: string | undefined;
     changeVisibilityForm: () => void;
     removeNote: (title: string | undefined) => void;
     changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;

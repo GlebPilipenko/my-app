@@ -2,7 +2,7 @@ import { NotesType } from '../../../typings';
 
 export type PropsType = {
     country?: string;
-    notes: NotesType[];
     city: string | undefined;
+    filteredNotesByCountry: NotesType[];
     removeNote: (title: string | undefined) => void;
 };

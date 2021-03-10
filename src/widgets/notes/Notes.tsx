@@ -8,15 +8,13 @@ import {FormWithNotes} from './components/formWithNotes/FormWithNotes';
 import {
     AccordionWithButtonForm
 } from './components/accordionWithButtonForm/AccordionCityWithButtonForm';
-import { getNotes } from './service/getNotes';
-import { LocalStorageTitles } from './enums/Enums'
-import { NotesComponentsType, NotesType } from './typings/';
+import {getNotes} from './service/getNotes';
+import {LocalStorageTitles} from './enums/Enums'
+import {NotesComponentsType, NotesType} from './typings/';
 
 export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
-    const notesWidget = LocalStorageTitles.NotesWidget
-
     const findedCity: any[] = [];
-    const findedCountry: any[] = [];
+    const notesWidget = LocalStorageTitles.NotesWidget
 
     const [notes, setNotes] = useState<NotesType[]>(
         getParseLocalStorageData('widget.Notes'));
@@ -43,7 +41,6 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         setDescription('');
         setShowForm(false);
     };
-    const changeVisibilityForm = () => setShowForm(true);
     const removeNote = (title: string | undefined) => {
         const trimmedString = title?.slice(1).trim();
         const filteredNotes = getNotes(notesWidget).filter((obj: NotesType) => {
@@ -65,6 +62,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         setDataToLocalStorage(notesWidget, JSON.stringify(filteredNotes));
     };
 
+    const changeVisibilityForm = () => setShowForm(true);
     const changeInputValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     }, []);
@@ -81,25 +79,12 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         }
     }
 
-    for (const el of arrayCountries) {
-        if (!findedCountry.includes(el)) {
-            findedCountry.push(el);
-        }
-    }
-
     useEffect(() => {
         getNotes(notesWidget, {} as NotesType, city);
     }, [city]);
 
-    if (!notes.length) {
-        return (
-            <ErrorMessage
-                errorMessage={'Sorry, you have no notes for the city...'}
-            />
-        );
-    }
+    if (!country) {
 
-    if (city && !country) {
         return (
             <ErrorMessage
                 errorMessage={'Sorry, no notes...'}
@@ -107,51 +92,81 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         )
     }
 
-    if (!city && !country) {
+    if (city && findedCity.includes(city)) {
+
         return (
-            <ErrorMessage
-                errorMessage={'Sorry, no notes...'}
+            <AccordionWithButtonForm
+                city={city}
+                notes={notes}
+                title={title}
+                country={country}
+                showForm={showForm}
+                addNotes={addNotes}
+                cityTitle={cityTitle}
+                removeNote={removeNote}
+                description={description}
+                changeInputValue={changeInputValue}
+                changeTxtAreaValue={changeTxtAreaValue}
+                changeInputCityValue={changeInputCityValue}
+                changeVisibilityForm={changeVisibilityForm}
             />
-        );
+        )
     }
 
-    // if (city && (country && !findedCountry.includes(country))) {
-    //     const filteredNotesByCountry = getNotes(notesWidget)
-    //         .filter((obj: NotesType) => obj.country === country);
-    //
-    //         debugger
-    //
-    //     if (filteredNotesByCountry.length === 0) {
-    //
-    //         return (
-    //             <FormWithNotes
-    //                 city={city}
-    //                 notes={notes}
-    //                 title={title}
-    //                 country={country}
-    //                 showForm={showForm}
-    //                 addNotes={addNotes}
-    //                 cityTitle={cityTitle}
-    //                 removeNote={removeNote}
-    //                 description={description}
-    //                 findedCountry={findedCountry}
-    //                 changeInputValue={changeInputValue}
-    //                 changeTxtAreaValue={changeTxtAreaValue}
-    //                 changeInputCityValue={changeInputCityValue}
-    //                 changeVisibilityForm={changeVisibilityForm}
-    //             />
-    //         )
-    //     }
-    // }
+    if (city && !findedCity.includes(city)) {
+
+        return (
+            <AccordionWithButtonForm
+                city={city}
+                notes={notes}
+                title={title}
+                country={country}
+                showForm={showForm}
+                addNotes={addNotes}
+                cityTitle={cityTitle}
+                removeNote={removeNote}
+                description={description}
+                changeInputValue={changeInputValue}
+                changeTxtAreaValue={changeTxtAreaValue}
+                changeInputCityValue={changeInputCityValue}
+                changeVisibilityForm={changeVisibilityForm}
+            />
+        )
+    }
 
     if (!city || (!findedCity.includes(city) && findedCity.length)) {
 
-        if (country && !findedCountry.includes(country)) {
+        if (!city && country) {
+            debugger
+
+            return (
+                <AccordionWithButtonForm
+                    city={city}
+                    notes={notes}
+                    title={title}
+                    country={country}
+                    showForm={showForm}
+                    addNotes={addNotes}
+                    cityTitle={cityTitle}
+                    removeNote={removeNote}
+                    description={description}
+                    changeInputValue={changeInputValue}
+                    changeTxtAreaValue={changeTxtAreaValue}
+                    changeInputCityValue={changeInputCityValue}
+                    changeVisibilityForm={changeVisibilityForm}
+                />
+            );
+        }
+
+        if (country) {
+            debugger
+
             return (
                 <FormWithNotes
                     city={city}
                     notes={notes}
                     title={title}
+                    country={country}
                     showForm={showForm}
                     addNotes={addNotes}
                     cityTitle={cityTitle}
@@ -164,31 +179,16 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
                 />
             )
         }
-
-        return (
-            <AccordionWithButtonForm
-                city={city}
-                notes={notes}
-                title={title}
-                showForm={showForm}
-                addNotes={addNotes}
-                cityTitle={cityTitle}
-                removeNote={removeNote}
-                findedCity={findedCity}
-                description={description}
-                changeInputValue={changeInputValue}
-                changeTxtAreaValue={changeTxtAreaValue}
-                changeInputCityValue={changeInputCityValue}
-                changeVisibilityForm={changeVisibilityForm}
-            />
-        );
     }
+
+    debugger
 
     return (
         <FormWithNotes
             city={city}
             notes={notes}
             title={title}
+            country={country}
             showForm={showForm}
             addNotes={addNotes}
             cityTitle={cityTitle}

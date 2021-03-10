@@ -21,6 +21,12 @@ export const AccordionItem: React.FC<PropsType> = ({
         });
     };
 
+    if (city) {
+        if (!findedCity.includes(city)) {
+            return null;
+        }
+    }
+
     return (
         <React.Fragment key={index}>
             <div onClick={() => showFilteredNotes(findedCity)}>

@@ -1,4 +1,4 @@
-import { NotesType } from '../../../typings';
+import {NotesType} from '../../../typings';
 
 export type PropsType = {
     index: number;
