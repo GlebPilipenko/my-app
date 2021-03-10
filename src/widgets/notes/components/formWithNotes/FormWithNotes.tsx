@@ -1,9 +1,9 @@
 import React from 'react';
-import style from '../../Notes.module.css';
+import {PropsType} from './typings';
 import {Button} from '../button/Button';
+import style from '../../Notes.module.css';
 import {NotesForm} from '../notesForm/NotesForm';
 import {NotesForCity} from '../notesForCity/NotesForCity';
-import {PropsType} from './typings';
 
 export const FormWithNotes: React.FC<PropsType> = ({
     city,
