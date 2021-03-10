@@ -2,7 +2,6 @@ import {ChangeEvent} from "react";
 import {NotesType} from '../../../typings';
 
 export type PropsType = {
-    city: string | undefined;
     title: string;
     country: string;
     showForm: boolean;
@@ -10,6 +9,7 @@ export type PropsType = {
     notes: NotesType[];
     description: string;
     addNotes: () => void;
+    city: string | undefined;
     changeVisibilityForm: () => void;
     removeNote: (title: string | undefined) => void;
     changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;

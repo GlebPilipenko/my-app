@@ -8,7 +8,6 @@ export type PropsType = {
     cityTitle: string;
     description: string;
     addNotes: () => void;
-    findedCountry?: string[];
     city: string | undefined;
     country: string | undefined;
     changeVisibilityForm: () => void;

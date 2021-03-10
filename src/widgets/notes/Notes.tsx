@@ -1,16 +1,17 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import {ErrorMessage} from '../../common/errorMessage/ErrorMessage';
+import React, {useEffect, useState} from 'react';
 import {
+    getNotes,
+    NotesType,
+    ErrorMessage,
+    FormWithNotes,
+    AccordionWithNotes,
+    LocalStorageTitles,
+    NotesComponentsType,
+    setDataToLocalStorage,
     getParseLocalStorageData,
-    setDataToLocalStorage
-} from '../../services/localStorage';
-import {FormWithNotes} from './components/formWithNotes/FormWithNotes';
-import {
-    AccordionWithButtonForm
-} from './components/accordionWithButtonForm/AccordionCityWithButtonForm';
-import {getNotes} from './service/getNotes';
-import {LocalStorageTitles} from './enums/Enums'
-import {NotesComponentsType, NotesType} from './typings/';
+} from './index';
+import {useInputValue} from '../../hooks/useInputValue';
+import {useVisibilityForm} from '../../hooks/useVisibilityForm';
 
 export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
     const findedCity: any[] = [];
@@ -20,15 +21,15 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         getParseLocalStorageData('widget.Notes'));
     const arrayCities = notes.map(({city}) => city);
 
-    const [showForm, setShowForm] = useState<boolean>(false);
-    const [title, setTitle] = useState<string>('');
-    const [cityTitle, setCityTitle] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
+    const [title, setTitle, changeInputValue] = useInputValue('');
+    const [cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
+    const [description, setDescription, changeTxtAreaValue] = useInputValue('');
+    const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
     const addNotes = () => {
-        city = !city ? cityTitle : city;
-        const newNote = {title, description, country, city};
-        const findedNotes = getNotes('widget.Notes', newNote, city, setNotes);
+        const copyCity = city || cityTitle;
+        const newNote = {title, description, country, city: copyCity};
+        const findedNotes = getNotes('widget.Notes', newNote, copyCity, setNotes);
 
         setNotes([...findedNotes, newNote]);
         setDataToLocalStorage(
@@ -54,17 +55,6 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         setDataToLocalStorage(notesWidget, JSON.stringify(filteredNotes));
     };
 
-    const changeVisibilityForm = () => setShowForm(true);
-    const changeInputValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value);
-    }, []);
-    const changeTxtAreaValue = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(e.currentTarget.value);
-    }, [setDescription]);
-    const changeInputCityValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setCityTitle(e.currentTarget.value);
-    }, [setCityTitle]);
-
     for (const el of arrayCities) {
         if (!findedCity.includes(el)) {
             findedCity.push(el);
@@ -87,7 +77,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
     if (city && findedCity.includes(city)) {
 
         return (
-            <AccordionWithButtonForm
+            <AccordionWithNotes
                 city={city}
                 notes={notes}
                 title={title}
@@ -108,7 +98,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
     if (city && !findedCity.includes(city)) {
 
         return (
-            <AccordionWithButtonForm
+            <AccordionWithNotes
                 city={city}
                 notes={notes}
                 title={title}
@@ -131,7 +121,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         if (!city && country) {
 
             return (
-                <AccordionWithButtonForm
+                <AccordionWithNotes
                     city={city}
                     notes={notes}
                     title={title}

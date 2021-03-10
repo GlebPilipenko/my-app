@@ -4,7 +4,7 @@ import {NotesType} from '../../typings';
 import {Button} from '../button/Button';
 import style from '../../Notes.module.css';
 import {NotesForm} from '../notesForm/NotesForm';
-import {NotesForCity} from '../notesForCity/NotesForCity';
+import {NotesItem} from '../notesItem/NotesItem';
 
 export const FormWithNotes: React.FC<PropsType> = ({
     city,
@@ -65,9 +65,8 @@ export const FormWithNotes: React.FC<PropsType> = ({
                     changeTxtAreaValue={changeTxtAreaValue}
                     changeInputCityValue={changeInputCityValue}
                 />
-                <NotesForCity
+                <NotesItem
                     city={city}
-                    country={country}
                     removeNote={removeNote}
                     filteredNotesByCountry={filteredNotesByCountry}
                 />

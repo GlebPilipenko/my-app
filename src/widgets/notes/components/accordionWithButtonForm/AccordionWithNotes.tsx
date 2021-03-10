@@ -1,13 +1,13 @@
 import React from 'react';
 import {PropsType} from './typings';
+import {NotesType} from '../../typings';
 import {Button} from '../button/Button';
 import notesStyle from '../../Notes.module.css';
 import {NotesForm} from '../notesForm/NotesForm';
-import {AccordionItem} from '../accordionItem/AccordionItem';
-import {NotesType} from '../../typings';
-import {NotesForCity} from '../notesForCity/NotesForCity';
+import {NotesItem} from '../notesItem/NotesItem';
+import {AccordionItem} from './accordionItem/AccordionItem';
 
-export const AccordionWithButtonForm: React.FC<PropsType> = ({
+export const AccordionWithNotes: React.FC<PropsType> = ({
     city,
     notes,
     title,
@@ -22,14 +22,14 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
     changeVisibilityForm,
     changeInputCityValue,
 }) => {
-    const findedCity: string[] = []
+    const findedCity: string[] = [];
     const filteredNotesByCountry = notes
         .filter((notes: NotesType) => notes.country === country);
 
     for (const note of filteredNotesByCountry) {
-        if (!findedCity.includes(note.city)) {
-            findedCity.push(note.city);
-        }
+            if (!findedCity.includes(note.city as string)) {
+                findedCity.push(note.city as string);
+            }
     }
 
     const renderNotesAccordion = () => {
@@ -46,8 +46,8 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
                     removeNote={removeNote}
                 />
             );
-        })
-    }
+        });
+    };
 
     if (findedCity.length > 0 && city && findedCity.includes(city)) {
 
@@ -68,9 +68,8 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
                         changeTxtAreaValue={changeTxtAreaValue}
                         changeInputCityValue={changeInputCityValue}
                     />
-                    <NotesForCity
+                    <NotesItem
                         city={city}
-                        country={country}
                         removeNote={removeNote}
                         filteredNotesByCountry={filteredNotesByCountry}
                     />

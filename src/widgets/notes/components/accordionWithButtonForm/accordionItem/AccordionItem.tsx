@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {PropsType} from './typings';
-import {NotesType} from '../../typings';
+import {NotesType} from '../../../typings';
 import style from './AccordionItem.module.css';
 
 export const AccordionItem: React.FC<PropsType> = ({
@@ -26,7 +26,7 @@ export const AccordionItem: React.FC<PropsType> = ({
     const filteredNotesByCountry = notes
         .filter((notes: NotesType) => notes.country === country);
 
-    const renderNote = () => {
+    const renderNoteItem = () => {
         return (
             <div>
                 {(!city || !findedCity.includes(city)) && (
@@ -69,7 +69,7 @@ export const AccordionItem: React.FC<PropsType> = ({
             <div onClick={() => showFilteredNotes(findedCity)}>
                 {findedCity}
             </div>
-            {renderNote()}
+            {renderNoteItem()}
         </React.Fragment>
     );
 };

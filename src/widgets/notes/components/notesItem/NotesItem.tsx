@@ -1,11 +1,10 @@
 import React from 'react';
+import {PropsType} from './typings';
 import {NotesType} from '../../typings';
-import {PropsType} from './typings'
-import style from './NotesForCity.module.css';
+import style from './NotesItem.module.css';
 
-export const NotesForCity: React.FC<PropsType> = ({
+export const NotesItem: React.FC<PropsType> = ({
     city,
-    country,
     removeNote,
     filteredNotesByCountry,
 }) => {
