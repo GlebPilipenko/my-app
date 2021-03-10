@@ -19,7 +19,6 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
     const [notes, setNotes] = useState<NotesType[]>(
         getParseLocalStorageData('widget.Notes'));
     const arrayCities = notes.map(({city}) => city);
-    const arrayCountries = notes.map(({country}) => country);
 
     const [showForm, setShowForm] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
@@ -42,15 +41,8 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         setShowForm(false);
     };
     const removeNote = (title: string | undefined) => {
-        const trimmedString = title?.slice(1).trim();
         const filteredNotes = getNotes(notesWidget).filter((obj: NotesType) => {
-
-                if (!title?.includes('•')) {
-                    return null;
-                }
-
-                return obj.title !== trimmedString;
-
+                return obj.title !== title;
             });
 
         if (!city || city !== filteredNotes[0]?.city) {
@@ -81,7 +73,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
 
     useEffect(() => {
         getNotes(notesWidget, {} as NotesType, city);
-    }, [city]);
+    }, [notesWidget, city]);
 
     if (!country) {
 
@@ -89,7 +81,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
             <ErrorMessage
                 errorMessage={'Sorry, no notes...'}
             />
-        )
+        );
     }
 
     if (city && findedCity.includes(city)) {
@@ -110,7 +102,7 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
                 changeInputCityValue={changeInputCityValue}
                 changeVisibilityForm={changeVisibilityForm}
             />
-        )
+        );
     }
 
     if (city && !findedCity.includes(city)) {
@@ -131,13 +123,12 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
                 changeInputCityValue={changeInputCityValue}
                 changeVisibilityForm={changeVisibilityForm}
             />
-        )
+        );
     }
 
     if (!city || (!findedCity.includes(city) && findedCity.length)) {
 
         if (!city && country) {
-            debugger
 
             return (
                 <AccordionWithButtonForm
@@ -159,7 +150,6 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
         }
 
         if (country) {
-            debugger
 
             return (
                 <FormWithNotes
@@ -177,11 +167,9 @@ export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
                     changeInputCityValue={changeInputCityValue}
                     changeVisibilityForm={changeVisibilityForm}
                 />
-            )
+            );
         }
     }
-
-    debugger
 
     return (
         <FormWithNotes

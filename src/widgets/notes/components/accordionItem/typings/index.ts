@@ -1,7 +1,8 @@
 import {NotesType} from '../../../typings';
 
 export type PropsType = {
-    index: number;
+    key: number;
+    country: string;
     findedCity: string;
     notes: NotesType[];
     city: string | undefined;

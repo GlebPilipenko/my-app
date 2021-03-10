@@ -9,20 +9,17 @@ export const NotesForCity: React.FC<PropsType> = ({
     removeNote,
     filteredNotesByCountry,
 }) => {
-    const filteredNotesByCity = filteredNotesByCountry.filter((note: NotesType) => {
-        return note.city === city;
-    })
+    const filteredNotesByCity = filteredNotesByCountry
+        .filter((note: NotesType) => note.city === city)
 
     return (
         <React.Fragment>
-            {filteredNotesByCity.map((obj: NotesType, index: number) => {
-                const title = `• ${obj.title}`;
-                const description = `${obj.description}`;
+            {filteredNotesByCity.map(({title, description}, index: number) => {
 
                 return (
                     <div key={index}
                          className={style.info__container}>
-                        <p className={style.title}>{title}</p>
+                        <p className={style.title}>• {title}</p>
                         <div className={style.description__container}>
                             <p className={style.description}>{description}</p>
                             <button

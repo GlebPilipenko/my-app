@@ -21,9 +21,8 @@ export const FormWithNotes: React.FC<PropsType> = ({
     changeVisibilityForm,
     changeInputCityValue,
 }) => {
-    const filteredNotesByCountry = notes.filter((notes: NotesType) => {
-        return notes.country === country;
-    });
+    const filteredNotesByCountry = notes
+        .filter((notes: NotesType) => notes.country === country);
 
     if (filteredNotesByCountry.length === 0) {
 

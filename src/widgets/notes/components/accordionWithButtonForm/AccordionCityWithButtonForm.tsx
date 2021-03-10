@@ -23,9 +23,8 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
     changeInputCityValue,
 }) => {
     const findedCity: string[] = []
-    const filteredNotesByCountry = notes.filter((notes: NotesType) => {
-        return notes.country === country;
-    });
+    const filteredNotesByCountry = notes
+        .filter((notes: NotesType) => notes.country === country);
 
     for (const note of filteredNotesByCountry) {
         if (!findedCity.includes(note.city)) {
@@ -39,9 +38,10 @@ export const AccordionWithButtonForm: React.FC<PropsType> = ({
 
             return (
                 <AccordionItem
+                    key={index}
                     city={city}
                     notes={notes}
-                    index={index}
+                    country={country}
                     findedCity={findedCity}
                     removeNote={removeNote}
                 />
