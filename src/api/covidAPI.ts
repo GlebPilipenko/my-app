@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const newsApi = axios.create({
+const covidApi = axios.create({
     baseURL: `${process.env.REACT_APP_COVID_BASE_URL}`,
 });
 
@@ -8,8 +8,9 @@ const getQueryParams = (query: string | undefined) => {
     return `countries/${query}?strict=false&allowNull=true`;
 };
 
-export const getNewsCountry = (country: string | undefined) => newsApi
-    .get<CovidAPIType>(getQueryParams(country));
+export const getInfoByCovid = (country: string | undefined) => {
+    return covidApi.get<CovidAPIType>(getQueryParams(country));
+};
 
 type CountryinfoType = {
     _id: number;
@@ -20,7 +21,7 @@ type CountryinfoType = {
     flag: string;
 };
 
-type CovidAPIType = {
+export type CovidAPIType = {
     updated: number;
     country: string;
     countryInfo: CountryinfoType;
