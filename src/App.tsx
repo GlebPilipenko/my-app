@@ -1,11 +1,13 @@
 import React from 'react';
-import {Weather} from './components/weather/Weather';
 import style from './App.module.css';
 import {News} from './components/news/News';
+import {Weather} from './components/weather/Weather';
+import {ColumnarDiagram} from './components/covid/ColumnarDiagram';
 
 enum WidgetTitles {
     WeatherWidget = 'weather-widget',
     NewsWidget = 'news-widget',
+    CovidWidget = 'covid-widget',
 }
 
 type PropsType = {
@@ -28,6 +30,10 @@ export const App: React.FC<PropsType> = ({
             return <div className={style.wrapper}>
                 <News country={country} city={city} />
             </div>;
+        case `${WidgetTitles.CovidWidget}`:
+            return <div className={style.wrapper}>
+                <ColumnarDiagram country={country}/>
+            </div>
         default:
             return null;
     }

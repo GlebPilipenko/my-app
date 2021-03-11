@@ -4,7 +4,11 @@ import './index.css';
 import {App} from './App';
 import reportWebVitals from './reportWebVitals';
 
-const ROOT_SELECTORS = ['[data-app="weather-widget"]', '[data-app="news-widget"]'];
+const ROOT_SELECTORS = [
+    '[data-app="weather-widget"]',
+    '[data-app="news-widget"]',
+    '[data-app="covid-widget"]'
+];
 
 const getAppNodes = (selectors: string[]) => {
     const arrayOfArrays = selectors.map(selector => {
