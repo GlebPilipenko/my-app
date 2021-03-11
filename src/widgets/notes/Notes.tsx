@@ -22,7 +22,7 @@ export const Notes: React.FC<NotesComponentsType> = (props) => {
     const notesWidget = LocalStorageTitles.NotesWidget;
 
     const [notes, setNotes] = useState<NotesType[]>(
-        getParseLocalStorageData('widget.Notes'));
+        getParseLocalStorageData(notesWidget));
     const arrayCities = notes.map(({city}) => city);
 
     const [title, setTitle, changeInputValue] = useInputValue('');
@@ -33,7 +33,7 @@ export const Notes: React.FC<NotesComponentsType> = (props) => {
     const addNotes = () => {
         const copyCity = city || getLowerCaseString(cityTitle);
         const newNote = {title, description, country, city: copyCity};
-        const findedNotes = getNotes('widget.Notes', newNote, copyCity, setNotes);
+        const findedNotes = getNotes(notesWidget, newNote, copyCity, setNotes);
 
         setNotes([...findedNotes, newNote]);
         setDataToLocalStorage(
