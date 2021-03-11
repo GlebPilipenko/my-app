@@ -4,6 +4,7 @@ import {
     NotesType,
     ErrorMessage,
     FormWithNotes,
+    getLowerCaseString,
     AccordionWithNotes,
     LocalStorageTitles,
     NotesComponentsType,
@@ -13,9 +14,12 @@ import {
 import {useInputValue} from '../../hooks/useInputValue';
 import {useVisibilityForm} from '../../hooks/useVisibilityForm';
 
-export const Notes: React.FC<NotesComponentsType> = ({city, country}) => {
+export const Notes: React.FC<NotesComponentsType> = (props) => {
+    const city = getLowerCaseString(props.city);
+    const country = getLowerCaseString(props.country);
+
     const findedCity: any[] = [];
-    const notesWidget = LocalStorageTitles.NotesWidget
+    const notesWidget = LocalStorageTitles.NotesWidget;
 
     const [notes, setNotes] = useState<NotesType[]>(
         getParseLocalStorageData('widget.Notes'));
