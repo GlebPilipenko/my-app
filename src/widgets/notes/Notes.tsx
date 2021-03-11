@@ -31,7 +31,7 @@ export const Notes: React.FC<NotesComponentsType> = (props) => {
     const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
     const addNotes = () => {
-        const copyCity = city || cityTitle;
+        const copyCity = city || getLowerCaseString(cityTitle);
         const newNote = {title, description, country, city: copyCity};
         const findedNotes = getNotes('widget.Notes', newNote, copyCity, setNotes);
 

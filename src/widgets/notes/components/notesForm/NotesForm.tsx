@@ -12,13 +12,30 @@ export const NotesForm: React.FC<PropsType> = ({
     changeInputValue,
     changeTxtAreaValue,
     changeInputCityValue,
+    changeVisibilityForm,
 }) => {
+
     if (!showForm) {
-        return null;
+        return (
+            <div className={style.btn__container}>
+                <button
+                    className={style.btn}
+                    onClick={changeVisibilityForm}>
+                    Create note
+                </button>
+            </div>
+        )
     }
 
     return (
         <div className={style.form__container}>
+            <div className={style.btn__container}>
+                <button
+                    className={style.btn}
+                    onClick={changeVisibilityForm}>
+                    Create note
+                </button>
+            </div>
             <div className={style.input__container}>
                 <h4>Add your title</h4>
                 <input

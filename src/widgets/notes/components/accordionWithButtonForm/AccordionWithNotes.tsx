@@ -1,7 +1,6 @@
 import React from 'react';
 import {PropsType} from './typings';
 import {NotesType} from '../../typings';
-import {Button} from '../button/Button';
 import notesStyle from '../../Notes.module.css';
 import {NotesForm} from '../notesForm/NotesForm';
 import {NotesItem} from '../notesItem/NotesItem';
@@ -54,9 +53,6 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         return (
             <div className={notesStyle.wrapper}>
                 <div className={notesStyle.container}>
-                    <Button
-                        changeVisibilityForm={changeVisibilityForm}
-                    />
                     <NotesForm
                         city={city}
                         title={title}
@@ -67,6 +63,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
                         changeInputValue={changeInputValue}
                         changeTxtAreaValue={changeTxtAreaValue}
                         changeInputCityValue={changeInputCityValue}
+                        changeVisibilityForm={changeVisibilityForm}
                     />
                     <NotesItem
                         city={city}
@@ -81,9 +78,6 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
     return (
         <div className={notesStyle.wrapper}>
             <div className={notesStyle.container}>
-                <Button
-                    changeVisibilityForm={changeVisibilityForm}
-                />
                 <NotesForm
                     city={city}
                     title={title}
@@ -94,6 +88,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
                     changeInputValue={changeInputValue}
                     changeTxtAreaValue={changeTxtAreaValue}
                     changeInputCityValue={changeInputCityValue}
+                    changeVisibilityForm={changeVisibilityForm}
                 />
                 {renderNotesAccordion()}
             </div>
