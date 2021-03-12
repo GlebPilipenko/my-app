@@ -8,11 +8,10 @@ const getQueryParams = (query: string | undefined) => {
     return `countries/${query}?strict=false&allowNull=true`;
 };
 
-export const getInfoByCovid = (country: string | undefined) => {
-    return covidApi.get<CovidAPIType>(getQueryParams(country));
-};
+export const getInfoByCovid = (country: string | undefined) => covidApi
+    .get<CovidAPIType>(getQueryParams(country));
 
-type CountryinfoType = {
+type CountryInfoType = {
     _id: number;
     iso2: string;
     iso3: string;
@@ -24,7 +23,7 @@ type CountryinfoType = {
 export type CovidAPIType = {
     updated: number;
     country: string;
-    countryInfo: CountryinfoType;
+    countryInfo: CountryInfoType;
     cases: number;
     todayCases: number | null;
     deaths: number;
