@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {
-    getNotes,
-    NotesType,
-    ErrorMessage,
-    FormWithNotes,
-    getLowerCaseString,
-    AccordionWithNotes,
-    LocalStorageTitles,
-    NotesComponentsType,
-    setDataToLocalStorage,
-    getParseLocalStorageData,
-} from './index';
-import {useInputValue} from '../../hooks/useInputValue';
-import {useVisibilityForm} from '../../hooks/useVisibilityForm';
+import {getNotes} from './service';
+import {LocalStorageTitles} from './enums';
+import {getLowerCaseString} from '../../utils';
+import {ErrorMessage} from '../../common/errorMessage';
+import {useVisibilityForm, useInputValue} from '../../hooks';
+import {FormWithNotes, AccordionWithNotes } from './components';
+
+import {setDataToLocalStorage, getParseLocalStorageData} from '../../services';
+import {NotesComponentsType, NotesType} from './typings';
 
 export const Notes: React.FC<NotesComponentsType> = (props) => {
     const city = getLowerCaseString(props.city);

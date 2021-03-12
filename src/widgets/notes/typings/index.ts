@@ -4,7 +4,7 @@ export type NotesComponentsType = {
 };
 
 export type NotesType = {
-    city: string | undefined;
+    city?: string;
     title?: string;
     country?: string;
     description?: string;
