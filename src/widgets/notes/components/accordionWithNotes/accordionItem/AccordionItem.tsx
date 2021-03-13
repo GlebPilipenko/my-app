@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {PropsType} from './typings';
-import {NotesType} from '../../../typings';
 import style from './AccordionItem.module.css';
+import {NotesType} from 'src/widgets/notes/typings';
 
 export const AccordionItem: React.FC<PropsType> = ({
     key,

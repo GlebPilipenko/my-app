@@ -1,20 +1,10 @@
 import React from 'react';
-import {Weather} from './widgets/weather/Weather';
+import {News} from './widgets';
+import {Notes} from './widgets';
+import {Weather} from './widgets';
+import {PropsType} from './typings';
+import {WidgetTitles} from './enums';
 import style from './App.module.css';
-import {News} from './widgets/news/News';
-import {Notes} from './widgets/notes/Notes';
-
-enum WidgetTitles {
-    WeatherWidget = 'weather-widget',
-    NewsWidget = 'news-widget',
-    NotesWidget = 'notes-widget',
-};
-
-type PropsType = {
-    app?: WidgetTitles;
-    city?: string;
-    country?: string;
-};
 
 export const App: React.FC<PropsType> = ({
     app,

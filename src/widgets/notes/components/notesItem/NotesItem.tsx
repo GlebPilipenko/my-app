@@ -1,7 +1,7 @@
 import React from 'react';
 import {PropsType} from './typings';
-import {NotesType} from '../../typings';
 import style from './NotesItem.module.css';
+import {NotesType} from 'src/widgets/notes/typings';
 
 export const NotesItem: React.FC<PropsType> = ({
     city,

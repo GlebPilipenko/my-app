@@ -1,4 +1,4 @@
-import {NotesType} from '../../../typings';
+import {NotesType} from 'src/widgets/notes/typings';
 
 export type PropsType = {
     city: string | undefined;

@@ -39,7 +39,7 @@ export const Notes: React.FC<NotesComponentsType> = (props) => {
         setDescription('');
         setShowForm(false);
     };
-    const removeNote = (title: string | undefined) => {
+    const removeNote = (title?: string) => {
         const filteredNotes = getNotes(notesWidget).filter((obj: NotesType) => {
                 return obj.title !== title;
             });
