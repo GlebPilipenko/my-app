@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {getNotes} from './service';
 import {LocalStorageTitles} from './enums';
-import {getLowerCaseString} from '../../utils';
-import {ErrorMessage} from '../../common/errorMessage';
-import {useVisibilityForm, useInputValue} from '../../hooks';
-import {FormWithNotes, AccordionWithNotes } from './components';
-
-import {setDataToLocalStorage, getParseLocalStorageData} from '../../services';
+import {getLowerCaseString} from 'src/utils';
+import {AccordionWithNotes} from './components';
+import {ErrorMessage} from 'src/common/errorMessage';
 import {NotesComponentsType, NotesType} from './typings';
+import {useVisibilityForm, useInputValue} from 'src/hooks';
+import {setDataToLocalStorage, getParseLocalStorageData} from 'src/services';
 
 export const Notes: React.FC<NotesComponentsType> = (props) => {
     const city = getLowerCaseString(props.city);
@@ -73,95 +72,8 @@ export const Notes: React.FC<NotesComponentsType> = (props) => {
         );
     }
 
-    if (city && findedCity.includes(city)) {
-
-        return (
-            <AccordionWithNotes
-                city={city}
-                notes={notes}
-                title={title}
-                country={country}
-                showForm={showForm}
-                addNotes={addNotes}
-                cityTitle={cityTitle}
-                removeNote={removeNote}
-                description={description}
-                changeInputValue={changeInputValue}
-                changeTxtAreaValue={changeTxtAreaValue}
-                changeInputCityValue={changeInputCityValue}
-                changeVisibilityForm={changeVisibilityForm}
-            />
-        );
-    }
-
-    if (city && !findedCity.includes(city)) {
-
-        return (
-            <AccordionWithNotes
-                city={city}
-                notes={notes}
-                title={title}
-                country={country}
-                showForm={showForm}
-                addNotes={addNotes}
-                cityTitle={cityTitle}
-                removeNote={removeNote}
-                description={description}
-                changeInputValue={changeInputValue}
-                changeTxtAreaValue={changeTxtAreaValue}
-                changeInputCityValue={changeInputCityValue}
-                changeVisibilityForm={changeVisibilityForm}
-            />
-        );
-    }
-
-    if (!city || (!findedCity.includes(city) && findedCity.length)) {
-
-        if (!city && country) {
-
-            return (
-                <AccordionWithNotes
-                    city={city}
-                    notes={notes}
-                    title={title}
-                    country={country}
-                    showForm={showForm}
-                    addNotes={addNotes}
-                    cityTitle={cityTitle}
-                    removeNote={removeNote}
-                    description={description}
-                    changeInputValue={changeInputValue}
-                    changeTxtAreaValue={changeTxtAreaValue}
-                    changeInputCityValue={changeInputCityValue}
-                    changeVisibilityForm={changeVisibilityForm}
-                />
-            );
-        }
-
-        if (country) {
-
-            return (
-                <FormWithNotes
-                    city={city}
-                    notes={notes}
-                    title={title}
-                    country={country}
-                    showForm={showForm}
-                    addNotes={addNotes}
-                    cityTitle={cityTitle}
-                    removeNote={removeNote}
-                    description={description}
-                    changeInputValue={changeInputValue}
-                    changeTxtAreaValue={changeTxtAreaValue}
-                    changeInputCityValue={changeInputCityValue}
-                    changeVisibilityForm={changeVisibilityForm}
-                />
-            );
-        }
-    }
-
     return (
-        <FormWithNotes
+        <AccordionWithNotes
             city={city}
             notes={notes}
             title={title}

@@ -1,9 +1,9 @@
 import React from 'react';
 import {PropsType} from './typings';
+import {NotesForm} from '../notesForm';
+import {NotesItem} from '../notesItem';
 import {NotesType} from '../../typings';
 import notesStyle from '../../Notes.module.css';
-import {NotesForm} from '../notesForm/NotesForm';
-import {NotesItem} from '../notesItem/NotesItem';
 import {AccordionItem} from './accordionItem/AccordionItem';
 
 export const AccordionWithNotes: React.FC<PropsType> = ({
@@ -26,9 +26,9 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         .filter((notes: NotesType) => notes.country === country);
 
     for (const note of filteredNotesByCountry) {
-            if (!findedCity.includes(note.city as string)) {
-                findedCity.push(note.city as string);
-            }
+        if (!findedCity.includes(note.city as string)) {
+            findedCity.push(note.city as string);
+        }
     }
 
     const renderNotesAccordion = () => {
@@ -48,7 +48,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         });
     };
 
-    if (findedCity.length > 0 && city && findedCity.includes(city)) {
+    if (city && findedCity.length > 0 && findedCity.includes(city)) {
 
         return (
             <div className={notesStyle.wrapper}>
