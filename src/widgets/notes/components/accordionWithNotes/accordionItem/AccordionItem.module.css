@@ -1,3 +1,19 @@
+*:focus {
+    outline: none;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid darkgrey;
+    border-radius: 2px;
+    padding: 5px 15px;
+}
+
+.btn {
+    width: 10px;
+    height: 10px;
+}
+
 .info__container {
     width: 100%;
     margin-bottom: 15px;

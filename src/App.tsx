@@ -1,10 +1,9 @@
 import React from 'react';
-import {News} from './widgets';
-import {Notes} from './widgets';
-import {Weather} from './widgets';
-import {PropsType} from './typings';
-import {WidgetTitles} from './enums';
 import style from './App.module.css';
+import {PropsType} from 'src/typings';
+import {WidgetTitles} from 'src/enums';
+import 'bootstrap/dist/css/bootstrap.css';
+import {News, Notes, Weather} from './widgets';
 
 export const App: React.FC<PropsType> = ({
     app,

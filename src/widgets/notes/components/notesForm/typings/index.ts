@@ -6,7 +6,7 @@ export type PropsType = {
     cityTitle: string;
     description: string;
     addNotes: () => void;
-    city: string | undefined;
+    city?: string;
     changeVisibilityForm: () => void;
     changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
     changeInputCityValue: (e: ChangeEvent<HTMLInputElement>) => void;

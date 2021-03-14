@@ -1,7 +1,7 @@
 import {NotesType} from 'src/widgets/notes/typings';
 
 export type PropsType = {
-    city: string | undefined;
+    city?: string;
     filteredNotesByCountry: NotesType[];
-    removeNote: (title: string | undefined) => void;
+    removeNote: (title?: string) => void;
 };

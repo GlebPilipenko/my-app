@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {PropsType} from './typings';
-import style from './AccordionItem.module.css';
 import {NotesType} from 'src/widgets/notes/typings';
 
 export const AccordionItem: React.FC<PropsType> = ({
@@ -36,24 +35,33 @@ export const AccordionItem: React.FC<PropsType> = ({
 
                             return (
                                 cityForNotes.includes(findedCity) && (
-                                    <div key={title}
-                                         className={style.info__container}>
-                                        <p className={style.title}>• {title}</p>
-                                        <div className={style.description__container}>
-                                            <p className={style.description}>
-                                                {description}
-                                            </p>
-                                            <button
-                                                className={style.remove__btn}
-                                                onClick={() => removeNote(title)}>
-                                                Delete
-                                            </button>
+                                    <div
+                                        className='modal-content'
+                                        style={{marginBottom: '10px'}}
+                                    >
+                                        <div className='modal-header'>
+                                            <h5 className='modal-title'>
+                                                {title}
+                                            </h5>
+                                                <span
+                                                    aria-hidden='true'
+                                                    onClick={() => {
+                                                        removeNote(title)
+                                                    }}
+                                                    style={{cursor: 'pointer'}}
+                                                >
+                                                ×
+                                                </span>
+                                        </div>
+                                        <div className='modal-body'>
+                                            <p>{description}</p>
                                         </div>
                                     </div>
                                 )
                             );
                         })
-                )}
+                    )
+                }
             </div>
         )
     }
@@ -66,10 +74,42 @@ export const AccordionItem: React.FC<PropsType> = ({
 
     return (
         <React.Fragment key={key}>
-            <div onClick={() => showFilteredNotes(findedCity)}>
-                {findedCity}
+            <div
+                id='accordionExample'
+                className='accordion'
+            >
+                <div className='accordion-item'>
+                    <h2
+                        id='headingOne'
+                        className='accordion-header'
+                        onClick={() => showFilteredNotes(findedCity)}
+                    >
+                        <button
+                            type='button'
+                            aria-expanded='true'
+                            data-bs-toggle='collapse'
+                            aria-controls='collapseTwo'
+                            data-bs-target='#collapseOne'
+                            className='accordion-button collapsed'
+                        >
+                            {findedCity}
+                        </button>
+                    </h2>
+                    <div
+                        id='collapseOne'
+                        aria-labelledby='headingOne'
+                        data-bs-parent='#accordionExample'
+                        className='accordion-collapse collapse hide'
+                    >
+                        <div
+                            style={{'padding': '0'}}
+                            className='accordion-body'
+                        >
+                            {renderNoteItem()}
+                        </div>
+                    </div>
+                </div>
             </div>
-            {renderNoteItem()}
         </React.Fragment>
     );
 };

@@ -1,4 +1,4 @@
-import {WidgetTitles} from "src/enums";
+import {WidgetTitles} from 'src/enums';
 
 export type PropsType = {
     app?: WidgetTitles;

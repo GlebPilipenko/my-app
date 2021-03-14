@@ -1,6 +1,5 @@
 import React from 'react';
 import {PropsType} from './typings';
-import style from './NotesItem.module.css';
 import {NotesType} from 'src/widgets/notes/typings';
 
 export const NotesItem: React.FC<PropsType> = ({
@@ -14,18 +13,26 @@ export const NotesItem: React.FC<PropsType> = ({
     return (
         <React.Fragment>
             {filteredNotesByCity.map(({title, description}, index: number) => {
-
                 return (
-                    <div key={index}
-                         className={style.info__container}>
-                        <p className={style.title}>• {title}</p>
-                        <div className={style.description__container}>
-                            <p className={style.description}>{description}</p>
-                            <button
-                                className={style.remove__btn}
-                                onClick={() => removeNote(title)}>
-                                Delete
-                            </button>
+                    <div
+                        key={index}
+                        className='modal-content'
+                        style={{marginBottom: '10px'}}
+                    >
+                        <div className='modal-header'>
+                            <h5 className='modal-title'>{title}</h5>
+                            <span
+                                aria-hidden='true'
+                                style={{
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => removeNote(title)}
+                            >
+                            ×
+                            </span>
+                        </div>
+                        <div className='modal-body'>
+                            <p>{description}</p>
                         </div>
                     </div>
                 );
