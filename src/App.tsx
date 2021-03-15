@@ -2,7 +2,6 @@ import React from 'react';
 import style from './App.module.css';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
-import 'bootstrap/dist/css/bootstrap.css';
 import {News, Notes, Weather} from './widgets';
 
 export const App: React.FC<PropsType> = ({
