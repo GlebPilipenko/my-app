@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {PropsType} from './typings';
+import {getCapitalizedString} from 'src/utils';
 import style from './AccordionItem.module.css';
 import {NotesType} from 'src/widgets/notes/typings';
+import {TransitionGroup, CSSTransition, Transition} from 'react-transition-group';
 
 export const AccordionItem: React.FC<PropsType> = ({
     key,
@@ -12,6 +14,7 @@ export const AccordionItem: React.FC<PropsType> = ({
     removeNote,
 }) => {
     const [cityForNotes, setCityForNotes] = useState<string[]>([]);
+    const [isOpenAccordion, setIsOpenAccordion] = useState<boolean>(false);
 
     const showFilteredNotes = (city: string) => {
         setCityForNotes((prev: string[]) => {
@@ -21,6 +24,8 @@ export const AccordionItem: React.FC<PropsType> = ({
                 return [...prev, city];
             }
         });
+
+        setIsOpenAccordion(!isOpenAccordion);
     };
 
     const filteredNotesByCountry = notes
@@ -28,7 +33,11 @@ export const AccordionItem: React.FC<PropsType> = ({
 
     const renderNoteItem = () => {
         return (
-            <div>
+            <React.Fragment>
+                <TransitionGroup
+                    in={isOpenAccordion}
+                    timeout={1}
+                >
                 {(!city || !findedCity.includes(city)) && (
                     filteredNotesByCountry
                         .filter((note: NotesType) => note.city === findedCity)
@@ -36,27 +45,38 @@ export const AccordionItem: React.FC<PropsType> = ({
 
                             return (
                                 cityForNotes.includes(findedCity) && (
-                                    <div key={title}
-                                         className={style.info__container}>
-                                        <p className={style.title}>• {title}</p>
-                                        <div className={style.description__container}>
-                                            <p className={style.description}>
-                                                {description}
-                                            </p>
-                                            <button
-                                                className={style.remove__btn}
-                                                onClick={() => removeNote(title)}>
-                                                Delete
-                                            </button>
+                                    <Transition
+                                        timeout={1000}
+                                        classNames="item"
+                                    >
+                                        <div
+                                            className={style.info__container}>
+                                            <div
+                                                className={style.title__container}>
+                                                <p className={style.title}>
+                                                    • {title}
+                                                </p>
+                                                <a href="#"
+                                                   onClick={() => removeNote(title)}>
+                                                    ✕
+                                                </a>
+                                            </div>
+                                            <div
+                                                className={style.description__container}>
+                                                <p className={style.description}>
+                                                    {description}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Transition>
                                 )
                             );
                         })
                 )}
-            </div>
-        )
-    }
+                </TransitionGroup>
+            </React.Fragment>
+        );
+    };
 
     if (city) {
         if (!findedCity.includes(city)) {
@@ -66,8 +86,12 @@ export const AccordionItem: React.FC<PropsType> = ({
 
     return (
         <React.Fragment key={key}>
-            <div onClick={() => showFilteredNotes(findedCity)}>
-                {findedCity}
+            <div className={style.city__container}>
+                {getCapitalizedString(findedCity)}
+                <a href="#"
+                   onClick={() => showFilteredNotes(findedCity)}>
+                    {!isOpenAccordion ? '▼' : '▲'}
+                </a>
             </div>
             {renderNoteItem()}
         </React.Fragment>

@@ -18,14 +18,14 @@ export const NotesItem: React.FC<PropsType> = ({
                 return (
                     <div key={index}
                          className={style.info__container}>
-                        <p className={style.title}>• {title}</p>
+                        <div className={style.title__container}>
+                            <p className={style.title}>• {title}</p>
+                            <a href="#" onClick={() => removeNote(title)}>
+                                ✕
+                            </a>
+                        </div>
                         <div className={style.description__container}>
                             <p className={style.description}>{description}</p>
-                            <button
-                                className={style.remove__btn}
-                                onClick={() => removeNote(title)}>
-                                Delete
-                            </button>
                         </div>
                     </div>
                 );

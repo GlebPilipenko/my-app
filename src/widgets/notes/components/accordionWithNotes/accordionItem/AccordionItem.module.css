@@ -1,6 +1,29 @@
 .info__container {
     width: 100%;
     margin-bottom: 15px;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.title__container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.city__container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+a {
+    color: tomato;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
 }
 
 .title {
@@ -8,23 +31,29 @@
     margin-bottom: 15px;
 }
 
-.description__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .description {
     margin-right: 15px;
     font-size: 12px;
 }
 
-.remove__btn {
-    padding: 3px 15px;
-    border: 1px solid darkgrey;
-    border-radius: 2px;
-    outline: none;
-    background-color: #1c78db;
-    color: white;
-    font-size: 12px;
+.remove-btn {
+    margin-right: 0.5rem;
 }
+
+.itemEnter {
+    opacity: 0;
+}
+.itemEnterActive {
+    opacity: 1;
+    background: red;
+    transition-duration: 3s;
+}
+.itemExit {
+    opacity: 1;
+}
+.itemExitActive {
+    opacity: 0;
+    background: red;
+    transition-duration: 3s;
+}
+
