@@ -1,23 +1,14 @@
 .info__container {
     width: 100%;
     margin-bottom: 15px;
-    border: 1px solid darkgrey;
-    border-radius: 3px;
-    padding: 10px;
 }
 
-.title__container {
-    display: flex;
-    justify-content: space-between;
+.country {
+    font-size: 36px;
 }
 
-.info__container a {
-    color: tomato;
-    text-decoration: none;
-}
-
-.info__container a:hover {
-    color: red;
+.city {
+    font-size: 28px;
 }
 
 .title {
@@ -25,31 +16,23 @@
     margin-bottom: 15px;
 }
 
+.description__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .description {
     margin-right: 15px;
     font-size: 12px;
 }
 
-/*.country {*/
-/*    font-size: 36px;*/
-/*}*/
-/**/
-/*.city {*/
-/*    font-size: 28px;*/
-/*}*/
-
-/*.description__container {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-/*}*/
-
-/*.remove__btn {*/
-/*    padding: 3px 15px;*/
-/*    border: 1px solid darkgrey;*/
-/*    border-radius: 2px;*/
-/*    outline: none;*/
-/*    background-color: #1c78db;*/
-/*    color: white;*/
-/*    font-size: 12px;*/
-/*}*/
+.remove__btn {
+    padding: 3px 15px;
+    border: 1px solid darkgrey;
+    border-radius: 2px;
+    outline: none;
+    background-color: #1c78db;
+    color: white;
+    font-size: 12px;
+}

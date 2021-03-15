@@ -1,7 +1,5 @@
 export const getLowerCaseString = (value?: string) => {
-    if (!value) {
-        return;
+    if (value) {
+        return value.toLowerCase();
     }
-
-    return value?.toLowerCase();
 };

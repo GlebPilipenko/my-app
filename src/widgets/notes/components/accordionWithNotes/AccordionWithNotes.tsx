@@ -2,9 +2,8 @@ import React from 'react';
 import {PropsType} from './typings';
 import {NotesForm} from '../notesForm';
 import {NotesItem} from '../notesItem';
-import {NotesType} from '../../typings'; //
 import {AccordionItem} from './accordionItem';
-// import {NotesType} from 'src/widgets/notes/typings';
+import {NotesType} from 'src/widgets/notes/typings';
 import notesStyle from './AccordionWithNotes.module.css';
 
 export const AccordionWithNotes: React.FC<PropsType> = ({
@@ -32,7 +31,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         }
     }
 
-    const RenderNotesAccordion = () => {
+    const renderNotesAccordion = () => {
 
         return findedCity.map((findedCity: string, index: number) => {
 
@@ -91,7 +90,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
                     changeInputCityValue={changeInputCityValue}
                     changeVisibilityForm={changeVisibilityForm}
                 />
-                {RenderNotesAccordion()}
+                {renderNotesAccordion()}
             </div>
         </div>
     );

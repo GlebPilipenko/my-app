@@ -1,1 +1,3 @@
-export {LocalStorageTitles} from './enum';
+export enum LocalStorageTitles {
+    NotesWidget = 'widget.Notes',
+}

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {PropsType} from './typings';
-import {getCapitalizedString} from 'src/utils';
 import style from './AccordionItem.module.css';
 import {NotesType} from 'src/widgets/notes/typings';
 import {TransitionGroup, CSSTransition, Transition} from 'react-transition-group';
+import { getCapitalizedString } from 'src/utils';
 
 export const AccordionItem: React.FC<PropsType> = ({
     key,
