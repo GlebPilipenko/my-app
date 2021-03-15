@@ -16,16 +16,19 @@ export const NotesItem: React.FC<PropsType> = ({
             {filteredNotesByCity.map(({title, description}, index: number) => {
 
                 return (
-                    <div key={index}
-                         className={style.info__container}>
+                    <div key={index} className={style.info__container}>
                         <div className={style.title__container}>
-                            <p className={style.title}>• {title}</p>
-                            <a href="#" onClick={() => removeNote(title)}>
+                            <p className={style.title}>
+                                • {title}
+                            </p>
+                            <span onClick={() => removeNote(title)}>
                                 ✕
-                            </a>
+                            </span>
                         </div>
                         <div className={style.description__container}>
-                            <p className={style.description}>{description}</p>
+                            <p className={style.description}>
+                                {description}
+                            </p>
                         </div>
                     </div>
                 );

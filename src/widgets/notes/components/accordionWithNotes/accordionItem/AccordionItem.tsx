@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
+import './animationStyle.css'
 import {PropsType} from './typings';
 import style from './AccordionItem.module.css';
+import {getCapitalizedString} from 'src/utils';
 import {NotesType} from 'src/widgets/notes/typings';
-import {TransitionGroup, CSSTransition, Transition} from 'react-transition-group';
-import { getCapitalizedString } from 'src/utils';
+import {CSSTransition} from 'react-transition-group';
 
 export const AccordionItem: React.FC<PropsType> = ({
-    key,
     city,
     notes,
     country,
@@ -28,53 +28,47 @@ export const AccordionItem: React.FC<PropsType> = ({
         setIsOpenAccordion(!isOpenAccordion);
     };
 
+
     const filteredNotesByCountry = notes
         .filter((notes: NotesType) => notes.country === country);
 
     const renderNoteItem = () => {
         return (
-            <React.Fragment>
-                <TransitionGroup
-                    in={isOpenAccordion}
-                    timeout={1}
-                >
-                {(!city || !findedCity.includes(city)) && (
+            <div>
+                {
+                    (!city || !findedCity.includes(city)) && (
                     filteredNotesByCountry
                         .filter((note: NotesType) => note.city === findedCity)
-                        .map(({title, description}) => {
+                        .map(({title, description}, index: number) => {
 
                             return (
                                 cityForNotes.includes(findedCity) && (
-                                    <Transition
-                                        timeout={1000}
-                                        classNames="item"
+                                    <div
+                                        key={index}
+                                        className={style.info__container}
                                     >
                                         <div
-                                            className={style.info__container}>
-                                            <div
-                                                className={style.title__container}>
-                                                <p className={style.title}>
-                                                    • {title}
-                                                </p>
-                                                <a href="#"
-                                                   onClick={() => removeNote(title)}>
-                                                    ✕
-                                                </a>
-                                            </div>
-                                            <div
-                                                className={style.description__container}>
-                                                <p className={style.description}>
-                                                    {description}
-                                                </p>
-                                            </div>
+                                            className={style.title__container}>
+                                            <p className={style.title}>
+                                                • {title}
+                                            </p>
+                                            <span
+                                                onClick={() => removeNote(title)}>
+                                                ✕
+                                            </span>
                                         </div>
-                                    </Transition>
+                                        <div className={style.description__container}>
+                                            <p className={style.description}>
+                                                {description}
+                                            </p>
+                                        </div>
+                                    </div>
                                 )
                             );
                         })
-                )}
-                </TransitionGroup>
-            </React.Fragment>
+                    )
+                }
+            </div>
         );
     };
 
@@ -85,15 +79,20 @@ export const AccordionItem: React.FC<PropsType> = ({
     }
 
     return (
-        <React.Fragment key={key}>
+        <React.Fragment>
             <div className={style.city__container}>
                 {getCapitalizedString(findedCity)}
-                <a href="#"
-                   onClick={() => showFilteredNotes(findedCity)}>
+                <span onClick={() => showFilteredNotes(findedCity)}>
                     {!isOpenAccordion ? '▼' : '▲'}
-                </a>
+                </span>
             </div>
-            {renderNoteItem()}
+            <CSSTransition
+            in={isOpenAccordion}
+            timeout={1000}
+            classNames='accordion__item'
+            >
+                {renderNoteItem()}
+           </CSSTransition>
         </React.Fragment>
     );
 };

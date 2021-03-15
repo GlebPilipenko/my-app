@@ -4,7 +4,7 @@ import {NotesForm} from '../notesForm';
 import {NotesItem} from '../notesItem';
 import {AccordionItem} from './accordionItem';
 import {NotesType} from 'src/widgets/notes/typings';
-import notesStyle from './AccordionWithNotes.module.css';
+import style from './AccordionWithNotes.module.css';
 
 export const AccordionWithNotes: React.FC<PropsType> = ({
     city,
@@ -36,48 +36,22 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         return findedCity.map((findedCity: string, index: number) => {
 
             return (
-                <AccordionItem
-                    key={index}
-                    city={city}
-                    notes={notes}
-                    country={country}
-                    findedCity={findedCity}
-                    removeNote={removeNote}
-                />
+                <React.Fragment key={index}>
+                    <AccordionItem
+                        city={city}
+                        notes={notes}
+                        country={country}
+                        findedCity={findedCity}
+                        removeNote={removeNote}
+                    />
+                </React.Fragment>
             );
         });
     };
 
-    if (city && findedCity.length > 0 && findedCity.includes(city)) {
-
-        return (
-            <div className={notesStyle.wrapper}>
-                <div className={notesStyle.container}>
-                    <NotesForm
-                        city={city}
-                        title={title}
-                        addNotes={addNotes}
-                        showForm={showForm}
-                        cityTitle={cityTitle}
-                        description={description}
-                        changeInputValue={changeInputValue}
-                        changeTxtAreaValue={changeTxtAreaValue}
-                        changeInputCityValue={changeInputCityValue}
-                        changeVisibilityForm={changeVisibilityForm}
-                    />
-                    <NotesItem
-                        city={city}
-                        removeNote={removeNote}
-                        filteredNotesByCountry={filteredNotesByCountry}
-                    />
-                </div>
-            </div>
-        )
-    }
-
     return (
-        <div className={notesStyle.wrapper}>
-            <div className={notesStyle.container}>
+        <div className={style.wrapper}>
+            <div className={style.container}>
                 <NotesForm
                     city={city}
                     title={title}
@@ -90,7 +64,15 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
                     changeInputCityValue={changeInputCityValue}
                     changeVisibilityForm={changeVisibilityForm}
                 />
-                {renderNotesAccordion()}
+                {
+                    city && findedCity.length > 0 && findedCity.includes(city)
+                    ? <NotesItem
+                            city={city}
+                            removeNote={removeNote}
+                            filteredNotesByCountry={filteredNotesByCountry}
+                    />
+                    : renderNotesAccordion()
+                }
             </div>
         </div>
     );

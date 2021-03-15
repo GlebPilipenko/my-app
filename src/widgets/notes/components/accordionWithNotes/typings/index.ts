@@ -1,4 +1,4 @@
-import {ChangeEvent} from "react";
+import {ChangeEvent} from 'react';
 import {NotesType} from 'src/widgets/notes/typings';
 
 export type PropsType = {

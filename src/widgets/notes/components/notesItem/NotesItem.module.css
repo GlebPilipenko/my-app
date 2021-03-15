@@ -1,38 +1,32 @@
 .info__container {
     width: 100%;
     margin-bottom: 15px;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    padding: 10px;
 }
 
-.country {
-    font-size: 36px;
+.title__container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
 }
 
-.city {
-    font-size: 28px;
+span {
+    color: tomato;
+    text-decoration: none;
+}
+
+span:hover {
+    color: red;
+    cursor: pointer;
 }
 
 .title {
     font-size: 20px;
-    margin-bottom: 15px;
-}
-
-.description__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .description {
-    margin-right: 15px;
-    font-size: 12px;
-}
-
-.remove__btn {
-    padding: 3px 15px;
-    border: 1px solid darkgrey;
-    border-radius: 2px;
-    outline: none;
-    background-color: #1c78db;
-    color: white;
+    margin-top: 10px;
     font-size: 12px;
 }

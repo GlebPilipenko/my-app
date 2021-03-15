@@ -32,17 +32,19 @@
     border-radius: 3px;
     outline: none;
     color: white;
-    background-color: #ff6347;
+    background-color: tomato;
 }
 
 .btn:hover {
-    background-color: #ee482a;
+    background-color: red;
+    cursor: pointer;
 }
 
 .btn__save {
-    background-color: #07a052;
+    background-color: forestgreen;
 }
 
 .btn__save:hover {
-    background-color: #088344;
+    background-color: green;
+    cursor: pointer;
 }
