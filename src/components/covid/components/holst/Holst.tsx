@@ -72,7 +72,7 @@ export const Diagrams: React.FC<PropsType> = ({state}) => {
 
     return (
         <div className={style.wrapper}>
-            <svg width={SVG_WIDTH} height={SVG_HEIGHT}>
+            <svg width={SVG_WIDTH} height={SVG_HEIGHT - y0}>
 
                 {/* X axis */}
                 <line
@@ -84,7 +84,7 @@ export const Diagrams: React.FC<PropsType> = ({state}) => {
                 />
                 <text
                     x={x0 + xAxisLength + 5}
-                    y={xAxisY + 4}
+                    y={xAxisY}
                 >Column names
                 </text>
                 {/* Y axis */}
