@@ -1,7 +1,7 @@
 import React from 'react';
 import {ListType, WeatherAPIType, WeatherType} from '../../../../api/weatherAPI';
 import style from './InformationOfCity.module.css';
-import {getFormatedDate} from '../../../../utils/getFormatedDate';
+import {getFormattedDate} from '../../../../utils/getFormattedDate';
 
 type PropsType = {
     state: WeatherAPIType | null;
@@ -39,7 +39,7 @@ export const InformationOfCity: React.FC<PropsType> = ({state}) => {
                                 <div className={style.info__block_top}>
                                     {state.city.name}
                                     <br />
-                                    {getFormatedDate(list.dt)}
+                                    {getFormattedDate(list.dt)}
                                 </div>
                                 <div className={style.info__block_middle}>
                                     <img src={`${url}${iconQuery}`}

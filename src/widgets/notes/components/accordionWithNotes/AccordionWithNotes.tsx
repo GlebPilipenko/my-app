@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {PropsType} from './typings';
 import {NotesForm} from '../notesForm';
 import {NotesItem} from '../notesItem';
@@ -31,10 +31,9 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
           <React.Fragment key={index}>
             <AccordionItem
               city={city}
-              notes={notes}
-              country={country}
               foundCity={foundCity}
               removeNote={removeNote}
+              filteredNotesByCountry={filteredNotesByCountry}
             />
           </React.Fragment>
         );

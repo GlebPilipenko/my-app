@@ -9,10 +9,9 @@ import {CSSTransition} from 'react-transition-group';
 
 export const AccordionItem: React.FC<PropsType> = ({
   city,
-  notes,
-  country,
   foundCity,
   removeNote,
+  filteredNotesByCountry,
 }) => {
   const [cityForNotes, setCityForNotes] = useState<string[]>([]);
   const [isOpenAccordion, setIsOpenAccordion] = useState<boolean>(false);
@@ -29,9 +28,6 @@ export const AccordionItem: React.FC<PropsType> = ({
     setIsOpenAccordion(!isOpenAccordion);
   };
 
-  const filteredNotesByCountry = notes
-    .filter((notes: NotesType) => notes.country === country);
-
   const renderNoteItem = () => {
     return (
       <div>
@@ -39,8 +35,7 @@ export const AccordionItem: React.FC<PropsType> = ({
           (!city || !foundCity.includes(city)) && (
             filteredNotesByCountry
               .filter((note: NotesType) => note.city === foundCity)
-              .map(({title, description}, index: number) => {
-
+              .map(({title = '', description}, index: number) => {
                 return (
                   cityForNotes.includes(foundCity) && (
                     <div

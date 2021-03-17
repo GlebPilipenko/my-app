@@ -14,13 +14,12 @@ export const Notes: React.FC<NotesComponentsType> = ({
   const city = getLowerCaseString(cityToLowerCase);
   const country = getLowerCaseString(countryToLowerCase);
 
-  const foundCity: any[] = [];
   const notesWidget = LocalStorageTitles.NotesWidget;
 
   const [notes, setNotes] = useState<NotesType[]>(
     getParseLocalStorageData(notesWidget)
   );
-  const arrayCities = notes.map(({city}) => city);
+
 
   const [title, setTitle, changeInputValue] = useInputValue('');
   const [cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
@@ -30,7 +29,7 @@ export const Notes: React.FC<NotesComponentsType> = ({
   const addNotes = () => {
     const copyCity = city || getLowerCaseString(cityTitle);
     const newNote = {title, description, country, city: copyCity};
-    const notesFromLocalStorage = getParseLocalStorageData(notesWidget)
+    const notesFromLocalStorage = getParseLocalStorageData(notesWidget);
 
     setNotes([...notesFromLocalStorage, newNote]);
     setDataToLocalStorage(notesWidget, JSON.stringify(
@@ -42,7 +41,7 @@ export const Notes: React.FC<NotesComponentsType> = ({
     setDescription('');
     setShowForm(false);
   };
-  const removeNote = (title?: string) => {
+  const removeNote = (title: string) => {
     const filteredNotesFromLocalStorage = getParseLocalStorageData(notesWidget)
       .filter((obj: NotesType) => obj.title !== title);
 
@@ -59,14 +58,15 @@ export const Notes: React.FC<NotesComponentsType> = ({
   };
 
   useEffect(() => {
-    getParseLocalStorageData(notesWidget);
+    const foundCity: string[] = [];
+    const arrayOfCities = notes.map(({city}) => city);
 
-    for (const el of arrayCities) {
-      if (!foundCity.includes(el)) {
-        foundCity.push(el);
+    for (const el of arrayOfCities) {
+      if (!foundCity.includes(el as string)) {
+        foundCity.push(el as string);
       }
     }
-  }, [notesWidget, city]);
+  }, [notesWidget, notes]);
 
   if (!country) {
     return <ErrorMessage errorMessage={'Sorry, no notes...'} />

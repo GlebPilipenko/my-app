@@ -11,7 +11,7 @@ export type PropsType = {
   description: string;
   addNotes: () => void;
   changeVisibilityForm: () => void;
-  removeNote: (title?: string) => void;
+  removeNote: (title: string) => void;
   changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
   changeInputCityValue: (e: ChangeEvent<HTMLInputElement>) => void;
   changeTxtAreaValue: (e: ChangeEvent<HTMLTextAreaElement>) => void;

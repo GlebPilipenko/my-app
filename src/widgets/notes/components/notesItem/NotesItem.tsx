@@ -13,8 +13,7 @@ export const NotesItem: React.FC<PropsType> = ({
 
   return (
     <React.Fragment>
-      {filteredNotesByCity.map(({title, description}, index: number) => {
-
+      {filteredNotesByCity.map(({title = '', description}, index: number) => {
         return (
           <div key={index} className={style.info__container}>
             <div className={style.title__container}>
