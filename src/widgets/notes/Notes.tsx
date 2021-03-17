@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {getNotes} from './service';
 import {LocalStorageTitles} from './enums';
 import {getLowerCaseString} from 'src/utils';
 import {AccordionWithNotes} from './components';
@@ -31,12 +30,12 @@ export const Notes: React.FC<NotesComponentsType> = ({
   const addNotes = () => {
     const copyCity = city || getLowerCaseString(cityTitle);
     const newNote = {title, description, country, city: copyCity};
-    const foundNotes = getNotes(notesWidget, newNote, copyCity, setNotes);
+    const notesFromLocalStorage = getParseLocalStorageData(notesWidget)
 
-    setNotes([...foundNotes, newNote]);
-    setDataToLocalStorage(
-      notesWidget, JSON.stringify([...foundNotes, newNote])
-    );
+    setNotes([...notesFromLocalStorage, newNote]);
+    setDataToLocalStorage(notesWidget, JSON.stringify(
+      [...notesFromLocalStorage, newNote]
+    ));
 
     setTitle('');
     setCityTitle('');
@@ -44,22 +43,23 @@ export const Notes: React.FC<NotesComponentsType> = ({
     setShowForm(false);
   };
   const removeNote = (title?: string) => {
-    const filteredNotes = getNotes(notesWidget).filter((obj: NotesType) => {
-      return obj.title !== title;
-    });
+    const filteredNotesFromLocalStorage = getParseLocalStorageData(notesWidget)
+      .filter((obj: NotesType) => obj.title !== title);
 
-    if (!city || city !== filteredNotes[0]?.city) {
-      setNotes(filteredNotes);
+    if (!city || city !== filteredNotesFromLocalStorage[0].city) {
+      setNotes(filteredNotesFromLocalStorage);
     } else {
-      setNotes(filteredNotes.filter((el: NotesType) => el.city === city));
+      setNotes(filteredNotesFromLocalStorage
+        .filter((el: NotesType) => el.city === city));
     }
 
-    setDataToLocalStorage(notesWidget, JSON.stringify(filteredNotes));
+    setDataToLocalStorage(
+      notesWidget, JSON.stringify(filteredNotesFromLocalStorage)
+    );
   };
 
   useEffect(() => {
     getParseLocalStorageData(notesWidget);
-    // getNotes(notesWidget);
 
     for (const el of arrayCities) {
       if (!foundCity.includes(el)) {
