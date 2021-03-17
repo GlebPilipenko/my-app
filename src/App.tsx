@@ -5,24 +5,24 @@ import {WidgetTitles} from 'src/enums';
 import {News, Notes, Weather} from './widgets';
 
 export const App: React.FC<PropsType> = ({
-    app,
-    city,
-    country,
+  app,
+  city,
+  country,
 }) => {
-    switch (app) {
-        case `${WidgetTitles.WeatherWidget}`:
-            return <div className={style.wrapper}>
-                <Weather city={city} />
-            </div>;
-        case `${WidgetTitles.NewsWidget}`:
-            return <div className={style.wrapper}>
-                <News country={country} city={city} />
-            </div>;
-        case `${WidgetTitles.NotesWidget}`:
-            return <div className={style.wrapper}>
-                <Notes country={country} city={city} />
-            </div>;
-        default:
-            return null;
-    }
+  switch (app) {
+    case `${WidgetTitles.WeatherWidget}`:
+      return <div className={style.wrapper}>
+        <Weather city={city} />
+      </div>;
+    case `${WidgetTitles.NewsWidget}`:
+      return <div className={style.wrapper}>
+        <News country={country} city={city} />
+      </div>;
+    case `${WidgetTitles.NotesWidget}`:
+      return <div className={style.wrapper}>
+        <Notes country={country} city={city} />
+      </div>;
+    default:
+      return null;
+  }
 };
