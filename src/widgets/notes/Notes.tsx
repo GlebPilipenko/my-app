@@ -26,7 +26,6 @@ export const Notes: React.FC<NotesComponentsType> = ({
   const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
   const addNotes = (noteID: string) => {
-    debugger
     const copyCity = city || getLowerCaseString(cityTitle);
     const newNote = {noteID, title, description, country, city: copyCity};
     const notesFromLocalStorage = getParseLocalStorageData(notesWidget);
