@@ -6,6 +6,7 @@ export type NotesComponentsType = {
 export type NotesType = {
   city?: string;
   title?: string;
+  noteID: string;
   country?: string;
   description?: string;
 };

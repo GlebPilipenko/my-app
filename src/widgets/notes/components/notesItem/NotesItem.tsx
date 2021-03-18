@@ -13,12 +13,12 @@ export const NotesItem: React.FC<PropsType> = ({
 
   return (
     <React.Fragment>
-      {filteredNotesByCity.map(({title = '', description}, index: number) => {
+      {filteredNotesByCity.map(({noteID, title = '', description}, index: number) => {
         return (
           <div key={index} className={style.info__container}>
             <div className={style.title__container}>
               <p className={style.title}>• {title}</p>
-              <span onClick={() => removeNote(title)}>✕</span>
+              <span onClick={() => removeNote(noteID)}>✕</span>
             </div>
             <div className={style.description__container}>
               <p className={style.description}>{description}</p>

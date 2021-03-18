@@ -25,9 +25,10 @@ export const Notes: React.FC<NotesComponentsType> = ({
   const [description, setDescription, changeTxtAreaValue] = useInputValue('');
   const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
-  const addNotes = () => {
+  const addNotes = (noteID: string) => {
+    debugger
     const copyCity = city || getLowerCaseString(cityTitle);
-    const newNote = {title, description, country, city: copyCity};
+    const newNote = {noteID, title, description, country, city: copyCity};
     const notesFromLocalStorage = getParseLocalStorageData(notesWidget);
 
     setNotes([...notesFromLocalStorage, newNote]);
@@ -40,11 +41,12 @@ export const Notes: React.FC<NotesComponentsType> = ({
     setDescription('');
     setShowForm(false);
   };
-  const removeNote = (title: string) => {
+  const removeNote = (noteID: string) => {
     const filteredNotesFromLocalStorage = getParseLocalStorageData(notesWidget)
-      .filter((obj: NotesType) => obj.title !== title);
+      .filter((note: NotesType) => note.noteID !== noteID);
+    const emptyLocalStorage = filteredNotesFromLocalStorage.length === 0;
 
-    if (!city || city !== filteredNotesFromLocalStorage[0].city) {
+    if (!city || emptyLocalStorage || city !== filteredNotesFromLocalStorage[0].city) {
       setNotes(filteredNotesFromLocalStorage);
     } else {
       setNotes(filteredNotesFromLocalStorage

@@ -4,5 +4,5 @@ export type PropsType = {
   city?: string;
   foundCity: string;
   filteredNotesByCountry: NotesType[];
-  removeNote: (title: string) => void;
+  removeNote: (noteID: string) => void;
 };
