@@ -35,7 +35,7 @@ export const AccordionItem: React.FC<PropsType> = ({
           (!city || !foundCity.includes(city)) && (
             filteredNotesByCountry
               .filter((note: NotesType) => note.city === foundCity)
-              .map(({title = '', description}, index: number) => {
+              .map(({noteID, title = '', description}, index: number) => {
                 return (
                   cityForNotes.includes(foundCity) && (
                     <div
@@ -44,7 +44,7 @@ export const AccordionItem: React.FC<PropsType> = ({
                     >
                       <div className={style.title__container}>
                         <p className={style.title}>• {title}</p>
-                        <span onClick={() => removeNote(title)}>✕</span>
+                        <span onClick={() => removeNote(noteID)}>✕</span>
                       </div>
                       <div className={style.description__container}>
                         <p className={style.description}>{description}</p>

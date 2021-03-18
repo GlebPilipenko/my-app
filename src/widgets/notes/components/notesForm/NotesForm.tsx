@@ -14,6 +14,7 @@ export const NotesForm: React.FC<PropsType> = ({
   changeInputCityValue,
   changeVisibilityForm,
 }) => {
+  const noteID = `${title}${Math.random()}`;
 
   if (!showForm) {
     return (
@@ -66,7 +67,7 @@ export const NotesForm: React.FC<PropsType> = ({
       </div>
       <button
         className={`${style.btn} ${style.btn__save}`}
-        onClick={addNotes}>
+        onClick={() => addNotes(noteID)}>
         Save
       </button>
     </div>
