@@ -2,7 +2,7 @@ import React from 'react';
 import style from './App.module.css';
 import {News} from './components/news/News';
 import {Weather} from './components/weather/Weather';
-import {ColumnarDiagram} from './components/covid/ColumnarDiagram';
+import {CovidDiagram} from './components/covid/CovidDiagram';
 
 enum WidgetTitles {
     WeatherWidget = 'weather-widget',
@@ -32,7 +32,7 @@ export const App: React.FC<PropsType> = ({
             </div>;
         case `${WidgetTitles.CovidWidget}`:
             return <div className={style.wrapper}>
-                <ColumnarDiagram country={country}/>
+                <CovidDiagram country={country}/>
             </div>
         default:
             return null;

@@ -1,3 +1,3 @@
 export type PropsType = {
-    country: string | undefined;
+  country?: string;
 }

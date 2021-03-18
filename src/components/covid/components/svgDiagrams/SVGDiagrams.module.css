@@ -1,5 +1,10 @@
 .wrapper {
+    width: 100%;
     margin: 50px;
+}
+
+.container {
+    max-width: 1000px;
 }
 
 .rect {
@@ -10,6 +15,10 @@
     animation-name: rect;
     animation-duration: 1.3s;
     animation-timing-function: ease;
+}
+
+.info__item {
+    margin: 0 61px;
 }
 
 @keyframes rect {

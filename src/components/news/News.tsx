@@ -8,7 +8,7 @@ import {
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import style from './News.module.css';
-import {getFormatedDate, getDateToTimeStamp} from '../../utils/GetFormatedDate';
+import {getFormattedDate, getDateToTimeStamp} from '../../utils/getFormattedDate';
 import {ErrorMessage} from '../common/errorMessage/ErrorMessage';
 
 type PropsType = {
@@ -96,7 +96,7 @@ export const News: React.FC<PropsType> = ({city, country}) => {
                                         className={`${style.publishedAt__container}
                                         ${style.text}`}>
                                         <span>
-                                            {getFormatedDate(getDateToTimeStamp(date))}
+                                            {getFormattedDate(getDateToTimeStamp(date))}
                                         </span>
                                     </div>
                                     <div
