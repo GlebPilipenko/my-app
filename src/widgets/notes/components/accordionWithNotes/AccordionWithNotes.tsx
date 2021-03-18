@@ -40,11 +40,11 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
       }
     );
 
-    for (const note of filteredNotesByCountry) {
-      if (!foundNotes.includes(note.city as string)) {
-        foundNotes.push(note.city as string);
-      }
+  for (const note of filteredNotesByCountry) {
+    if (!foundNotes.includes(note.city as string)) {
+      foundNotes.push(note.city as string);
     }
+  }
 
   const hasCity = city && foundNotes.length > 0 && foundNotes.includes(city);
 

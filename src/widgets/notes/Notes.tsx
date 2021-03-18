@@ -11,15 +11,14 @@ export const Notes: React.FC<NotesComponentsType> = ({
   city: cityToLowerCase = '',
   country: countryToLowerCase = '',
 }) => {
+  const notesWidget = LocalStorageTitles.NotesWidget;
+
   const city = getLowerCaseString(cityToLowerCase);
   const country = getLowerCaseString(countryToLowerCase);
-
-  const notesWidget = LocalStorageTitles.NotesWidget;
 
   const [notes, setNotes] = useState<NotesType[]>(
     getParseLocalStorageData(notesWidget)
   );
-
 
   const [title, setTitle, changeInputValue] = useInputValue('');
   const [cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
