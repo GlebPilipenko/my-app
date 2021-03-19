@@ -1,13 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './App';
+import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 const ROOT_SELECTORS = [
-    '[data-app="weather-widget"]',
     '[data-app="news-widget"]',
-    '[data-app="covid-widget"]'
+    '[data-app="covid-widget"]',
+    '[data-app="weather-widget"]'
 ];
 
 const getAppNodes = (selectors: string[]) => {

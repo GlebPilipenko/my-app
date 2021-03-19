@@ -34,30 +34,33 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
   const renderAxisX_Y = () => {
     return (
       <React.Fragment>
-        {Array.from({length: numYTicks}).map((_, index) => {
-          const y = y0 + index * (yAxisLength / numYTicks);
-          const abbreviatedYValue = getAbbreviatedYValue(
-            index, dataYMax, dataYRange, numYTicks
-          );
+        {
+          Array.from({length: numYTicks}).map((_, index) => {
+            const y = y0 + index * (yAxisLength / numYTicks);
+            const abbreviatedYValue = getAbbreviatedYValue(
+              index, dataYMax, dataYRange, numYTicks
+            );
 
-          return (
-            <g key={index}>
-              <line
-                x1={x0}
-                y1={y}
-                x2={x0 - 5}
-                y2={y}
-                stroke='grey'
-              />
-              <text
-                x={x0 - 5}
-                y={y + 5}
-                textAnchor='end'>
-                {abbreviatedYValue}
-              </text>
-            </g>
-          );
-        })}
+            return (
+              <g key={index}>
+                <line
+                  y1={y}
+                  y2={y}
+                  x1={x0}
+                  x2={x0 - 5}
+                  stroke='grey'
+                />
+                <text
+                  y={y + 5}
+                  x={x0 - 5}
+                  textAnchor='end'
+                >
+                  {abbreviatedYValue}
+                </text>
+              </g>
+            );
+          })
+        }
       </ React.Fragment>
     );
   };
@@ -78,16 +81,18 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
           <text
             y={xAxisY - 635}
             x={x + barPlotWidth / 2}
-            textAnchor='middle'>
+            textAnchor='middle'
+          >
             {yValue}
           </text>
           <g>
             <animateTransform
-              attributeName="transform"
-              type="translate"
+              to='0 0'
+              dur='1s'
+              type='translate'
               from={`0 ${height}`}
-              to="0 0"
-              dur="1s" />
+              attributeName='transform'
+            />
             <rect
               y={y}
               height={height}
@@ -95,15 +100,20 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
               x={x + sidePadding / 2}
               width={barPlotWidth - sidePadding}
             >
-              <animate attributeName="height" from="0" to={height}
-                       dur="1s" />
+              <animate
+                from='0'
+                dur='1s'
+                to={height}
+                attributeName='height'
+              />
             </rect>
           </g>
           <text
             x={x0}
             y={y0 - 35}
             textAnchor='end'
-          >Quantity
+          >
+            Quantity
           </text>
         </g>
       );
@@ -126,13 +136,17 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
                 >
                   {`${info} `}
                 </span>
-              )
+              );
             })
           }
         </div>
       </div>
     );
   };
+
+  if (state.length >= 200) {
+    return <ErrorMessage errorMessage={'Country not found...'} />;
+  }
 
   return renderSVGDiagrams();
 };

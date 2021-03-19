@@ -27,9 +27,5 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
     return <ErrorMessage errorMessage={error} />;
   }
 
-  if (state.length >= 200) {
-    return <ErrorMessage errorMessage={'Country not found...'} />;
-  }
-
   return <SVGDiagrams state={state} error={error} />;
 };
