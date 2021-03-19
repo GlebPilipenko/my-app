@@ -81,16 +81,24 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
             textAnchor='middle'>
             {yValue}
           </text>
-          <rect
-            y={y}
-            height={height}
-            className={style.rect}
-            x={x + sidePadding / 2}
-            width={barPlotWidth - sidePadding}
-          >
-            <animate attributeName="height" from="0" to={height}
-                     dur=".5s" />
-          </rect>
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              from={`0 ${height}`}
+              to="0 0"
+              dur="1s" />
+            <rect
+              y={y}
+              height={height}
+              className={style.rect}
+              x={x + sidePadding / 2}
+              width={barPlotWidth - sidePadding}
+            >
+              <animate attributeName="height" from="0" to={height}
+                       dur="1s" />
+            </rect>
+          </g>
           <text
             x={x0}
             y={y0 - 35}

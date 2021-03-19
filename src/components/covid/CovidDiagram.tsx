@@ -16,7 +16,7 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
         setState(Object.entries(infoByCovid.data));
       } catch (e) {
         !e.response
-          ? setError('Your request is blocked')
+          ? setError('Your request is blocked...')
           : setError(e.response.data.message);
       }
     })();
@@ -26,7 +26,5 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
     return <ErrorMessage errorMessage={error} />;
   }
 
-  return (
-    <SVGDiagrams state={state} error={error} />
-  );
+  return <SVGDiagrams state={state} error={error} />;
 };
