@@ -118,8 +118,15 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
         </svg>
         <div className={style.info__container}>
           {
-            data.map(([info]) => {
-              return <span className={style.info__item}>{`${info} `}</span>;
+            data.map(([info, value], index) => {
+              return (
+                <span
+                  key={value + index}
+                  className={style.info__item}
+                >
+                  {`${info} `}
+                </span>
+              )
             })
           }
         </div>
