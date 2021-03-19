@@ -6,30 +6,27 @@ import {CovidAPIType} from 'src/api/typings';
 import {ErrorMessage} from 'src/components/common/errorMessage';
 
 export const CovidDiagram: React.FC<PropsType> = ({country}) => {
-    const [error, setError] = useState<string>('');
-    const [state, setState] = useState<any | CovidAPIType>(null);
+  const [error, setError] = useState<string>('');
+  const [state, setState] = useState<any | CovidAPIType>(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const infoByCovid = await getInfoByCovid(country);
-                setState(Object.entries(infoByCovid.data));
-            } catch (e) {
-                !e.response
-                    ? setError('Your request is blocked')
-                    : setError(e.response.data.message);
-            }
-        })();
-    }, [country]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const infoByCovid = await getInfoByCovid(country);
+        setState(Object.entries(infoByCovid.data));
+      } catch (e) {
+        !e.response
+          ? setError('Your request is blocked')
+          : setError(e.response.data.message);
+      }
+    })();
+  }, [country]);
 
-    if (error.length) {
-        return <ErrorMessage errorMessage={error} />;
-    }
+  if (error.length) {
+    return <ErrorMessage errorMessage={error} />;
+  }
 
-    return (
-        <SVGDiagrams
-          state={state}
-          error={error}
-        />
-    )
+  return (
+    <SVGDiagrams state={state} error={error} />
+  );
 };

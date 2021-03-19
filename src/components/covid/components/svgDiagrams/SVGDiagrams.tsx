@@ -31,26 +31,9 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
   const dataYRange = dataYMax - dataYMin;
   const barPlotWidth = xAxisLength / data.length;
 
-  const renderSVGDiagrams = () => {
+  const renderAxisX_Y = () => {
     return (
-      <svg
-        width={SVG_WIDTH}
-        height={SVG_HEIGHT - y0}
-      >
-        <line
-          x1={x0}
-          y1={xAxisY}
-          x2={x0 + xAxisLength}
-          y2={xAxisY}
-          stroke='red'
-        />
-        <line
-          x1={x0}
-          y1={y0}
-          x2={x0}
-          y2={y0 + yAxisLength}
-          stroke='red'
-        />
+      <React.Fragment>
         {Array.from({length: numYTicks}).map((_, index) => {
           const y = y0 + index * (yAxisLength / numYTicks);
           const abbreviatedYValue = getAbbreviatedYValue(
@@ -75,59 +58,66 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
             </g>
           );
         })}
-        <text
-          x={x0}
-          y={y0 - 35}
-          textAnchor='end'
-        >Quantity
-        </text>
-        {data.map(([info, dataY], index) => {
-          const x = x0 + index * barPlotWidth;
-          const yRatio = (dataY as number - dataYMin) / dataYRange;
-          const y = y0 + (1 - yRatio) * yAxisLength;
-          const height = yRatio * yAxisLength;
+      </ React.Fragment>
+    );
+  };
+  const renderYValue_Rect = () => data.map(([info, dataY], index) => {
+      const x = x0 + index * barPlotWidth;
+      const yRatio = (dataY as number - dataYMin) / dataYRange;
+      const y = y0 + (1 - yRatio) * yAxisLength;
+      const height = yRatio * yAxisLength;
 
-          const sidePadding = 10;
+      const sidePadding = 10;
 
-          const yValue = (dataYMax - index * Number(
-            (dataYRange / numYTicks).toFixed(0)
-          ));
+      const yValue = (dataYMax - index * Number(
+        (dataYRange / numYTicks).toFixed(0)
+      ));
 
-          return (
-            <g key={index}>
-              <text
-                y={xAxisY - 635}
-                x={x + barPlotWidth / 2}
-                textAnchor='middle'>
-                {yValue}
-              </text>
-              <rect
-                y={y}
-                height={height}
-                className={style.rect}
-                x={x + sidePadding / 2}
-                width={barPlotWidth - sidePadding}
-              >
-                <animate attributeName="height" from="0" to={height}
-                         dur=".5s" />
-              </rect>
-            </g>
-          );
-        })}
-      </svg>
+      return (
+        <g key={index}>
+          <text
+            y={xAxisY - 635}
+            x={x + barPlotWidth / 2}
+            textAnchor='middle'>
+            {yValue}
+          </text>
+          <rect
+            y={y}
+            height={height}
+            className={style.rect}
+            x={x + sidePadding / 2}
+            width={barPlotWidth - sidePadding}
+          >
+            <animate attributeName="height" from="0" to={height}
+                     dur=".5s" />
+          </rect>
+          <text
+            x={x0}
+            y={y0 - 35}
+            textAnchor='end'
+          >Quantity
+          </text>
+        </g>
+      );
+    }
+  );
+  const renderSVGDiagrams = () => {
+    return (
+      <div className={style.wrapper}>
+        <svg width={SVG_WIDTH} height={SVG_HEIGHT - y0}>
+          {renderAxisX_Y()}
+          {renderYValue_Rect()}
+        </svg>
+        <div className={style.info__container}>
+          {
+            data.map(([info]) => {
+              return <span className={style.info__item}>{`${info} `}</span>;
+            })
+          }
+        </div>
+      </div>
     );
   };
 
-  return (
-    <div className={style.wrapper}>
-      {renderSVGDiagrams()}
-      <div className={style.info__container}>
-        {
-          data.map(([info]) => {
-            return <span className={style.info__item}>{`${info} `}</span>;
-          })
-        }
-      </div>
-    </div>
-  );
+  return renderSVGDiagrams();
 };
