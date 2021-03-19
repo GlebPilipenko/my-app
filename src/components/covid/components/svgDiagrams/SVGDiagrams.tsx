@@ -1,27 +1,22 @@
 import React from 'react';
-import {PropsType} from './index';
+import {PropsType} from './typings';
 import style from './SVGDiagrams.module.css';
 import {getAbbreviatedYValue} from 'src/components/covid/utils';
 import {ErrorMessage} from 'src/components/common/errorMessage';
 
-export const Diagrams: React.FC<PropsType> = ({state, error}) => {
+export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
 
   if (!state) {
     return <ErrorMessage errorMessage={error} />;
   }
 
   const [, , , cases, , deaths, , recovered, , active] = state;
-  const data = [
-    cases,
-    deaths,
-    recovered,
-    active,
-  ];
+  const data = [cases, deaths, recovered, active];
 
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
 
-  const x0 = 150;
+  const x0 = 65;
   const y0 = 50;
   const numYTicks = 7;
   const xAxisLength = SVG_WIDTH - x0 * 2;
@@ -49,11 +44,6 @@ export const Diagrams: React.FC<PropsType> = ({state, error}) => {
           y2={xAxisY}
           stroke='red'
         />
-        <text
-          x={x0 + xAxisLength + 5}
-          y={xAxisY}
-        >Column names
-        </text>
         <line
           x1={x0}
           y1={y0}
@@ -114,10 +104,12 @@ export const Diagrams: React.FC<PropsType> = ({state, error}) => {
               <rect
                 y={y}
                 height={height}
-                // className={style.rect}
+                className={style.rect}
                 x={x + sidePadding / 2}
                 width={barPlotWidth - sidePadding}
-              ><animate attributeName="height" from="0" to={height} dur=".5s" fill="freeze" transform='rotate(90deg)' />
+              >
+                <animate attributeName="height" from="0" to={height}
+                         dur=".5s" />
               </rect>
             </g>
           );
@@ -128,15 +120,13 @@ export const Diagrams: React.FC<PropsType> = ({state, error}) => {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.container}>
-        {renderSVGDiagrams()}
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          {
-            data.map(([info]) => {
-              return <span className={style.info__item}>{`${info} `}</span>;
-            })
-          }
-        </div>
+      {renderSVGDiagrams()}
+      <div className={style.info__container}>
+        {
+          data.map(([info]) => {
+            return <span className={style.info__item}>{`${info} `}</span>;
+          })
+        }
       </div>
     </div>
   );

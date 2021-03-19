@@ -1,1 +1,1 @@
-export * from '../../api/covidAPI';
+export {SVGDiagrams} from './components/svgDiagrams'

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import {SVGDiagrams} from './index';
 import {PropsType} from './typings/';
-import {CovidAPIType, getInfoByCovid} from './index';
-import {Diagrams} from './components/svgDiagrams/SVGDiagrams';
+import {getInfoByCovid} from 'src/api';
+import {CovidAPIType} from 'src/api/typings';
 import {ErrorMessage} from 'src/components/common/errorMessage';
 
 export const CovidDiagram: React.FC<PropsType> = ({country}) => {
@@ -22,11 +23,11 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
     }, [country]);
 
     if (error.length) {
-        return <ErrorMessage errorMessage={error} />
+        return <ErrorMessage errorMessage={error} />;
     }
 
     return (
-        <Diagrams
+        <SVGDiagrams
           state={state}
           error={error}
         />

@@ -1,0 +1,1 @@
+export {getInfoByCovid} from './covidAPI';
