@@ -13,6 +13,7 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
     (async () => {
       try {
         const infoByCovid = await getInfoByCovid(country);
+
         setState(Object.entries(infoByCovid.data));
       } catch (e) {
         !e.response
@@ -24,6 +25,10 @@ export const CovidDiagram: React.FC<PropsType> = ({country}) => {
 
   if (error.length) {
     return <ErrorMessage errorMessage={error} />;
+  }
+
+  if (state.length >= 200) {
+    return <ErrorMessage errorMessage={'Country not found...'} />;
   }
 
   return <SVGDiagrams state={state} error={error} />;
