@@ -1,6 +1,6 @@
 import React from 'react';
 import {PropsType} from './typings';
-import style from './NotesItem.module.css';
+import '../accordionWithNotes/accordionItem';
 import {NotesType} from 'src/widgets/notes/typings';
 
 export const NotesItem: React.FC<PropsType> = ({
@@ -16,18 +16,18 @@ export const NotesItem: React.FC<PropsType> = ({
       {filteredNotesByCity
         .map(({noteID, title = '', description}, index: number) => {
         return (
-          <div key={index} className={style.info__container}>
-            <div className={style.title__container}>
-              <p className={style.title}>• {title}</p>
+          <div key={index} className={'info__container'}>
+            <div className={'title__container'}>
+              <p className={title}>• {title}</p>
               <span
-                className={style.deleteIcon}
+                className={'deleteIcon'}
                 onClick={() => removeNote(noteID)}
               >
                 ✕
               </span>
             </div>
-            <div className={style.description__container}>
-              <p className={style.description}>{description}</p>
+            <div className={'description__container'}>
+              <p className={'description'}>{description}</p>
             </div>
           </div>
         );

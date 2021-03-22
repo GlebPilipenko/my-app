@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './style.css';
 import './animationStyle.css';
 import {PropsType} from './typings';
 import style from './AccordionItem.module.css';
@@ -40,16 +41,16 @@ export const AccordionItem: React.FC<PropsType> = ({
                   cityForNotes.includes(foundCity) && (
                     <div
                       key={index}
-                      className={style.info__container}
+                      className={'info__container'}
                     >
-                      <div className={style.title__container}>
-                        <p className={style.title}>• {title}</p>
+                      <div className={'title__container'}>
+                        <p className={'title'}>• {title}</p>
                         <span
-                          className={style.deleteIcon}
+                          className={'deleteIcon'}
                           onClick={() => removeNote(noteID)}>✕</span>
                       </div>
-                      <div className={style.description__container}>
-                        <p className={style.description}>{description}</p>
+                      <div className={'description__container'}>
+                        <p className={'description'}>{description}</p>
                       </div>
                     </div>
                   )

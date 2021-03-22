@@ -1,19 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {getWeather} from 'src/api/weatherApi';
+import {getCapitalizedString} from 'src/utils';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {WeatherAPIType} from 'src/api/weatherApi/typings';
 import {InformationOfCity} from './components/informationOfCity';
 
-export const Weather: React.FC<PropsType> = ({city}) => {
+export const Weather: React.FC<PropsType> = ({
+  city = `incorrect_parameter`,
+}) => {
   const [state, setState] = useState<null | WeatherAPIType>(null);
-  const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState<string>('');
   const getErrorMessage = (error: string) => {
-    const message = `${error[0].toUpperCase()}${error.slice(1)}`;
+    const message = getCapitalizedString(error);
 
     if (message === 'Nothing to geocode') {
       return 'Enter the correct city.';
     }
+
     if (message === 'Bad query') {
       return 'There are no attributes for correct display.';
     }
@@ -23,10 +27,6 @@ export const Weather: React.FC<PropsType> = ({city}) => {
 
   useEffect(() => {
     (async () => {
-      if (!city) {
-        city = 'incorrect_parametr';
-      }
-
       try {
         const res = await getWeather(city);
         setState(res.data);

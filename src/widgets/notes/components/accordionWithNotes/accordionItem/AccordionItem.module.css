@@ -1,27 +1,9 @@
-.info__container {
-    width: 100%;
-    margin-bottom: 15px;
-    border: 1px solid darkgrey;
-    border-radius: 3px;
-    padding: 10px;
-}
-
 .city__container {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
 }
 
-.title__container {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-}
-
-.title {
-    font-size: 20px;
-}
-
 .arrow {
     color: tomato;
     text-decoration: none;
@@ -42,19 +24,4 @@
     color: red;
     cursor: pointer;
     font-weight: bold;
-}
-
-.deleteIcon {
-    color: tomato;
-    text-decoration: none;
-}
-
-.deleteIcon:hover {
-    color: red;
-    cursor: pointer;
-}
-
-.description {
-    margin-top: 10px;
-    font-size: 12px;
 }

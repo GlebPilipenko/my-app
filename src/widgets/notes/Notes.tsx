@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {LocalStorageTitles} from './enums';
 import {getLowerCaseString} from 'src/utils';
+import {NotesType, PropsType} from './typings';
 import {AccordionWithNotes} from './components';
 import {ErrorMessage} from 'src/common/errorMessage';
-import {NotesComponentsType, NotesType} from './typings';
 import {useVisibilityForm, useInputValue} from 'src/hooks';
 import {setDataToLocalStorage, getParseLocalStorageData} from 'src/services';
 
-export const Notes: React.FC<NotesComponentsType> = ({
+export const Notes: React.FC<PropsType> = ({
   city: cityToLowerCase = '',
   country: countryToLowerCase = '',
 }) => {
