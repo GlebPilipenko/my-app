@@ -6,31 +6,52 @@
     padding: 10px;
 }
 
-.title__container {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-}
-
 .city__container {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
 }
 
-span {
+.title__container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.arrow {
     color: tomato;
     text-decoration: none;
 }
 
-span:hover {
+.arrow:hover {
     color: red;
     cursor: pointer;
     font-weight: bold;
 }
 
-.title {
-    font-size: 20px;
+.arrow {
+    color: tomato;
+    text-decoration: none;
+}
+
+.arrow:hover {
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.deleteIcon {
+    color: tomato;
+    text-decoration: none;
+}
+
+.deleteIcon:hover {
+    color: red;
+    cursor: pointer;
 }
 
 .description {

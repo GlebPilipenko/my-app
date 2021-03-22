@@ -44,7 +44,9 @@ export const AccordionItem: React.FC<PropsType> = ({
                     >
                       <div className={style.title__container}>
                         <p className={style.title}>• {title}</p>
-                        <span onClick={() => removeNote(noteID)}>✕</span>
+                        <span
+                          className={style.deleteIcon}
+                          onClick={() => removeNote(noteID)}>✕</span>
                       </div>
                       <div className={style.description__container}>
                         <p className={style.description}>{description}</p>
@@ -73,7 +75,10 @@ export const AccordionItem: React.FC<PropsType> = ({
           ? getCapitalizedString(foundCity)
           : DescriptionForEmptyCity.NotesWithOutCity
         }
-        <span onClick={() => showFilteredNotes(foundCity)}>
+        <span
+          className={style.arrow}
+          onClick={() => showFilteredNotes(foundCity)}
+        >
             {!isOpenAccordion ? '▼' : '▲'}
         </span>
       </div>

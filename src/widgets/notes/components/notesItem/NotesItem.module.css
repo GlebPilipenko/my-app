@@ -12,18 +12,18 @@
     border-bottom: 1px solid darkgrey;
 }
 
-span {
+.title {
+    font-size: 20px;
+}
+
+.deleteIcon {
     color: tomato;
     text-decoration: none;
 }
 
-span:hover {
+.deleteIcon:hover {
     color: red;
     cursor: pointer;
-}
-
-.title {
-    font-size: 20px;
 }
 
 .description {

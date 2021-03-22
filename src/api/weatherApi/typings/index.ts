@@ -1,18 +1,3 @@
-import axios from 'axios';
-
-const weatherApi = axios.create({
-  baseURL: process.env.REACT_APP_WEATHER_BASE_URL
-});
-
-const apikey = process.env.REACT_APP_WEATHER_API_KEY;
-
-const getQuery = (city?: string, apikey?: string) => {
-  return `forecast?q=${city}&units=metric&appid=${apikey}`;
-};
-
-export const getWeather = (city?: string) => weatherApi
-  .get<WeatherAPIType>(getQuery(city, apikey));
-
 type MainType = {
   temp: number;
   feels_like: number;
@@ -23,13 +8,6 @@ type MainType = {
   grnd_level: number;
   humidity: number;
   temp_kf: number;
-};
-
-export type WeatherType = {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
 };
 
 type CityType = {
@@ -63,6 +41,13 @@ export type ListType = {
     pod: string;
   },
   dt_txt: string;
+};
+
+export type WeatherType = {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
 };
 
 export type WeatherAPIType = {
