@@ -1,3 +1,1 @@
-export const getLowerCaseString = (value: string) => {
-  return value.toLowerCase();
-};
+export const getLowerCaseString = (value: string) => value.toLowerCase();

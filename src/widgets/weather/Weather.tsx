@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {getWeather} from 'src/api/weatherApi';
 import {getCapitalizedString} from 'src/utils';
@@ -6,8 +6,8 @@ import {ErrorMessage} from 'src/common/errorMessage';
 import {WeatherAPIType} from 'src/api/weatherApi/typings';
 import {InformationOfCity} from './components/informationOfCity';
 
-export const Weather: React.FC<PropsType> = ({
-  city = `incorrect_parameter`,
+export const Weather: FC<PropsType> = ({
+  city = 'invalid_city',
 }) => {
   const [state, setState] = useState<null | WeatherAPIType>(null);
   const [error, setError] = useState<string>('');

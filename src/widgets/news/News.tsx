@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import style from './News.module.css';
 import {Carousel} from 'react-responsive-carousel';
 import {getNewsCity, getNewsCountry} from 'src/api';
+import {NewsAPIType} from 'src/api/newsApi/typings';
 import {ErrorMessage} from 'src/common/errorMessage';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {getFormattedDate, getDateToTimeStamp} from 'src/utils';
-import {ArticlesType, NewsAPIType} from 'src/api/newsApi/typings';
 
-export const News: React.FC<PropsType> = ({
+export const News: FC<PropsType> = ({
   city,
-  country = 'incorrect_parameter',
+  country = 'invalid_country'
 }) => {
   const [state, setState] = useState<NewsAPIType | null>(null);
   const [error, setError] = useState<null | string>(null);
@@ -71,65 +71,78 @@ export const News: React.FC<PropsType> = ({
     return <ErrorMessage errorMessage={error} />;
   }
 
-  return (
-    <div>
-      <Carousel showThumbs={false} infiniteLoop={true}>
-        {state.articles.map((article: ArticlesType, index: number) => {
-          const {title, author, description, url} = article;
-          const date = new Date(article.publishedAt).toString();
-          const getDefaultImgUrl = () => {
-            return article.urlToImage === null ? defaultImg : article.urlToImage;
-          };
+  const renderNewsItem = () => {
+    return (
+      <div>
+        <Carousel showThumbs={false} infiniteLoop={true}>
+          {
+            state.articles.map(({
+              url,
+              title,
+              author,
+              urlToImage,
+              publishedAt,
+              description
+            }, index: number) => {
+                const date = new Date(publishedAt).toString();
+                const getDefaultImgUrl = () => {
+                  return urlToImage === null ? defaultImg : urlToImage;
+                };
 
-          return (
-            <div
-              key={index}
-              className={style.article__container}
-              style={{minHeight: '300px', color: '#eee'}}
-            >
-              <div className={style.article__block}>
-                <div className={style.article__item}>
+                return (
                   <div
-                    className={`${style.publishedAt__container} ${style.text}`}
+                    key={index}
+                    className={style.article__container}
+                    style={{minHeight: '300px', color: '#eee'}}
                   >
-                    <span>{getFormattedDate(getDateToTimeStamp(date))}</span>
+                    <div className={style.article__block}>
+                      <div className={style.article__item}>
+                        <div
+                          className={`${style.publishedAt__container} ${style.text}`}
+                        >
+                          <span>{getFormattedDate(getDateToTimeStamp(date))}</span>
+                        </div>
+                        <div className={`${style.title__block} ${style.text}`}>
+                          <span>{title}</span>
+                        </div>
+                        <div className={`${style.author__block} ${style.text}`}>
+                    <span className={style.author}>{`By, ${author}`}</span>
+                        </div>
+                        <div
+                          className={`${style.description__block} ${style.text}`}
+                        >
+                          <span>{description}</span>
+                        </div>
+                        <div className={style.url__block}>
+                          <span>
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={style.text}
+                            >
+                              Link: {url}
+                            </a>
+                          </span>
+                        </div>
+                      </div>
+                      <div className={style.article__img_container}>
+                        <img
+                          alt='news'
+                          src={getDefaultImgUrl()}
+                          className={style.article__img}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className={`${style.title__block} ${style.text}`}>
-                    <span>{title}</span>
-                  </div>
-                  <div className={`${style.author__block} ${style.text}`}>
-                    <span className={style.author}>
-                        {`By, ${author}`}
-                    </span>
-                  </div>
-                  <div className={`${style.description__block} ${style.text}`}>
-                    <span>{description}</span>
-                  </div>
-                  <div className={style.url__block}>
-                    <span>
-                      <a
-                        href={url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={style.text}
-                      >
-                        Link: {url}
-                      </a>
-                    </span>
-                  </div>
-                </div>
-                <div className={style.article__img_container}>
-                  <img
-                    alt='news'
-                    src={getDefaultImgUrl()}
-                    className={style.article__img}
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </Carousel>
-    </div>
-  );
+                );
+              }
+            )
+          }
+        </Carousel>
+      </div>
+    );
+  };
+
+  return renderNewsItem();
 };
