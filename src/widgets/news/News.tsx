@@ -79,12 +79,13 @@ export const News: FC<PropsType> = ({
             state.articles.map(({
               url,
               title,
-              author,
+              author: articleAuthor,
               urlToImage,
               publishedAt,
               description
             }, index: number) => {
                 const date = new Date(publishedAt).toString();
+                const author = !articleAuthor ? '' : `By, ${articleAuthor}`;
                 const getDefaultImgUrl = () => {
                   return urlToImage === null ? defaultImg : urlToImage;
                 };
@@ -106,7 +107,7 @@ export const News: FC<PropsType> = ({
                           <span>{title}</span>
                         </div>
                         <div className={`${style.author__block} ${style.text}`}>
-                    <span className={style.author}>{`By, ${author}`}</span>
+                          <span className={style.author}>{author}</span>
                         </div>
                         <div
                           className={`${style.description__block} ${style.text}`}
