@@ -4,7 +4,10 @@ import style from './SVGDiagrams.module.css';
 import {getAbbreviatedYValue} from 'src/components/covid/utils';
 import {ErrorMessage} from 'src/components/common/errorMessage';
 
-export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
+export const SVGDiagrams: React.FC<PropsType> = ({
+  state,
+  error,
+}) => {
 
   if (!state) {
     return <ErrorMessage errorMessage={error} />;
@@ -122,23 +125,25 @@ export const SVGDiagrams: React.FC<PropsType> = ({state, error}) => {
   const renderSVGDiagrams = () => {
     return (
       <div className={style.wrapper}>
-        <svg width={SVG_WIDTH} height={SVG_HEIGHT - y0}>
-          {renderAxisX_Y()}
-          {renderYValue_Rect()}
-        </svg>
-        <div className={style.info__container}>
-          {
-            data.map(([info, value], index) => {
-              return (
-                <span
-                  key={value + index}
-                  className={style.info__item}
-                >
-                  {`${info} `}
-                </span>
-              );
-            })
-          }
+        <div className={style.container}>
+          <svg width={SVG_WIDTH} height={SVG_HEIGHT - y0}>
+            {renderAxisX_Y()}
+            {renderYValue_Rect()}
+          </svg>
+          <div className={style.info__container}>
+            {
+              data.map(([info, value], index) => {
+                return (
+                  <span
+                    key={value + index}
+                    className={style.info__item}
+                  >
+                    {info}
+                  </span>
+                );
+              })
+            }
+          </div>
         </div>
       </div>
     );
