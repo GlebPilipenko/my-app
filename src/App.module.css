@@ -9,20 +9,21 @@ body {
     color: black;
 }
 
-/* box sizing */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-/* padding */
+*:focus {
+    outline: 0;
+}
+
 ul[class],
 ol[class] {
     padding: 0;
 }
 
-/* margin */
 body,
 h1,
 h2,
@@ -40,7 +41,6 @@ dd {
     margin: 0;
 }
 
-/* default settings for body */
 body {
     min-height: 100vh;
     scroll-behavior: smooth;
@@ -48,18 +48,15 @@ body {
     line-height: 1.5;
 }
 
-/* delete classic style for ul & li */
 ul[class],
 ol[class] {
     list-style: none;
 }
 
-/* default style for a */
 a:not([class]) {
     text-decoration-skip-ink: auto;
 }
 
-/* default style for img */
 img {
     max-width: 100%;
     display: block;

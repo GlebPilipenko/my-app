@@ -1,34 +1,29 @@
 import React from 'react';
-import {Weather} from './components/weather/Weather';
 import style from './App.module.css';
-import {News} from './components/news/News';
-
-enum WidgetTitles {
-    WeatherWidget = 'weather-widget',
-    NewsWidget = 'news-widget',
-}
-
-type PropsType = {
-    app?: WidgetTitles;
-    city?: string;
-    country?: string;
-};
+import {PropsType} from 'src/typings';
+import {WidgetTitles} from 'src/enums';
+import {News, Notes, Weather} from './widgets';
 
 export const App: React.FC<PropsType> = ({
-    app,
-    city,
-    country,
+  app,
+  city,
+  country,
 }) => {
-    switch (app) {
-        case `${WidgetTitles.WeatherWidget}`:
-            return <div className={style.wrapper}>
-                <Weather city={city} />
-            </div>;
-        case `${WidgetTitles.NewsWidget}`:
-            return <div className={style.wrapper}>
-                <News country={country} city={city} />
-            </div>;
-        default:
-            return null;
-    }
+  console.log(country);
+  switch (app) {
+    case `${WidgetTitles.WeatherWidget}`:
+      return <div className={style.wrapper}>
+        <Weather city={city} />
+      </div>;
+    case `${WidgetTitles.NewsWidget}`:
+      return <div className={style.wrapper}>
+        <News country={country} city={city} />
+      </div>;
+    case `${WidgetTitles.NotesWidget}`:
+      return <div className={style.wrapper}>
+        <Notes country={country} city={city} />
+      </div>;
+    default:
+      return null;
+  }
 };
