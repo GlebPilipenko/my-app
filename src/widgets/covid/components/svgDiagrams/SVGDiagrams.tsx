@@ -1,8 +1,9 @@
 import {FC} from 'react';
+import {AxisXY} from '../axisXY';
 import {PropsType} from './typings';
 import style from './SVGDiagrams.module.css';
 import {ErrorMessage} from 'src/common/errorMessage';
-import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
+import {ColumnWithInformation} from '../columnWithInformation';
 
 export const SVGDiagrams: FC<PropsType> = ({
   state,
@@ -11,6 +12,10 @@ export const SVGDiagrams: FC<PropsType> = ({
 
   if (!state) {
     return <ErrorMessage errorMessage={error} />;
+  }
+
+  if (state.length >= 200) {
+    return <ErrorMessage errorMessage={'Country not found...'} />;
   }
 
   const [, , , cases, , deaths, , recovered, , active] = state;
@@ -34,94 +39,6 @@ export const SVGDiagrams: FC<PropsType> = ({
   const dataYRange = dataYMax - dataYMin;
   const barPlotWidth = xAxisLength / data.length;
 
-  const renderAxisX_Y = () => {
-    return (
-      <>
-        {
-          Array.from({length: numYTicks}).map((_, index) => {
-            const y = y0 + index * (yAxisLength / numYTicks);
-            const abbreviatedYValue = getAbbreviatedYValue(
-              index, dataYMax, dataYRange, numYTicks
-            );
-
-            return (
-              <g key={index}>
-                <line
-                  y1={y}
-                  y2={y}
-                  x1={x0}
-                  x2={x0 - 5}
-                  stroke='grey'
-                />
-                <text
-                  y={y + 5}
-                  x={x0 - 5}
-                  textAnchor='end'
-                >
-                  {abbreviatedYValue}
-                </text>
-              </g>
-            );
-          })
-        }
-      </>
-    );
-  };
-  const renderYValue_Rect = () => data.map(([info, dataY], index) => {
-    const yRatio = (dataY as number - dataYMin) / dataYRange;
-    const y = y0 + (1 - yRatio) * yAxisLength;
-    const x = x0 + index * barPlotWidth;
-    const height = yRatio * yAxisLength;
-
-      const sidePadding = 10;
-
-      const yValue = (dataYMax - index * Number(
-        (dataYRange / numYTicks).toFixed(0)
-      ));
-
-      return (
-        <g key={index}>
-          <text
-            y={xAxisY - 635}
-            x={x + barPlotWidth / 2}
-            textAnchor='middle'
-          >
-            {yValue}
-          </text>
-          <g>
-            <animateTransform
-              to='0 0'
-              dur='1s'
-              type='translate'
-              from={`0 ${height}`}
-              attributeName='transform'
-            />
-            <rect
-              y={y}
-              height={height}
-              className={style.rect}
-              x={x + sidePadding / 2}
-              width={barPlotWidth - sidePadding}
-            >
-              <animate
-                from='0'
-                dur='1s'
-                to={height}
-                attributeName='height'
-              />
-            </rect>
-          </g>
-          <text
-            x={x0}
-            y={y0 - 35}
-            textAnchor='end'
-          >
-            Quantity
-          </text>
-        </g>
-      );
-    }
-  );
   const renderSVGDiagrams = () => {
     return (
       <div className={style.wrapper}>
@@ -132,14 +49,34 @@ export const SVGDiagrams: FC<PropsType> = ({
               height={SVG_HEIGHT - y0}
               className={style.svg}
             >
-              {renderAxisX_Y()}
-              {renderYValue_Rect()}
+              <AxisXY
+                x0={x0}
+                y0={y0}
+                dataYMax={dataYMax}
+                numYTicks={numYTicks}
+                dataYRange={dataYRange}
+                yAxisLength={yAxisLength}
+              />
+              <ColumnWithInformation
+                x0={x0}
+                y0={y0}
+                data={data}
+                xAxisY={xAxisY}
+                dataYMax={dataYMax}
+                dataYMin={dataYMin}
+                numYTicks={numYTicks}
+                dataYRange={dataYRange}
+                yAxisLength={yAxisLength}
+                barPlotWidth={barPlotWidth}
+              />
             </svg>
             <div className={style.info__container}>
               {data.map(([info, value], index) => {
+                const key = `${value}${index}`;
+
                 return (
                   <span
-                    key={value + index}
+                    key={key}
                     className={style.info__item}
                   >
                     {info}
@@ -152,10 +89,6 @@ export const SVGDiagrams: FC<PropsType> = ({
       </div>
     );
   };
-
-  if (state.length >= 200) {
-    return <ErrorMessage errorMessage={'Country not found...'} />;
-  }
 
   return renderSVGDiagrams();
 };
