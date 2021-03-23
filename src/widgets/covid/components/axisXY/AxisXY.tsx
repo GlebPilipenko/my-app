@@ -5,16 +5,15 @@ import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
 export const AxisXY: FC<PropsType> = ({
   x0,
   y0,
-  dataYMax,
-  numYTicks,
-  dataYRange,
-  yAxisLength,
+  maxYValue,
+  axisLengthY,
+  countTicsYCoordinates,
 }) => (
   <>
-    {Array.from({length: numYTicks}).map((_, index) => {
-      const y = y0 + index * (yAxisLength / numYTicks);
+    {Array.from({length: countTicsYCoordinates}).map((_, index) => {
+      const y = y0 + index * (axisLengthY / countTicsYCoordinates);
       const abbreviatedYValue = getAbbreviatedYValue(
-        index, dataYMax, dataYRange, numYTicks
+        index, maxYValue, countTicsYCoordinates
       );
 
       return (

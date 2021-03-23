@@ -2,22 +2,10 @@ import {FC} from 'react';
 import {AxisXY} from '../axisXY';
 import {PropsType} from './typings';
 import style from './SVGDiagrams.module.css';
-import {ErrorMessage} from 'src/common/errorMessage';
+import {getCapitalizedString} from 'src/utils';
 import {ColumnWithInformation} from '../columnWithInformation';
 
-export const SVGDiagrams: FC<PropsType> = ({
-  state,
-  error,
-}) => {
-
-  if (!state) {
-    return <ErrorMessage errorMessage={error} />;
-  }
-
-  if (state.length >= 200) {
-    return <ErrorMessage errorMessage={'Country not found...'} />;
-  }
-
+export const SVGDiagrams: FC<PropsType> = ({state}) => {
   const [, , , cases, , deaths, , recovered, , active] = state;
   const data = [cases, deaths, recovered, active];
 
@@ -26,18 +14,16 @@ export const SVGDiagrams: FC<PropsType> = ({
 
   const x0 = 65;
   const y0 = 50;
-  const numYTicks = 7;
-  const xAxisLength = SVG_WIDTH - x0 * 2;
-  const yAxisLength = SVG_HEIGHT - y0 * 2;
-  const xAxisY = y0 + yAxisLength;
+  const countTicsYCoordinates = 7;
+  const axisLengthX = SVG_WIDTH - x0 * 2;
+  const axisLengthY = SVG_HEIGHT - y0 * 2;
 
-  const dataYMax = data.reduce(
+  const maxYValue = data.reduce(
     (currMax, [_, dataY]) => Math.max(currMax, dataY as number), 0);
-  const dataYMin = data.reduce(
+  const minYValue = data.reduce(
     (currMin, [_, dataY]) => Math.min(currMin, dataY as number), 0);
 
-  const dataYRange = dataYMax - dataYMin;
-  const barPlotWidth = xAxisLength / data.length;
+  const barPlotWidth = axisLengthX / data.length;
 
   const renderSVGDiagrams = () => {
     return (
@@ -52,34 +38,31 @@ export const SVGDiagrams: FC<PropsType> = ({
               <AxisXY
                 x0={x0}
                 y0={y0}
-                dataYMax={dataYMax}
-                numYTicks={numYTicks}
-                dataYRange={dataYRange}
-                yAxisLength={yAxisLength}
+                maxYValue={maxYValue}
+                axisLengthY={axisLengthY}
+                countTicsYCoordinates={countTicsYCoordinates}
               />
               <ColumnWithInformation
                 x0={x0}
                 y0={y0}
                 data={data}
-                xAxisY={xAxisY}
-                dataYMax={dataYMax}
-                dataYMin={dataYMin}
-                numYTicks={numYTicks}
-                dataYRange={dataYRange}
-                yAxisLength={yAxisLength}
+                maxYValue={maxYValue}
+                minYValue={minYValue}
+                axisLengthY={axisLengthY}
                 barPlotWidth={barPlotWidth}
+                countTicsYCoordinates={countTicsYCoordinates}
               />
             </svg>
             <div className={style.info__container}>
-              {data.map(([info, value], index) => {
-                const key = `${value}${index}`;
+              {data.map(([info, value]) => {
+                const key = `${value}${Date.now()}`;
 
                 return (
                   <span
                     key={key}
                     className={style.info__item}
                   >
-                    {info}
+                    {getCapitalizedString(info)}
                   </span>
                 );
               })}
