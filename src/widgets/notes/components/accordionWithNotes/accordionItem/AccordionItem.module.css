@@ -1,0 +1,27 @@
+.city__container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.arrow {
+    color: tomato;
+    text-decoration: none;
+}
+
+.arrow:hover {
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.arrow {
+    color: tomato;
+    text-decoration: none;
+}
+
+.arrow:hover {
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+}

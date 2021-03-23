@@ -1,0 +1,39 @@
+.wrapper {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.svg {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.graphs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.info__container {
+    max-width: 1000px;
+    text-align: center;
+}
+
+.rect {
+    fill-opacity: .3;
+    fill: tomato;
+    stroke: tomato;
+    stroke-width: 2;
+}
+
+.info__item {
+    margin: 0 81px;
+}
