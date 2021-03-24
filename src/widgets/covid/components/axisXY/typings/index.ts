@@ -1,7 +1,7 @@
 export type PropsType = {
-  x0: number;
-  y0: number;
   maxYValue: number;
+  startCoordX: number;
+  startCoordY: number;
   axisLengthY: number;
   countTicsYCoordinates: number;
 };

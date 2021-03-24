@@ -3,24 +3,24 @@ import {PropsType} from './typings';
 import style from '../svgDiagrams/SVGDiagrams.module.css';
 
 export const ColumnWithInformation: FC<PropsType> = ({
-  x0,
-  y0,
   data,
   maxYValue,
   minYValue,
+  startCoordX,
+  startCoordY,
   axisLengthY,
   barPlotWidth,
-  countTicsYCoordinates
+  countTicsYCoordinates,
 }) => {
   const renderColumnWithInformation = () => {
     return (
       <>
         {data.map(([_, dataY]: any, index: number) => {
             const columnRatio = (dataY as number - minYValue) / maxYValue;
-            const y = y0 + (1 - columnRatio) * axisLengthY;
-            const verticalPositionForText = 15;
-            const x = x0 + index * barPlotWidth;
-            const height = columnRatio * axisLengthY;
+          const coordsX = startCoordX + index * barPlotWidth;
+          const coordsY = startCoordY + (1 - columnRatio) * axisLengthY;
+          const verticalPositionForText = 15;
+          const height = columnRatio * axisLengthY;
 
             const sidePadding = 10;
 
@@ -31,9 +31,9 @@ export const ColumnWithInformation: FC<PropsType> = ({
             return (
               <g key={index}>
                 <text
-                  y={verticalPositionForText}
-                  x={x + barPlotWidth / 2}
                   textAnchor='middle'
+                  y={verticalPositionForText}
+                  x={coordsX + barPlotWidth / 2}
                 >
                   {yValue}
                 </text>
@@ -46,11 +46,11 @@ export const ColumnWithInformation: FC<PropsType> = ({
                     attributeName='transform'
                   />
                   <rect
-                    y={y}
                     height={height}
                     className={style.rect}
-                    x={x + sidePadding / 2}
                     width={barPlotWidth - sidePadding}
+                    y={coordsY}
+                    x={coordsX + sidePadding / 2}
                   >
                     <animate
                       from='0'
@@ -61,9 +61,9 @@ export const ColumnWithInformation: FC<PropsType> = ({
                   </rect>
                 </g>
                 <text
-                  x={x0}
-                  y={y0 - 35}
                   textAnchor='end'
+                  x={startCoordX}
+                  y={startCoordY - 35}
                 >
                   Quantity
                 </text>

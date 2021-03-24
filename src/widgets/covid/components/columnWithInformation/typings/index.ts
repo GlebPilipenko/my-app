@@ -1,10 +1,10 @@
 import {CovidAPIType} from 'src/api/covidApi/typings';
 
 export type PropsType = {
-  x0: number;
-  y0: number;
   maxYValue: number;
   minYValue: number;
+  startCoordX: number;
+  startCoordY: number;
   axisLengthY: number;
   barPlotWidth: number;
   data: CovidAPIType[];

@@ -3,37 +3,43 @@ import {PropsType} from './typings';
 import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
 
 export const AxisXY: FC<PropsType> = ({
-  x0,
-  y0,
   maxYValue,
+  startCoordX,
+  startCoordY,
   axisLengthY,
   countTicsYCoordinates,
-}) => (
-  <>
-    {Array.from({length: countTicsYCoordinates}).map((_, index) => {
-      const y = y0 + index * (axisLengthY / countTicsYCoordinates);
-      const abbreviatedYValue = getAbbreviatedYValue(
-        index, maxYValue, countTicsYCoordinates
-      );
+}) => {
+  const renderAxisXY = () => {
+    return (
+      <>
+        {Array.from({length: countTicsYCoordinates}).map((_, index) => {
+          const coordsY = startCoordY + index * (axisLengthY / countTicsYCoordinates);
+          const abbreviatedYValue = getAbbreviatedYValue(
+            index, maxYValue, countTicsYCoordinates
+          );
 
-      return (
-        <g key={index}>
-          <line
-            y1={y}
-            y2={y}
-            x1={x0}
-            x2={x0 - 5}
-            stroke='grey'
-          />
-          <text
-            y={y + 5}
-            x={x0 - 5}
-            textAnchor='end'
-          >
-            {abbreviatedYValue}
-          </text>
-        </g>
-      );
-    })}
-  </>
-);
+          return (
+            <g key={index}>
+              <line
+                y1={coordsY}
+                y2={coordsY}
+                stroke='grey'
+                x1={startCoordX}
+                x2={startCoordX - 5}
+              />
+              <text
+                textAnchor='end'
+                y={coordsY + 5}
+                x={startCoordX - 5}
+              >
+                {abbreviatedYValue}
+              </text>
+            </g>
+          );
+        })}
+      </>
+    );
+  };
+
+  return renderAxisXY();
+};

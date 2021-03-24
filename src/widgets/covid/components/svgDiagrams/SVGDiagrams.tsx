@@ -12,11 +12,11 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
 
-  const x0 = 65;
-  const y0 = 50;
+  const startCoordX = 65;
+  const startCoordY = 50;
   const countTicsYCoordinates = 7;
-  const axisLengthX = SVG_WIDTH - x0 * 2;
-  const axisLengthY = SVG_HEIGHT - y0 * 2;
+  const axisLengthX = SVG_WIDTH - startCoordX * 2;
+  const axisLengthY = SVG_HEIGHT - startCoordY * 2;
 
   const maxYValue = data.reduce(
     (currMax, [_, dataY]) => Math.max(currMax, dataY as number), 0);
@@ -51,22 +51,22 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
           <div className={style.graphs}>
             <svg
               width={SVG_WIDTH}
-              height={SVG_HEIGHT - y0}
+              height={SVG_HEIGHT - startCoordY}
               className={style.svg}
             >
               <AxisXY
-                x0={x0}
-                y0={y0}
                 maxYValue={maxYValue}
+                startCoordX={startCoordX}
+                startCoordY={startCoordY}
                 axisLengthY={axisLengthY}
                 countTicsYCoordinates={countTicsYCoordinates}
               />
               <ColumnWithInformation
-                x0={x0}
-                y0={y0}
                 data={data}
                 maxYValue={maxYValue}
                 minYValue={minYValue}
+                startCoordX={startCoordX}
+                startCoordY={startCoordY}
                 axisLengthY={axisLengthY}
                 barPlotWidth={barPlotWidth}
                 countTicsYCoordinates={countTicsYCoordinates}
