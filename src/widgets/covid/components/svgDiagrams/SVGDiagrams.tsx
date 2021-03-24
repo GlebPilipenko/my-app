@@ -25,6 +25,25 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
 
   const barPlotWidth = axisLengthX / data.length;
 
+  const renderColumnNames = () => {
+    return (
+      <div className={style.info__container}>
+        {data.map(([info, value]) => {
+            const key = `${value}${Date.now()}`;
+
+            return (
+              <span
+                key={key}
+                className={style.info__item}
+              >
+                {getCapitalizedString(info)}
+              </span>
+            );
+          }
+        )}
+      </div>
+    );
+  };
   const renderSVGDiagrams = () => {
     return (
       <div className={style.wrapper}>
@@ -53,20 +72,7 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
                 countTicsYCoordinates={countTicsYCoordinates}
               />
             </svg>
-            <div className={style.info__container}>
-              {data.map(([info, value]) => {
-                const key = `${value}${Date.now()}`;
-
-                return (
-                  <span
-                    key={key}
-                    className={style.info__item}
-                  >
-                    {getCapitalizedString(info)}
-                  </span>
-                );
-              })}
-            </div>
+            {renderColumnNames()}
           </div>
         </div>
       </div>

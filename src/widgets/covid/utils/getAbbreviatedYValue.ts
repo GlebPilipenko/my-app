@@ -1,32 +1,28 @@
+import {ArrayLength} from '../enum';
+
 export const getAbbreviatedYValue = (
   index: number, maxYValue: number, numYTicks: number
 ) => {
-  const yValue = (maxYValue - index * (maxYValue / numYTicks)).toFixed(0);
-  const arrayOfValue = yValue.slice(0, 3).split('');
+  const valueOnAxisY = (maxYValue - index * (maxYValue / numYTicks)).toFixed(0);
+  const arrayOfTruncatedValue = valueOnAxisY.slice(0, 3).split('');
 
-  return getTruncatedValue(arrayOfValue, yValue.length);
+  return getTruncatedValue(arrayOfTruncatedValue, valueOnAxisY.length);
 };
 
-const getTruncatedValue = (truncatedValue: string[], arrayLength: number) => {
-  if (arrayLength === 8) {
-    return `${truncatedValue[0]}${truncatedValue[1]}.${truncatedValue[2]} M`;
+const getTruncatedValue = (arrayOfTruncatedValue: string[], valueOnAxisY: number) => {
+  switch (valueOnAxisY) {
+    case ArrayLength.Eight:
+      return `${arrayOfTruncatedValue[0]}${arrayOfTruncatedValue[1]}.${
+        arrayOfTruncatedValue[2]} M`;
+    case ArrayLength.Seven:
+      return `${arrayOfTruncatedValue[0]}.${arrayOfTruncatedValue[1]} M`;
+    case ArrayLength.Six:
+      return `0.${arrayOfTruncatedValue[0]} M`;
+    case ArrayLength.Five:
+      return `0.0${arrayOfTruncatedValue[0]} M`;
+    case ArrayLength.Four:
+      return `0.00${arrayOfTruncatedValue[0]} M`;
+    default:
+      return arrayOfTruncatedValue;
   }
-
-  if (arrayLength === 7) {
-    return `${truncatedValue[0]}.${truncatedValue[1]} M`;
-  }
-
-  if (arrayLength === 6) {
-    return `0.${truncatedValue[0]} M`;
-  }
-
-  if (arrayLength === 5) {
-    return `0.0${truncatedValue[0]} M`;
-  }
-
-  if (arrayLength === 4) {
-    return `0.00${truncatedValue[0]} M`;
-  }
-
-  return truncatedValue;
-}
+};

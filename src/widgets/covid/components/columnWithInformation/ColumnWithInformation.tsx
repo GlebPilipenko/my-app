@@ -18,9 +18,9 @@ export const ColumnWithInformation: FC<PropsType> = ({
         {data.map(([_, dataY]: any, index: number) => {
             const columnRatio = (dataY as number - minYValue) / maxYValue;
             const y = y0 + (1 - columnRatio) * axisLengthY;
-          const verticalPositionForText = 15;
-          const x = x0 + index * barPlotWidth;
-          const height = columnRatio * axisLengthY;
+            const verticalPositionForText = 15;
+            const x = x0 + index * barPlotWidth;
+            const height = columnRatio * axisLengthY;
 
             const sidePadding = 10;
 

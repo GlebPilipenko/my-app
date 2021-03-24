@@ -1,9 +1,9 @@
 import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {getInfoByCovid} from 'src/api';
+import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
 import {CovidAPIType} from 'src/api/covidApi/typings';
-import {ErrorMessage} from '../../common/errorMessage';
 
 export const CovidDiagram: FC<PropsType> = ({country = 'invalid_country'}) => {
   const [error, setError] = useState<string>('');
@@ -26,7 +26,7 @@ export const CovidDiagram: FC<PropsType> = ({country = 'invalid_country'}) => {
     return <ErrorMessage errorMessage={error} />;
   }
 
-  if (state.length >= 200) {
+  if (state.length > 200) {
     return <ErrorMessage errorMessage={`Country not found...`} />;
   }
 
