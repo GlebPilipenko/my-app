@@ -8,5 +8,4 @@ export type PropsType = {
   axisLengthY: number;
   barPlotWidth: number;
   data: CovidAPIType[];
-  countTicsYCoordinates: number;
 };

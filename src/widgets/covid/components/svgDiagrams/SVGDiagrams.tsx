@@ -12,9 +12,14 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
 
+  console.log('cases:', cases);
+  console.log('deaths:', deaths);
+  console.log('recovered:', recovered);
+  console.log('active:', active);
+
   const startCoordX = 65;
   const startCoordY = 50;
-  const countTicsYCoordinates = 7;
+  const countTicsYCoordinates = 10;
   const axisLengthX = SVG_WIDTH - startCoordX * 2;
   const axisLengthY = SVG_HEIGHT - startCoordY * 2;
 
@@ -69,7 +74,6 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
                 startCoordY={startCoordY}
                 axisLengthY={axisLengthY}
                 barPlotWidth={barPlotWidth}
-                countTicsYCoordinates={countTicsYCoordinates}
               />
             </svg>
             {renderColumnNames()}

@@ -10,23 +10,17 @@ export const ColumnWithInformation: FC<PropsType> = ({
   startCoordY,
   axisLengthY,
   barPlotWidth,
-  countTicsYCoordinates,
 }) => {
   const renderColumnWithInformation = () => {
     return (
       <>
         {data.map(([_, dataY]: any, index: number) => {
-            const columnRatio = (dataY as number - minYValue) / maxYValue;
+          const columnRatio = (dataY as number - minYValue) / maxYValue;
           const coordsX = startCoordX + index * barPlotWidth;
           const coordsY = startCoordY + (1 - columnRatio) * axisLengthY;
           const verticalPositionForText = 15;
           const height = columnRatio * axisLengthY;
-
-            const sidePadding = 10;
-
-            const yValue = (maxYValue - index * Number(
-              (maxYValue / countTicsYCoordinates).toFixed(0)
-            ));
+          const sidePadding = 10;
 
             return (
               <g key={index}>
@@ -35,7 +29,7 @@ export const ColumnWithInformation: FC<PropsType> = ({
                   y={verticalPositionForText}
                   x={coordsX + barPlotWidth / 2}
                 >
-                  {yValue}
+                  {dataY}
                 </text>
                 <g>
                   <animateTransform

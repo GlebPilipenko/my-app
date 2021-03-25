@@ -17,7 +17,7 @@ const getTruncatedValue = (arrayOfTruncatedValue: string[], valueOnAxisY: number
     case ArrayLength.Seven:
       return `${arrayOfTruncatedValue[0]}.${arrayOfTruncatedValue[1]} M`;
     case ArrayLength.Six:
-      return `0.${arrayOfTruncatedValue[0]} M`;
+      return `0.${arrayOfTruncatedValue[0]}${arrayOfTruncatedValue[1]} M`;
     case ArrayLength.Five:
       return `0.0${arrayOfTruncatedValue[0]} M`;
     case ArrayLength.Four:
