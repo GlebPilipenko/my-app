@@ -2,11 +2,12 @@ import React from 'react';
 import style from './App.module.css';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
-import {News, Notes, Weather, Map} from './widgets';
+import {News, Notes, Weather, MapContainer} from './widgets';
 
 export const App: React.FC<PropsType> = ({
   app,
   city,
+  coords,
   country,
 }) => {
   switch (app) {
@@ -24,7 +25,7 @@ export const App: React.FC<PropsType> = ({
       </div>;
     case `${WidgetTitles.MapWidget}`:
       return <div className={style.wrapper}>
-        <Map country={country} city={city} />
+        <MapContainer country={country} city={city} coords={coords} />
       </div>;
     default:
       return null;

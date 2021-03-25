@@ -1,14 +1,34 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
+import {MapAPIType} from 'src/api/mapApi/typings';
+import {ErrorMessage} from 'src/common/errorMessage';
+import {getCoordsByCity, getCoordsByCountry} from 'src/api/mapApi';
 
-export const Map: FC<PropsType> = ({city, country}) => {
+export const MapContainer: FC<PropsType> = ({
+  coords,
+  city = 'invalid_city',
+  country = 'invalid_country',
+}) => {
+  const [state, setState] = useState<null | MapAPIType>(null);
+  const [error, setError] = useState<string>('');
 
-  useEffect(() => {
+  const invalidCity = 'invalid_city';
+  const invalidCountry = 'invalid_country';
+  const isInvalidCity = city === invalidCity;
+  const isNotInvalidCountry = country !== invalidCountry;
+  const allValuesIsInvalid = (
+    city === invalidCity && country === invalidCountry
+  );
+
+  const createMap = (state: any) => {
+    if (!state) {
+      return;
+    }
+
+    const {lat, lng} = state.results[0].geometry.location;
+    // @ts-ignore
     const map = new google.maps.Map(document.getElementById('map') as HTMLElement,
-      {
-        center: {lat: 53.905, lng: 27.555},
-        zoom: 12,
-        styles: [
+      {center: {lat, lng}, zoom: 12, styles: [
           {
             'elementType': 'geometry',
             'stylers': [
@@ -240,15 +260,59 @@ export const Map: FC<PropsType> = ({city, country}) => {
               }
             ]
           }
-        ],
-      });
-    const marker = new google.maps.Marker({
-      position: {lat: 53.905, lng: 27.555},
-      map: map,
-    })
-  }, []);
+        ]});
+    // @ts-ignore
+    const marker = new google.maps.Marker({position: {lat, lng}, map: map});
+  };
 
-  return (
-    <div id={'map'} style={{width: '100%', height: '100vh'}} />
-  );
+  useEffect(() => {
+    (async () => {
+      try {
+        if ((!city && !country) || allValuesIsInvalid) {
+          setError(`Please, enter correct city or country...`);
+        }
+
+        if ((!city && country) || (isInvalidCity && isNotInvalidCountry)) {
+          const coordsByCountry = await getCoordsByCountry(country);
+          const arrayLength = coordsByCountry.data.results.length;
+
+          if (arrayLength !== 0) {
+            setState(coordsByCountry.data);
+          } else {
+            setError(`Please, enter correct city or country...`);
+          }
+        }
+
+        if (city && city !== invalidCity) {
+          const coordsByCity = await getCoordsByCity(city);
+          const arrayLength = coordsByCity.data.results.length;
+
+          if (arrayLength !== 0) {
+            setState(coordsByCity.data);
+          }
+
+          if (arrayLength === 0) {
+            const coordsByCountry = await getCoordsByCountry(country);
+            const arrayLength = coordsByCountry.data.results.length;
+
+            if (arrayLength !== 0) {
+              setState(coordsByCountry.data);
+            }
+          }
+        }
+      } catch (e) {
+        setError(e.response.data.error_message);
+      }
+    })();
+  }, [city, country]);
+
+  useEffect(() => {
+    createMap(state);
+  }, [state]);
+
+  if (!state) {
+    return <ErrorMessage errorMessage={error} />;
+  }
+
+  return <div id={'map'} style={{width: '100%', height: '100vh'}} />;
 };
