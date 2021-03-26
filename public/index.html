@@ -39,21 +39,22 @@
 <!--<div data-city="minsk" data-app="weather-widget"></div>-->
 <!--<div data-city="" data-country="belarus" data-app="news-widget"></div>-->
 <!--<div data-city="minsk" data-country="belarus" data-app="notes-widget"></div>-->
-<div data-city="minsk" data-country="" data-coords="50,25"
+<!--40.7142484, -73.9614103-->
+<div data-city="minsk" data-country="russia" data-coords=""
      data-app="map-widget"></div>
 
 <!--
-+ city === '', country === '', ErrorMessage, 0 request
++ city === '', country === '', ErrorMessage, 0 request // JSX
 + city === '', country === 'belarus', marker by country, 1 request
-+ city === '', country === undefined, ErrorMessage, 1 request
++ city === '', country === undefined, ErrorMessage, 1 request // JSX
 
 + city === 'minsk', country === '', marker by city, 1 request
 + city === 'minsk', country === 'belarus', marker by city, 1 request
 + city === 'minsk', country === undefined, marker by city, 1 request
 
-+ city === undefined, country === '', ErrorMessage, 1 request // catch
++ city === undefined, country === '', ErrorMessage, 1 request // JSX
 + city === undefined, country === 'belarus', marker by country, 1 request
-+ city === undefined, country === undefined, ErrorMessage, 0 request // 1
++ city === undefined, country === undefined, ErrorMessage, 0 request // JSX
 -->
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4BdUK5hAfpPqFPZ-WDvUsxF339VKMz3s"></script>
