@@ -4,3 +4,8 @@ export enum WidgetTitles {
   CovidWidget = 'covid-widget',
   WeatherWidget = 'weather-widget',
 }
+
+export enum DefaultQueryParameters {
+  InvalidCoords = 'invalidCoords',
+  InvalidCountry = 'invalidCountry',
+}

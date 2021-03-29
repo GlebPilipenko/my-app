@@ -1,13 +1,18 @@
 import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {getInfoByCovid} from 'src/api';
+import {DefaultQueryParameters} from 'src/enums';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
 import {CovidAPIType} from 'src/api/covidApi/typings';
 
-export const CovidDiagram: FC<PropsType> = ({country = 'invalid_country'}) => {
+export const CovidDiagram: FC<PropsType> = ({
+  country = DefaultQueryParameters.InvalidCountry
+}) => {
   const [error, setError] = useState<string>('');
   const [state, setState] = useState<any | CovidAPIType[]>(null);
+
+  const numCountriesInWorld = 193;
 
   useEffect(() => {
     (async () => {
@@ -17,7 +22,7 @@ export const CovidDiagram: FC<PropsType> = ({country = 'invalid_country'}) => {
       } catch (e) {
         e.response
           ? setError(e.response.data.message)
-          : setError('Your request is blocked...');
+          : setError(`Your request is blocked...`);
       }
     })();
   }, [country]);
@@ -26,7 +31,7 @@ export const CovidDiagram: FC<PropsType> = ({country = 'invalid_country'}) => {
     return <ErrorMessage errorMessage={error} />;
   }
 
-  if (state.length > 200) {
+  if (state.length >= numCountriesInWorld) {
     return <ErrorMessage errorMessage={`Country not found...`} />;
   }
 
