@@ -4,7 +4,7 @@ import {PropsType} from './typings';
 import {DefaultQueryParameters} from 'src/enums';
 import {MapAPIType} from 'src/api/mapApi/typings';
 import {ErrorMessage} from 'src/common/errorMessage';
-import {getCoordsByCity, getCoordsByCountry,} from 'src/api/mapApi';
+import {getCoordsByCity, getCoordsByCountry} from 'src/api/mapApi';
 
 export const MapContainer: FC<PropsType> = ({
   city,
@@ -35,22 +35,26 @@ export const MapContainer: FC<PropsType> = ({
 
   const renderMap = useCallback((state: MapAPIType) => {
     const index = -1;
+    const invalidCoords = (!coords
+      || isInvalidCoords
+      || coords.indexOf(',') === index);
 
-    if (state) {
+    if (state || (state && invalidCoords)) {
       const {lat, lng} = state.results[0].geometry.location;
-
       createMap(lat, lng);
+
+      return;
     }
 
-    if (!state && !isInvalidCoords) {
+    if (!state && (coords && !isInvalidCoords)) {
       if (coords.indexOf(',') !== index) {
         const [lat, lng] = coords.split(',');
         createMap(+lat, +lng);
 
         return;
-      } else {
-        setError(`Enter correct coords with comma: ' , '`)
       }
+
+      return;
     }
 
   }, [coords, isInvalidCoords]);
@@ -70,6 +74,11 @@ export const MapContainer: FC<PropsType> = ({
 
           if (cityArrayLength !== 0) {
             setState(coordsByCity.data);
+
+            return;
+          }
+
+          if ((cityArrayLength === 0) && (!country || isInvalidCountry)) {
 
             return;
           }
