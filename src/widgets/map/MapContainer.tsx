@@ -1,20 +1,20 @@
 import {FC, useCallback, useEffect, useState} from 'react';
 import {createMap} from './utils';
 import {PropsType} from './typings';
-import {DefaultQueryParameters} from './enums';
+import {DefaultQueryParameters} from 'src/enums';
 import {MapAPIType} from 'src/api/mapApi/typings';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {getCoordsByCity, getCoordsByCountry,} from 'src/api/mapApi';
 
 export const MapContainer: FC<PropsType> = ({
   city,
-  coords = DefaultQueryParameters.InvalidCords,
+  coords = DefaultQueryParameters.InvalidCoords,
   country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [state, setState] = useState<any | MapAPIType>(null);
   const [error, setError] = useState<string>('');
 
-  const invalidCoords = DefaultQueryParameters.InvalidCords;
+  const invalidCoords = DefaultQueryParameters.InvalidCoords;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
   const isInvalidCoords = (coords === invalidCoords);
   const isInvalidCountry = (country === invalidCountry);
