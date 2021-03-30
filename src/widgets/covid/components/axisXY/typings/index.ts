@@ -5,4 +5,3 @@ export type PropsType = {
   axisLengthY: number;
   countTicsYCoordinates: number;
 };
-

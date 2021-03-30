@@ -9,13 +9,11 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
   const [, , , cases, , deaths, , recovered, , active] = state;
   const data = [cases, deaths, recovered, active];
 
+  const axisX = 0;
+  const axisY = 0;
+
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
-
-  console.log('cases:', cases);
-  console.log('deaths:', deaths);
-  console.log('recovered:', recovered);
-  console.log('active:', active);
 
   const startCoordX = 65;
   const startCoordY = 50;
@@ -55,9 +53,13 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
         <div className={style.container}>
           <div className={style.graphs}>
             <svg
-              width={SVG_WIDTH}
-              height={SVG_HEIGHT - startCoordY}
               className={style.svg}
+              viewBox={`
+                ${axisX} 
+                ${axisY} 
+                ${SVG_WIDTH} 
+                ${SVG_HEIGHT - startCoordY}
+                `}
             >
               <AxisXY
                 maxYValue={maxYValue}

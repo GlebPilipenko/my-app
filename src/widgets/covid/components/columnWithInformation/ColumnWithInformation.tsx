@@ -15,12 +15,13 @@ export const ColumnWithInformation: FC<PropsType> = ({
     return (
       <>
         {data.map(([_, dataY]: any, index: number) => {
+          const sidePadding = 10;
+          const verticalPositionForText = 15;
+
           const columnRatio = (dataY as number - minYValue) / maxYValue;
+          const height = columnRatio * axisLengthY;
           const coordsX = startCoordX + index * barPlotWidth;
           const coordsY = startCoordY + (1 - columnRatio) * axisLengthY;
-          const verticalPositionForText = 15;
-          const height = columnRatio * axisLengthY;
-          const sidePadding = 10;
 
             return (
               <g key={index}>

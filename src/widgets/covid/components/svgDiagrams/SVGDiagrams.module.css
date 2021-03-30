@@ -1,6 +1,6 @@
 .wrapper {
     width: 100%;
-    margin-top: 30px;
+    padding-top: 30px;
 }
 
 .container {
@@ -9,7 +9,8 @@
 }
 
 .svg {
-    width: 1000px;
+    max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -23,8 +24,23 @@
 }
 
 .info__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     max-width: 1000px;
+    width: 100%;
     text-align: center;
+    padding: 0 65px;
+}
+
+@media screen and (max-width: 768px) {
+    .info__container {
+        padding: 0 6vw;
+    }
+
+    .info__item {
+        font-size: 2vw;
+    }
 }
 
 .rect {
@@ -32,8 +48,4 @@
     fill: tomato;
     stroke: tomato;
     stroke-width: 2;
-}
-
-.info__item {
-    margin: 0 81px;
 }
