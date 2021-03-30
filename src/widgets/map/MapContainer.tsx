@@ -15,6 +15,8 @@ export const MapContainer: FC<PropsType> = ({
   const [error, setError] = useState<string>('');
 
   const index = -1;
+  const commaInSubstr = coords.indexOf(',') === index;
+
   const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCoords = DefaultQueryParameters.InvalidCoords;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
@@ -35,26 +37,18 @@ export const MapContainer: FC<PropsType> = ({
     }
   }, [country]);
   const renderMap = useCallback((state: MapAPIType) => {
-    const invalidCoords = (!coords
-      || isInvalidCoords
-      || coords.indexOf(',') === index);
+    const invalidCoords = (!coords || isInvalidCoords || commaInSubstr);
 
     if (state || (state && invalidCoords)) {
       const {lat, lng} = state.results[0].geometry.location;
       createMap(lat, lng);
-
-      return;
     }
 
     if (!state && (coords && !isInvalidCoords)) {
       if (coords.indexOf(',') !== index) {
         const [lat, lng] = coords.split(',');
         createMap(+lat, +lng);
-
-        return;
       }
-
-      return;
     }
 
   }, [coords, index, isInvalidCoords]);
@@ -62,13 +56,19 @@ export const MapContainer: FC<PropsType> = ({
   useEffect(() => {
     (async () => {
       try {
-        if (cityAndCountryIsInvalid && coords.indexOf(',') === index) {
+        if (cityAndCountryIsInvalid && commaInSubstr) {
           setError(`Enter correct coords with comma: ' , '`);
 
           return;
         }
 
         if (city) {
+          if (isInvalidCity && (country && !isInvalidCountry)) {
+            await requestByCountry();
+
+            return;
+          }
+
           const coordsByCity = await getCoordsByCity(city);
           const cityArrayLength = coordsByCity.data.results.length;
 
@@ -78,17 +78,13 @@ export const MapContainer: FC<PropsType> = ({
             return;
           }
 
-          if ((cityArrayLength === 0) && (!country || isInvalidCountry)) {
+          if ((cityArrayLength === 0) && (!country || isInvalidCountry) && commaInSubstr) {
             setError(`Enter valid city, country or coords with ' , '`);
-
-            return;
           }
 
-          if ((cityArrayLength === 0) && (country !== invalidCountry)) {
+          if (cityArrayLength === 0 && (country !== invalidCountry && !country)) {
             await requestByCountry();
           }
-
-          return;
         }
 
         if (country && (country !== invalidCountry)) {
@@ -100,8 +96,9 @@ export const MapContainer: FC<PropsType> = ({
         e.response && setError(e.response.data.error_message);
       }
     })();
-  }, [city, coords, country, index, invalidCountry, isInvalidCoords,
-    isInvalidCountry, requestByCountry, cityAndCountryIsInvalid]);
+  }, [city, coords, country, index, isInvalidCity, invalidCountry,
+    isInvalidCoords, isInvalidCountry, requestByCountry, cityAndCountryIsInvalid
+  ]);
 
   useEffect(() => {
     renderMap(state);
