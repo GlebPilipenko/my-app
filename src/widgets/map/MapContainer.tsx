@@ -7,20 +7,22 @@ import {ErrorMessage} from 'src/common/errorMessage';
 import {getCoordsByCity, getCoordsByCountry} from 'src/api/mapApi';
 
 export const MapContainer: FC<PropsType> = ({
-  city,
+  city = DefaultQueryParameters.InvalidCity,
   coords = DefaultQueryParameters.InvalidCoords,
   country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [state, setState] = useState<any | MapAPIType>(null);
   const [error, setError] = useState<string>('');
 
+  const index = -1;
+  const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCoords = DefaultQueryParameters.InvalidCoords;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
+  const isInvalidCity = (city === invalidCity);
   const isInvalidCoords = (coords === invalidCoords);
   const isInvalidCountry = (country === invalidCountry);
-  const allPropsIsInvalid = !city
-    && (!country || isInvalidCountry)
-    && (!coords || isInvalidCoords);
+  const cityAndCountryIsInvalid =
+    (!city || isInvalidCity) && (!country || isInvalidCountry);
 
   const requestByCountry = useCallback(async () => {
     const coordsByCountry = await getCoordsByCountry(country);
@@ -32,9 +34,7 @@ export const MapContainer: FC<PropsType> = ({
       setError(`Error, enter valid city, country or coords...`);
     }
   }, [country]);
-
   const renderMap = useCallback((state: MapAPIType) => {
-    const index = -1;
     const invalidCoords = (!coords
       || isInvalidCoords
       || coords.indexOf(',') === index);
@@ -57,13 +57,13 @@ export const MapContainer: FC<PropsType> = ({
       return;
     }
 
-  }, [coords, isInvalidCoords]);
+  }, [coords, index, isInvalidCoords]);
 
   useEffect(() => {
     (async () => {
       try {
-        if (allPropsIsInvalid) {
-          setError(`Error, enter valid city, country or coords...`);
+        if (cityAndCountryIsInvalid && coords.indexOf(',') === index) {
+          setError(`Enter correct coords with comma: ' , '`);
 
           return;
         }
@@ -79,6 +79,7 @@ export const MapContainer: FC<PropsType> = ({
           }
 
           if ((cityArrayLength === 0) && (!country || isInvalidCountry)) {
+            setError(`Enter valid city, country or coords with ' , '`);
 
             return;
           }
@@ -93,12 +94,14 @@ export const MapContainer: FC<PropsType> = ({
         if (country && (country !== invalidCountry)) {
           await requestByCountry();
         }
+
+        return;
       } catch (e) {
         e.response && setError(e.response.data.error_message);
       }
     })();
-  }, [city, coords, country, invalidCountry, isInvalidCoords, isInvalidCountry,
-    requestByCountry, allPropsIsInvalid]);
+  }, [city, coords, country, index, invalidCountry, isInvalidCoords,
+    isInvalidCountry, requestByCountry, cityAndCountryIsInvalid]);
 
   useEffect(() => {
     renderMap(state);

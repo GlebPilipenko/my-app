@@ -6,6 +6,7 @@ export enum WidgetTitles {
 }
 
 export enum DefaultQueryParameters {
+  InvalidCity = 'invalidCity',
   InvalidCoords = 'invalidCoords',
   InvalidCountry = 'invalidCountry',
 }
