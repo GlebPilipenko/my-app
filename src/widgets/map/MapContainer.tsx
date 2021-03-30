@@ -23,70 +23,78 @@ export const MapContainer: FC<PropsType> = ({
   const isInvalidCity = (city === invalidCity);
   const isInvalidCoords = (coords === invalidCoords);
   const isInvalidCountry = (country === invalidCountry);
-  const cityAndCountryIsInvalid =
-    (!city || isInvalidCity) && (!country || isInvalidCountry);
+  const notValidCoords = !coords || isInvalidCoords || noComma;
 
   const requestByCountry = useCallback(async () => {
     const coordsByCountry = await getCoordsByCountry(country);
     const countryArrayLength = coordsByCountry.data.results.length;
-
-    if (countryArrayLength !== 0) {
+    const emptyCountryArray = countryArrayLength === 0;
+    if (!emptyCountryArray) {
       setState(coordsByCountry.data);
+
+      return;
     } else {
       setError(`Error, enter valid city, country or coords...`);
     }
   }, [country]);
   const renderMap = useCallback((state: MapAPIType) => {
-    const invalidCoords = (!coords || isInvalidCoords || noComma);
-
-    if (state || (state && invalidCoords)) {
+    if (state || (state && (invalidCoords || noComma))) {
       const {lat, lng} = state.results[0].geometry.location;
       createMap(lat, lng);
     }
 
     if (!state && (coords && !isInvalidCoords)) {
-
-      // I think this not good code...
-
       if (!noComma) {
         const [lat, lng] = coords.split(',');
-          createMap(+lat, +lng);
+        return createMap(+lat, +lng);
       }
+
+      setError(`Error, enter valid coords with comma ' , '`);
     }
 
     // if (!state && (coords && !isInvalidCoords)) {
-    //   const commaNotFoundInSubstr = coords.indexOf(',') !== index;
-    //
-    //   if (commaNotFoundInSubstr) {
-    //     const [lat, lng] = coords.split(',');
-    //     const maxZenithPoint = 85;
-    //     const angleFromZenithToEquator = (
-    //       (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
-    //     );
-    //
-    //     if (angleFromZenithToEquator) {
-    //       createMap(+lat, +lng);
-    //
-    //       return;
-    //     }
-    //   }
-    //
-    //   setError(`The latitude should be from -85 and to 85`);
+//   const commaNotFoundInSubstr = coords.indexOf(',') !== index;
+//
+//   if (commaNotFoundInSubstr) {
+//     const [lat, lng] = coords.split(',');
+//     const maxZenithPoint = 85;
+//     const angleFromZenithToEquator = (
+//       (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
+//     );
+//
+//     if (angleFromZenithToEquator) {
+//       createMap(+lat, +lng);
+//
+//       return;
+//     }
+//   }
+//
+//   setError(`The latitude should be from -85 and to 85`);
 
-  }, [coords, isInvalidCoords, noComma]);
+  }, [coords, isInvalidCity, isInvalidCountry, isInvalidCoords, noComma]);
+
+
+  // empty city and other attributes undefined
+  // empty country and other attributes undefined
+  // empty city and country and other attributes undefined
+
 
   useEffect(() => {
     (async () => {
       try {
-        if (cityAndCountryIsInvalid && noComma) {
-          setError(`Enter correct coords with comma: ' , '`);
+        if (!city && !country && !coords) {
+          setError(`Error, enter valid city, country or coords...`);
+        }
 
-          return;
+        if (isInvalidCity && isInvalidCountry && notValidCoords) {
+          setError(`Error, enter valid city, country or coords...`);
         }
 
         if (city) {
-          if (isInvalidCity && (country && !isInvalidCountry)) {
-            await requestByCountry();
+          if (city === invalidCity) {
+            if (country && (country !== invalidCountry)) {
+              await requestByCountry();
+            }
 
             return;
           }
@@ -101,17 +109,15 @@ export const MapContainer: FC<PropsType> = ({
             return;
           }
 
-          if (emptyCityArray && (!country || isInvalidCountry) && noComma) {
-            setError(`Enter valid city, country or coords with ' , '`);
-          }
-
-          if (emptyCityArray && (country !== invalidCountry && !country)) {
-            await requestByCountry();
-          }
+          return;
         }
 
-        if (country && (country !== invalidCountry)) {
-          await requestByCountry();
+        if (country) {
+            if (country !== invalidCountry) {
+              await requestByCountry();
+            }
+
+            return;
         }
 
         return;
@@ -119,15 +125,13 @@ export const MapContainer: FC<PropsType> = ({
         e.response && setError(e.response.data.error_message);
       }
     })();
-  }, [city, coords, country, isInvalidCity, invalidCountry, noComma,
-    isInvalidCoords, isInvalidCountry, requestByCountry, cityAndCountryIsInvalid
-  ]);
+  }, [city, coords, country, invalidCity, invalidCountry, requestByCountry]);
 
   useEffect(() => {
     renderMap(state);
   }, [renderMap, state]);
 
-  if (error) {
+  if (error && ((!city || isInvalidCity) && (!country || isInvalidCountry))) {
     return <ErrorMessage errorMessage={error} />;
   }
 
