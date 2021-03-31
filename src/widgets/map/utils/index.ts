@@ -1,1 +1,1 @@
-export {createMap} from './createMap';
+export {initMap} from './initMap';
