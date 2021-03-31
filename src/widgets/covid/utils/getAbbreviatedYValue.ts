@@ -1,8 +1,27 @@
 import {ArrayLength} from '../enum';
 
+// Функция getAbbreviatedYValue принимет index, maxYValue - (максимальное
+// значение, кол-во заболевших ковидом в конкретной стране), numYTicks - это
+// кол-во (отображаемых значений слева по оси Y)
+
 export const getAbbreviatedYValue = (
   index: number, maxYValue: number, numYTicks: number
 ) => {
+
+  // Переменная valueOnAxisY работает следующим образом: maxYvalue /
+  // numYTicks, после * на index (1ый === 0), далее от maxYValue отнимается
+  // значение.
+  // country === Russia.
+  // maxYValue = 4545095
+  // index = 0
+  // numYTicks = 10
+
+  // 1ое значен 4545095 - 0 * (4545095 / 10) = 4545095
+  // 2ое значен 4545095 - 1 * (4545095 / 10) = 4090568
+  // 3е значен 4545095 - 2 * (4545095 / 10) = 3636077
+  // 4е значен 4545095 - 3 * (4545095 / 10) = 3181568
+  // ...
+  // А далее функция getTruncatedValue ретурнит обрезанное значение.
   const valueOnAxisY = (maxYValue - index * (maxYValue / numYTicks)).toFixed(0);
   const arrayOfTruncatedValue = valueOnAxisY.slice(0, 3).split('');
 
