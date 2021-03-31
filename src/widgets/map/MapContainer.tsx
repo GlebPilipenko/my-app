@@ -29,76 +29,64 @@ export const MapContainer: FC<PropsType> = ({
     const coordsByCountry = await getCoordsByCountry(country);
     const countryArrayLength = coordsByCountry.data.results.length;
     const emptyCountryArray = countryArrayLength === 0;
-    if (!emptyCountryArray) {
-      setState(coordsByCountry.data);
+
+    if (emptyCountryArray && coords) {
+      if (noComma) {
+        setError(`Error, enter valid city, country or coords with comma ' , '`);
+      }
 
       return;
+    }
+
+    if (!emptyCountryArray) {
+      setState(coordsByCountry.data);
     } else {
       setError(`Error, enter valid city, country or coords...`);
     }
-  }, [country]);
+  }, [coords, country, noComma]);
   const renderMap = useCallback((state: MapAPIType) => {
-    if (state || (state && (invalidCoords || noComma))) {
+    if (state) {
       const {lat, lng} = state.results[0].geometry.location;
       createMap(lat, lng);
+
+      return;
     }
 
-    if (!state && (coords && !isInvalidCoords)) {
+    if ((!state && !city && !country) || !noComma) {
       if (!noComma) {
         const [lat, lng] = coords.split(',');
-        return createMap(+lat, +lng);
+        const maxZenithPoint = 85;
+        const angleFromZenithToEquator = (
+          (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
+        );
+
+        if (angleFromZenithToEquator) {
+          createMap(+lat, +lng);
+
+          return;
+        }
       }
 
-      setError(`Error, enter valid coords with comma ' , '`);
+      setError(
+        `Error, enter valid city, country or coords, latitude should 
+            be from -85 and to 85...`
+      );
     }
-
-    // if (!state && (coords && !isInvalidCoords)) {
-//   const commaNotFoundInSubstr = coords.indexOf(',') !== index;
-//
-//   if (commaNotFoundInSubstr) {
-//     const [lat, lng] = coords.split(',');
-//     const maxZenithPoint = 85;
-//     const angleFromZenithToEquator = (
-//       (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
-//     );
-//
-//     if (angleFromZenithToEquator) {
-//       createMap(+lat, +lng);
-//
-//       return;
-//     }
-//   }
-//
-//   setError(`The latitude should be from -85 and to 85`);
-
-  }, [coords, isInvalidCity, isInvalidCountry, isInvalidCoords, noComma]);
-
-
-  // empty city and other attributes undefined
-  // empty country and other attributes undefined
-  // empty city and country and other attributes undefined
-
+  }, [city, coords, country, noComma]);
 
   useEffect(() => {
     (async () => {
       try {
-        if (!city && !country && !coords) {
-          setError(`Error, enter valid city, country or coords...`);
-        }
+        if ((!city || isInvalidCity) && (!country || isInvalidCountry) && (!coords || notValidCoords)) {
+          setError(
+            `Error, enter valid city, country or coords, latitude should 
+            be from -85 and to 85...`
+          );
 
-        if (isInvalidCity && isInvalidCountry && notValidCoords) {
-          setError(`Error, enter valid city, country or coords...`);
+          return;
         }
 
         if (city) {
-          if (city === invalidCity) {
-            if (country && (country !== invalidCountry)) {
-              await requestByCountry();
-            }
-
-            return;
-          }
-
           const coordsByCity = await getCoordsByCity(city);
           const cityArrayLength = coordsByCity.data.results.length;
           const emptyCityArray = cityArrayLength === 0;
@@ -109,30 +97,29 @@ export const MapContainer: FC<PropsType> = ({
             return;
           }
 
+          if (country) {
+            await requestByCountry();
+          }
+
           return;
         }
 
         if (country) {
-            if (country !== invalidCountry) {
-              await requestByCountry();
-            }
-
-            return;
+          await requestByCountry();
         }
-
-        return;
       } catch (e) {
         e.response && setError(e.response.data.error_message);
       }
     })();
-  }, [city, coords, country, invalidCity, invalidCountry, requestByCountry]);
+  }, [city, coords, country, isInvalidCity, isInvalidCoords, isInvalidCountry,
+    noComma, notValidCoords, requestByCountry]);
 
   useEffect(() => {
     renderMap(state);
-  }, [renderMap, state]);
+  }, [state, renderMap]);
 
-  if (error && ((!city || isInvalidCity) && (!country || isInvalidCountry))) {
-    return <ErrorMessage errorMessage={error} />;
+  if (error) {
+      return <ErrorMessage errorMessage={error} />;
   }
 
   return <div id={'map'} style={{width: '100%', height: '100vh'}} />;
