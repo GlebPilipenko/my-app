@@ -25,6 +25,8 @@ export const MapContainer: FC<PropsType> = ({
   const isInvalidCoords = (coords === invalidCoords);
   const isInvalidCountry = (country === invalidCountry);
 
+  const errorMessage = `Error, enter valid city, country or coords, 
+  coordinates should be from -85 and to 85 and via the ' , '`;
 
   const invalidCityAndCountry = (
     (!city || isInvalidCountry) && (!country || isInvalidCity)
@@ -36,58 +38,90 @@ export const MapContainer: FC<PropsType> = ({
     (!country || isInvalidCountry)
   );
 
+  const requestWithCountry = async (country: string) => {
+    const coordsByCountry = await getCoordsByCountry(country);
+    const countryArrayLength = coordsByCountry.data.results.length;
+    const emptyCountryArray = countryArrayLength === 0;
+
+    if (!emptyCountryArray) {
+      return setState(coordsByCountry.data);
+    }
+
+    setError(errorMessage);
+  };
+  const requestWithCity = async (city: string, country: string) => {
+    const coordsByCity = await getCoordsByCity(city);
+    const cityArrayLength = coordsByCity.data.results.length;
+    const emptyCityArray = cityArrayLength === 0;
+    if (!emptyCityArray) {
+      return setState(coordsByCity.data);
+    } else {
+      await requestWithCountry(country);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
         if (allPropsInvalid) {
-          return setError(`Error, enter correct city, country or coords...`);
+          return setError(errorMessage);
         }
 
         if (coordsNoNumber && invalidCityAndCountry && lengthOfArrayCoords) {
           return setError(`Coords not a number...`);
         }
 
-        if (coords && !isInvalidCoords) {
+        if (!lengthOfArrayCoords) {
+          if (!city && !country) {
+            return setError(errorMessage);
+          }
+
+          if (city && !isInvalidCity) {
+           return await requestWithCity(city, country);
+          }
+
+          if (country) {
+            return await requestWithCountry(country);
+          }
+        }
+
+        if (coords && !isInvalidCoords && !coordsNoNumber) {
           const maxZenithPoint = 85;
           const angleFromZenithToEquator = (
             (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
           );
 
+          if (!angleFromZenithToEquator) {
+            if (city) {
+              await requestWithCity(city, country);
+            }
+
+            if (country) {
+              await requestWithCountry(country);
+            }
+          }
+
           if (angleFromZenithToEquator) {
-            return initMap(+lat, +lat);
+            return initMap(+lat, +lng);
           } else {
-            setError(
-              `Error, enter valid city, country or coords, latitude should
-            be from -85 and to 85...`
-            );
+            setError(errorMessage);
           }
 
           return;
         }
 
         if (city) {
-          const coordsByCity = await getCoordsByCity(city);
-          const cityArrayLength = coordsByCity.data.results.length;
-          const emptyCityArray = cityArrayLength === 0;
-          if (!emptyCityArray) {
-            return setState(coordsByCity.data);
-          }
+          return await requestWithCity(city, country);
         }
 
-        if (country && !isInvalidCountry) {
-          const coordsByCountry = await getCoordsByCountry(country);
-          const countryArrayLength = coordsByCountry.data.results.length;
-          const emptyCountryArray = countryArrayLength === 0;
-
-          if (!emptyCountryArray) {
-            return setState(coordsByCountry.data);
-          }
+        if (country) {
+          await requestWithCountry(country);
         }
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [lat, lng, city, coords, country,
+  }, [lat, lng, city, coords, country, isInvalidCoords, errorMessage, isInvalidCity,
     allPropsInvalid, coordsNoNumber, invalidCityAndCountry, lengthOfArrayCoords
   ]);
 
