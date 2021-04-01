@@ -48,6 +48,10 @@ export const MapContainer: FC<PropsType> = ({
     setError(errorMessage);
   }, [errorMessage]);
   const getCoords = useCallback(async (city: string, country: string) => {
+    if (!city) {
+     return await getCoordsWithCountry(country);
+    }
+
     const coordsByCity = await getCoordsByCity(city);
     const cityArrayLength = coordsByCity.data.results.length;
     const emptyCityArray = cityArrayLength === 0;
@@ -71,7 +75,7 @@ export const MapContainer: FC<PropsType> = ({
             return setError(errorMessage);
           }
 
-          if ((city || country) && !isInvalidCity) {
+          if (city || country) {
             return await getCoords(city, country);
           }
         }
