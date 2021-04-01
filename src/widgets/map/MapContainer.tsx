@@ -70,6 +70,10 @@ export const MapContainer: FC<PropsType> = ({
           return setError(errorMessage);
         }
 
+        if (coordsNoNumber && invalidCityAndCountry && lengthOfArrayCoords) {
+          return setError(`Coords not a number...`);
+        }
+
         if (!lengthOfArrayCoords) {
           if (!city && !country) {
             return setError(errorMessage);
