@@ -1,5 +1,5 @@
-let map;
 const styles = require('../json/GoogleMapStyles.json');
+let map;
 
 export const initMap = (lat: number, lng: number) => {
   map = new google.maps.Map(document.getElementById('map') as HTMLElement,

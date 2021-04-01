@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {initMap} from './utils';
 import {PropsType} from './typings';
 import {DefaultQueryParameters} from 'src/enums';
@@ -36,7 +36,7 @@ export const MapContainer: FC<PropsType> = ({
   const errorMessage = `Error, enter valid city, country or coords, 
   coordinates should be from -85 and to 85 and via the ' , '`;
 
-  const requestWithCountry = async (country: string) => {
+  const requestWithCountry = useCallback(async (country: string) => {
     const coordsByCountry = await getCoordsByCountry(country);
     const countryArrayLength = coordsByCountry.data.results.length;
     const emptyCountryArray = countryArrayLength === 0;
@@ -46,8 +46,8 @@ export const MapContainer: FC<PropsType> = ({
     }
 
     setError(errorMessage);
-  };
-  const requestWithCity = async (city: string, country: string) => {
+  }, [errorMessage]);
+  const requestWithCity = useCallback(async (city: string, country: string) => {
     const coordsByCity = await getCoordsByCity(city);
     const cityArrayLength = coordsByCity.data.results.length;
     const emptyCityArray = cityArrayLength === 0;
@@ -56,7 +56,7 @@ export const MapContainer: FC<PropsType> = ({
     } else {
       await requestWithCountry(country);
     }
-  };
+  }, [requestWithCountry]);
 
   useEffect(() => {
     (async () => {
@@ -121,9 +121,9 @@ export const MapContainer: FC<PropsType> = ({
           : setError(error.response.message)
       }
     })();
-  }, [city, coords, country, lat, lng, isInvalidCoords, errorMessage, isInvalidCity,
-    allPropsInvalid, coordsNoNumber, invalidCityAndCountry, lengthOfArrayCoords
-  ]);
+  }, [city, coords, country, lat, lng, isInvalidCoords, errorMessage,
+    isInvalidCity, allPropsInvalid, coordsNoNumber, invalidCityAndCountry,
+    lengthOfArrayCoords, requestWithCity, requestWithCountry]);
 
   useEffect(() => {
     if (state) {
