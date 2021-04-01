@@ -20,23 +20,21 @@ export const MapContainer: FC<PropsType> = ({
   const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCoords = DefaultQueryParameters.InvalidCoords;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
-
   const isInvalidCity = (city === invalidCity);
   const isInvalidCoords = (coords === invalidCoords);
   const isInvalidCountry = (country === invalidCountry);
 
-  const errorMessage = `Error, enter valid city, country or coords, 
-  coordinates should be from -85 and to 85 and via the ' , '`;
-
-  const invalidCityAndCountry = (
-    (!city || isInvalidCountry) && (!country || isInvalidCity)
-  );
   const coordsNoNumber = (!isFinite(+lat) || !isFinite(+lng));
   const allPropsInvalid = (
     (!city || isInvalidCity) &&
     (!coords || isInvalidCoords) &&
     (!country || isInvalidCountry)
   );
+  const invalidCityAndCountry = (
+    (!city || isInvalidCountry) && (!country || isInvalidCity)
+  );
+  const errorMessage = `Error, enter valid city, country or coords, 
+  coordinates should be from -85 and to 85 and via the ' , '`;
 
   const requestWithCountry = async (country: string) => {
     const coordsByCountry = await getCoordsByCountry(country);
@@ -88,17 +86,17 @@ export const MapContainer: FC<PropsType> = ({
         if (coords && !isInvalidCoords && !coordsNoNumber) {
           const maxZenithPoint = 85;
           const angleFromZenithToEquator = (
-            (+lat > -maxZenithPoint) && (+lat <= maxZenithPoint)
+            (+lat < maxZenithPoint) && (+lat > -maxZenithPoint)
           );
 
           if (!angleFromZenithToEquator) {
-            if (city) {
-              await requestWithCity(city, country);
-            }
+              if (city) {
+                return await requestWithCity(city, country);
+              }
 
-            if (country) {
-              await requestWithCountry(country);
-            }
+              if (country) {
+                return await requestWithCountry(country);
+              }
           }
 
           if (angleFromZenithToEquator) {
@@ -118,10 +116,12 @@ export const MapContainer: FC<PropsType> = ({
           await requestWithCountry(country);
         }
       } catch (error) {
-        console.log(error);
+        !error.response
+          ? setError(`Request is blocked...`)
+          : setError(error.response.message)
       }
     })();
-  }, [lat, lng, city, coords, country, isInvalidCoords, errorMessage, isInvalidCity,
+  }, [city, coords, country, lat, lng, isInvalidCoords, errorMessage, isInvalidCity,
     allPropsInvalid, coordsNoNumber, invalidCityAndCountry, lengthOfArrayCoords
   ]);
 
