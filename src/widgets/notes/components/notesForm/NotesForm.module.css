@@ -32,11 +32,22 @@
     border-radius: 3px;
     outline: none;
     color: white;
-    background-color: tomato;
+    background-color: #5347ff;
+}
+
+.btn__error {
+    width: 100%;
+    padding: 5px 0;
+    margin: 15px 0 15px;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+    background-color: red;
 }
 
 .btn:hover {
-    background-color: red;
+    background-color: #4d43ea;
     cursor: pointer;
 }
 
@@ -47,4 +58,16 @@
 .btn__save:hover {
     background-color: green;
     cursor: pointer;
+}
+
+.invalid_btn__error {
+    background-color: red;
+    cursor: pointer;
+}
+
+.error {
+    width: 100%;
+    outline: 0;
+    outline-offset: 0;
+    border: 1px solid red;
 }

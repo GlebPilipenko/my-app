@@ -14,7 +14,43 @@ export const NotesForm: React.FC<PropsType> = ({
   changeInputCityValue,
   changeVisibilityForm,
 }) => {
+  const save = `Save`;
+  const invalidForm = `Invalid Form`;
   const noteID = `${title}${Math.random()}`;
+
+  const minInputValueLength = 3;
+  const maxDescriptionLength = 250;
+  const maxTitleLength = 100;
+  const maxCityTitleLength = 100;
+
+  const titleLength = title.length;
+  const cityTitleLength = cityTitle.length;
+  const descriptionLength = description.length;
+
+  const errorTitle = (
+    (titleLength < minInputValueLength) ||
+    (titleLength > maxTitleLength)
+  );
+  const errorCityTitle = (
+    (cityTitleLength < minInputValueLength) ||
+    (cityTitleLength > maxCityTitleLength)
+  );
+  const errorDescription = (
+    (descriptionLength < minInputValueLength) ||
+    (descriptionLength > maxDescriptionLength)
+  );
+  const error = errorTitle || errorCityTitle || errorDescription;
+
+  const titleStyle = errorTitle && titleLength !== 0 ? style.error : style.input;
+  const cityTitleStyle = errorCityTitle && cityTitleLength !== 0
+    ? style.error
+    : style.input;
+  const descriptionStyle = errorDescription && descriptionLength !== 0
+    ? style.error
+    :  style.textarea;
+  const errorBtnStyle = error
+    ? `${style.btn__error} ${style.invalid_btn__error}`
+    : `${style.btn__error} ${style.btn__save}`;
 
   if (!showForm) {
     return (
@@ -42,8 +78,8 @@ export const NotesForm: React.FC<PropsType> = ({
         <input
           type="text"
           value={title}
-          className={style.input}
           onChange={changeInputValue}
+          className={titleStyle}
         />
       </div>
       {!city && (
@@ -52,8 +88,8 @@ export const NotesForm: React.FC<PropsType> = ({
           <input
             type="text"
             value={cityTitle}
-            className={style.input}
             onChange={changeInputCityValue}
+            className={cityTitleStyle}
           />
         </div>
       )}
@@ -62,13 +98,15 @@ export const NotesForm: React.FC<PropsType> = ({
         <textarea
           value={description}
           onChange={changeTxtAreaValue}
-          className={style.textarea}
+          className={descriptionStyle}
         ></textarea>
       </div>
       <button
-        className={`${style.btn} ${style.btn__save}`}
-        onClick={() => addNotes(noteID)}>
-        Save
+        disabled={error}
+        onClick={() => addNotes(noteID)}
+        className={errorBtnStyle}
+      >
+        {error ? invalidForm : save}
       </button>
     </div>
   );
