@@ -20,9 +20,13 @@ export const Notes: React.FC<PropsType> = ({
     getParseLocalStorageData(notesWidget)
   );
 
-  const [title, setTitle, changeInputValue] = useInputValue('');
-  const [cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
-  const [description, setDescription, changeTxtAreaValue] = useInputValue('');
+  const [titleCount, title, setTitle, changeInputValue] = useInputValue('');
+  const [
+    cityTitleCount, cityTitle, setCityTitle, changeInputCityValue
+  ] = useInputValue('');
+  const [
+    descriptionCount, description, setDescription, changeTxtAreaValue
+  ] = useInputValue('');
   const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
   const addNotes = (noteID: string) => {
@@ -82,7 +86,10 @@ export const Notes: React.FC<PropsType> = ({
       addNotes={addNotes}
       cityTitle={cityTitle}
       removeNote={removeNote}
+      titleCount={titleCount}
       description={description}
+      cityTitleCount={cityTitleCount}
+      descriptionCount={descriptionCount}
       changeInputValue={changeInputValue}
       changeTxtAreaValue={changeTxtAreaValue}
       changeInputCityValue={changeInputCityValue}

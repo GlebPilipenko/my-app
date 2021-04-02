@@ -14,9 +14,12 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
   addNotes,
   showForm,
   cityTitle,
+  titleCount,
   removeNote,
   description,
+  cityTitleCount,
   changeInputValue,
+  descriptionCount,
   changeTxtAreaValue,
   changeVisibilityForm,
   changeInputCityValue,
@@ -27,7 +30,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
 
   const renderNotesAccordion = () => foundNotes
     .map((foundCity: string, index: number) => {
-      return (
+        return (
           <React.Fragment key={index}>
             <AccordionItem
               city={city}
@@ -57,7 +60,10 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
           addNotes={addNotes}
           showForm={showForm}
           cityTitle={cityTitle}
+          titleCount={titleCount}
           description={description}
+          cityTitleCount={cityTitleCount}
+          descriptionCount={descriptionCount}
           changeInputValue={changeInputValue}
           changeTxtAreaValue={changeTxtAreaValue}
           changeInputCityValue={changeInputCityValue}
@@ -66,9 +72,9 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         {
           hasCity
             ? <NotesItem
-                city={city}
-                removeNote={removeNote}
-                filteredNotesByCountry={filteredNotesByCountry}
+              city={city}
+              removeNote={removeNote}
+              filteredNotesByCountry={filteredNotesByCountry}
             />
             : renderNotesAccordion()
         }
