@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
+import { ErrorCounter } from './components/errorCounter';
 
-export const NotesForm: React.FC<PropsType> = ({
+export const NotesForm: FC<PropsType> = ({
   city,
   title,
   addNotes,
   showForm,
   cityTitle,
+  titleCount,
   description,
+  cityTitleCount,
+  descriptionCount,
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
@@ -16,6 +20,7 @@ export const NotesForm: React.FC<PropsType> = ({
 }) => {
   const save = `Save`;
   const invalidForm = `Invalid Form`;
+  const errorMessage = `Value must be between 3 and 100 inclusive...`;
   const noteID = `${title}${Math.random()}`;
 
   const minInputValueLength = 3;
@@ -81,6 +86,14 @@ export const NotesForm: React.FC<PropsType> = ({
           onChange={changeInputValue}
           className={titleStyle}
         />
+        <ErrorCounter
+          count={titleCount}
+          errorMessage={errorMessage}
+          maxTitleLength={maxTitleLength}
+          maxCityTitleLength={maxCityTitleLength}
+          minInputValueLength={minInputValueLength}
+          maxDescriptionLength={maxDescriptionLength}
+        />
       </div>
       {!city && (
         <div className={style.input__container}>
@@ -91,6 +104,14 @@ export const NotesForm: React.FC<PropsType> = ({
             onChange={changeInputCityValue}
             className={cityTitleStyle}
           />
+          <ErrorCounter
+            count={cityTitleCount}
+            errorMessage={errorMessage}
+            maxTitleLength={maxTitleLength}
+            maxCityTitleLength={maxCityTitleLength}
+            minInputValueLength={minInputValueLength}
+            maxDescriptionLength={maxDescriptionLength}
+          />
         </div>
       )}
       <div className={style.textarea__container}>
@@ -100,6 +121,14 @@ export const NotesForm: React.FC<PropsType> = ({
           onChange={changeTxtAreaValue}
           className={descriptionStyle}
         ></textarea>
+        <ErrorCounter
+          count={descriptionCount}
+          errorMessage={errorMessage}
+          maxTitleLength={maxTitleLength}
+          maxCityTitleLength={maxCityTitleLength}
+          minInputValueLength={minInputValueLength}
+          maxDescriptionLength={maxDescriptionLength}
+        />
       </div>
       <button
         disabled={error}
