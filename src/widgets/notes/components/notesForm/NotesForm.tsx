@@ -89,10 +89,8 @@ export const NotesForm: FC<PropsType> = ({
         <ErrorCounter
           count={titleCount}
           errorMessage={errorMessage}
-          maxTitleLength={maxTitleLength}
-          maxCityTitleLength={maxCityTitleLength}
+          maxLength={maxTitleLength}
           minInputValueLength={minInputValueLength}
-          maxDescriptionLength={maxDescriptionLength}
         />
       </div>
       {!city && (
@@ -107,10 +105,8 @@ export const NotesForm: FC<PropsType> = ({
           <ErrorCounter
             count={cityTitleCount}
             errorMessage={errorMessage}
-            maxTitleLength={maxTitleLength}
-            maxCityTitleLength={maxCityTitleLength}
+            maxLength={maxCityTitleLength}
             minInputValueLength={minInputValueLength}
-            maxDescriptionLength={maxDescriptionLength}
           />
         </div>
       )}
@@ -124,10 +120,8 @@ export const NotesForm: FC<PropsType> = ({
         <ErrorCounter
           count={descriptionCount}
           errorMessage={errorMessage}
-          maxTitleLength={maxTitleLength}
-          maxCityTitleLength={maxCityTitleLength}
+          maxLength={maxDescriptionLength}
           minInputValueLength={minInputValueLength}
-          maxDescriptionLength={maxDescriptionLength}
         />
       </div>
       <button

@@ -1,8 +1,6 @@
 export type PropsType = {
   count: number;
+  maxLength: number;
   errorMessage: string;
-  maxTitleLength: number;
-  maxCityTitleLength: number;
   minInputValueLength: number;
-  maxDescriptionLength: number;
 };
