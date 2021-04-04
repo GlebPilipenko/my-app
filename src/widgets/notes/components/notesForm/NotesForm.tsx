@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import { ErrorCounter } from './components/errorCounter';
+import {ErrorCounter} from './components/errorCounter';
 
 export const NotesForm: FC<PropsType> = ({
   city,
@@ -16,7 +16,7 @@ export const NotesForm: FC<PropsType> = ({
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
-  changeVisibilityForm,
+  changeVisibilityForm
 }) => {
   const save = `Save`;
   const invalidForm = `Invalid Form`;
@@ -52,7 +52,7 @@ export const NotesForm: FC<PropsType> = ({
     : style.input;
   const descriptionStyle = errorDescription && descriptionLength !== 0
     ? style.error
-    :  style.textarea;
+    : style.textarea;
   const errorBtnStyle = error
     ? `${style.btn__error} ${style.invalid_btn__error}`
     : `${style.btn__error} ${style.btn__save}`;

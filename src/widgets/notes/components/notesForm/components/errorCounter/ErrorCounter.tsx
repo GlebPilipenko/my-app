@@ -6,17 +6,16 @@ export const ErrorCounter: FC<PropsType> = ({
   count,
   maxLength,
   errorMessage,
-  minInputValueLength,
+  minInputValueLength
 }) => {
   const propsCount = !count ? 0 : count;
   const errorStyle = (
     (propsCount !== 0) &&
     ((propsCount > maxLength) ||
-    (propsCount < minInputValueLength))
+      (propsCount < minInputValueLength))
   );
   const textCountStyle = errorStyle ? `${style.red}` : ``;
 
-  debugger
   return (
     <div>
       <span className={textCountStyle}>
