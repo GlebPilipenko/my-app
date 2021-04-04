@@ -21,12 +21,8 @@ export const Notes: React.FC<PropsType> = ({
   );
 
   const [titleCount, title, setTitle, changeInputValue] = useInputValue('');
-  const [
-    cityTitleCount, cityTitle, setCityTitle, changeInputCityValue
-  ] = useInputValue('');
-  const [
-    descriptionCount, description, setDescription, changeTxtAreaValue
-  ] = useInputValue('');
+  const [cityTitleCount, cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
+  const [descriptionCount, description, setDescription, changeTxtAreaValue] = useInputValue('');
   const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
   const addNotes = (noteID: string) => {
