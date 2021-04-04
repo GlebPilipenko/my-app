@@ -9,9 +9,11 @@ export const ErrorCounter: FC<PropsType> = ({
   minInputValueLength,
   maxDescriptionLength,
 }) => {
+  const propsCount = !count ? 0 : count;
+
   return (
     <div>
-      <span>{`${count} / 100`}</span>
+      <span>{`${propsCount} / 100`}</span>
     </div>
   );
 };
