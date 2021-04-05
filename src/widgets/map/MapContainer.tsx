@@ -1,15 +1,15 @@
 import {FC, useCallback, useEffect, useState} from 'react';
 import {initMap} from './utils';
 import {PropsType} from './typings';
+import {getCoordinates} from 'src/api/mapApi';
 import {DefaultQueryParameters} from 'src/enums';
 import {MapAPIType} from 'src/api/mapApi/typings';
 import {ErrorMessage} from 'src/common/errorMessage';
-import {getCoordsByCity, getCoordsByCountry} from 'src/api/mapApi';
 
 export const MapContainer: FC<PropsType> = ({
   city = DefaultQueryParameters.InvalidCity,
   coords = DefaultQueryParameters.InvalidCoords,
-  country = DefaultQueryParameters.InvalidCountry
+  country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [state, setState] = useState<any | MapAPIType>(null);
   const [error, setError] = useState<string>('');
@@ -33,35 +33,26 @@ export const MapContainer: FC<PropsType> = ({
   const invalidCityAndCountry = (
     (!city || isInvalidCountry) && (!country || isInvalidCity)
   );
-  const errorMessage = `Error, enter valid city, country or coords, 
-  coordinates should be from -85 and to 85 and via the ' , '`;
+  const errorMessage = `
+  Error, enter valid city or country, If no city and country enter valid coords, 
+  coordinates should be from -85 and to 85 and via the ' , '
+  `;
 
-  const getCoordsWithCountry = useCallback(async (country: string) => {
-    const coordsByCountry = await getCoordsByCountry(country);
-    const countryArrayLength = coordsByCountry.data.results.length;
-    const emptyCountryArray = countryArrayLength === 0;
-
-    if (!emptyCountryArray) {
-      return setState(coordsByCountry.data);
-    }
-
-    setError(errorMessage);
-  }, [errorMessage]);
   const getCoords = useCallback(async (city: string, country: string) => {
-    if (!city) {
-     return await getCoordsWithCountry(country);
-    }
+    if (city && country) {
+      const coordsByCity = await getCoordinates(city, country);
+      const cityArrayLength = coordsByCity.data.results.length;
+      const emptyCityArray = cityArrayLength === 0;
 
-    const coordsByCity = await getCoordsByCity(city);
-    const cityArrayLength = coordsByCity.data.results.length;
-    const emptyCityArray = cityArrayLength === 0;
-
-    if (!emptyCityArray) {
-      return setState(coordsByCity.data);
+      if (!emptyCityArray) {
+        return setState(coordsByCity.data);
+      } else {
+        return setError(errorMessage);
+      }
     } else {
-      await getCoordsWithCountry(country);
+      setError(errorMessage);
     }
-  }, [getCoordsWithCountry]);
+  }, [errorMessage]);
 
   useEffect(() => {
     (async () => {
@@ -71,15 +62,15 @@ export const MapContainer: FC<PropsType> = ({
         }
 
         if (coordsNoNumber && invalidCityAndCountry && lengthOfArrayCoords) {
-          return setError(`Coords not a number...`);
+          return setError(errorMessage);
         }
 
         if (!lengthOfArrayCoords) {
-          if (!city && !country) {
+          if (!city || !country) {
             return setError(errorMessage);
           }
 
-          if (city || country) {
+          if (city && country) {
             return await getCoords(city, country);
           }
         }
@@ -101,10 +92,6 @@ export const MapContainer: FC<PropsType> = ({
           } else {
             return setError(errorMessage);
           }
-        }
-
-        if (city || country) {
-          return await getCoords(city, country);
         }
       } catch (error) {
         !error.response

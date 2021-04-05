@@ -1,1 +1,1 @@
-export {getCoordsByCity, getCoordsByCountry} from './mapAPI';
+export {getCoordinates} from './mapAPI';
