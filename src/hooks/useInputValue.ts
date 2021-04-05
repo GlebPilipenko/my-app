@@ -1,15 +1,16 @@
 import {ChangeEvent, useState} from 'react';
-import {useCountValue} from './useCountValue';
 
 export const useInputValue = (initValue: string) => {
-  const [count, getNewCountValue] = useCountValue(0);
-  const [value, setValue] = useState<any>(initValue);
+  const [value, setValue] = useState<any>(() => initValue);
+  const [count, setCount] = useState<any>('');
 
   const onChangeHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setValue(event.currentTarget.value);
-    getNewCountValue(event);
+    const value = event.currentTarget.value;
+
+    setValue(value);
+    setCount(value.length);
   };
 
   return [count, value, setValue, onChangeHandler];
