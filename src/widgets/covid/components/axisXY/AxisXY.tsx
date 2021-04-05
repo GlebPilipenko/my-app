@@ -14,9 +14,7 @@ export const AxisXY: FC<PropsType> = ({
       <>
         {Array.from({length: countTicsYCoordinates}).map((_, index) => {
           const coordsY = startCoordY + index * (axisLengthY / countTicsYCoordinates);
-          const abbreviatedYValue = getAbbreviatedYValue(
-            index, maxYValue, countTicsYCoordinates
-          );
+          const abbreviatedYValue = getAbbreviatedYValue(index, maxYValue);
 
           return (
             <g key={index}>
