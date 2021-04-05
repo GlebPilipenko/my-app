@@ -7,9 +7,9 @@ const mapApi = axios.create({
 
 const apikey = `${process.env.REACT_APP_MAP_API_KEY}`;
 
-const getQueryParams = (city: string, country: string, apikey: string) => {
-  return `json?address="${city} ${country}"&key=${apikey}`;
-};
+const getQueryParams = (city: string, country: string, apikey: string) => (
+  `json?address="${city} ${country}"&key=${apikey}`
+);
 
 export const getCoordinates = (city: string, country: string) => mapApi
   .get<MapAPIType>(getQueryParams(city, country, apikey));
