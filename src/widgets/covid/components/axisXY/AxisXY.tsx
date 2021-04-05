@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import {PropsType} from './typings';
 import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
+import style from '../svgDiagrams/SVGDiagrams.module.css';
 
 export const AxisXY: FC<PropsType> = ({
   maxYValue,
@@ -29,6 +30,7 @@ export const AxisXY: FC<PropsType> = ({
                 textAnchor='end'
                 y={coordsY + 5}
                 x={startCoordX - 5}
+                className={style.axis_Y__text}
               >
                 {abbreviatedYValue}
               </text>

@@ -12,6 +12,7 @@
     max-width: 1000px;
     width: 100%;
     margin: 0 auto;
+    overflow: visible;
 }
 
 .graphs {
@@ -49,6 +50,24 @@
 
     .quantity {
         font-size: 22px;
+    }
+
+    .axis_Y__text {
+        text-align: right;
+        white-space: nowrap;
+        font-size: 2.5vw;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .axis_Y__text {
+        font-size: 2.8vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .axis_Y__text {
+        font-size: 3.5vw;
     }
 }
 
