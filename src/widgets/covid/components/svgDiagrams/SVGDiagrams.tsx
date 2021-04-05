@@ -16,7 +16,7 @@ export const SVGDiagrams: FC<PropsType> = ({state}) => {
   const SVG_HEIGHT = 700;
 
   const startCoordX = 65;
-  const startCoordY = 50;
+  const startCoordY = 70;
   const countTicsYCoordinates = 10;
   const axisLengthX = SVG_WIDTH - startCoordX * 2;
   const axisLengthY = SVG_HEIGHT - startCoordY * 2;

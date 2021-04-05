@@ -33,13 +33,22 @@
     padding: 0 65px;
 }
 
+
 @media screen and (max-width: 768px) {
     .info__container {
         padding: 0 6vw;
     }
 
     .info__item {
-        font-size: 2vw;
+        font-size: 2.5vw;
+    }
+
+    .y__value {
+        font-size: 20px;
+    }
+
+    .quantity {
+        font-size: 22px;
     }
 }
 
