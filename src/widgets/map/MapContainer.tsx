@@ -34,7 +34,7 @@ export const MapContainer: FC<PropsType> = ({
     (!city || isInvalidCountry) || (!country || isInvalidCity)
   );
   const errorMessage = `
-  Error, enter valid city or country, If no city and country enter valid coords, 
+  Error, enter valid city or country, If no city and country enter valid coords,
   coordinates should be from -85 and to 85 and via the ' , '
   `;
   const coordsNoNumberCityCountry =
@@ -93,14 +93,20 @@ export const MapContainer: FC<PropsType> = ({
             }
           }
         } catch (error) {
+          const statusText = error.response.statusText;
+
           !error.response
             ? setError(`Request is blocked...`)
-            : setError(error.response.message);
+            : setError(
+            statusText === `Not Found`
+              ? errorMessage
+              : statusText
+            );
         }
       })();
     }, [city, coords, country, lat, lng, isInvalidCoords, errorMessage,
-    allPropsInvalid, invalidCityAndCountry, lengthOfArrayCoords,
-    coordsNoNumber, coordsNoNumberCityCountry, getCoords]
+      allPropsInvalid, invalidCityAndCountry, lengthOfArrayCoords,
+      coordsNoNumber, coordsNoNumberCityCountry, getCoords]
   );
 
   useEffect(() => {
