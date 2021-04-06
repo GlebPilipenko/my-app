@@ -16,7 +16,7 @@ export const NotesForm: FC<PropsType> = ({
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
-  changeVisibilityForm
+  changeVisibilityForm,
 }) => {
   const save = `Save`;
   const invalidForm = `Invalid Form`;
@@ -80,12 +80,12 @@ export const NotesForm: FC<PropsType> = ({
       </div>
       <div className={style.input__container}>
         <h4>Add your title</h4>
-        <input
-          type="text"
-          value={title}
-          onChange={changeInputValue}
-          className={titleStyle}
-        />
+          <input
+            type="text"
+            value={title}
+            onChange={changeInputValue}
+            className={titleStyle}
+          />
         <ErrorCounter
           count={titleCount}
           errorMessage={errorMessage}

@@ -1,21 +1,27 @@
 .form__container {
-    width: inherit;
+    max-width: 500px;
     margin-bottom: 15px;
 }
 
 .input__container {
     width: 100%;
     margin-bottom: 15px;
+    position: relative;
+    padding: 10px 0;
 }
 
 .input {
     width: 100%;
     outline: 0;
     outline-offset: 0;
+    padding-inline-end: 60px;
 }
 
 .textarea__container {
     width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+    padding: 10px 0;
 }
 
 .textarea {
@@ -70,4 +76,5 @@
     outline: 0;
     outline-offset: 0;
     border: 1px solid red;
+    padding-inline-end: 60px;
 }

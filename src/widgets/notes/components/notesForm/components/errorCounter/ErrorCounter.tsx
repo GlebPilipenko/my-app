@@ -6,22 +6,27 @@ export const ErrorCounter: FC<PropsType> = ({
   count,
   maxLength,
   errorMessage,
-  minInputValueLength
+  minInputValueLength,
 }) => {
   const propsCount = !count ? 0 : count;
-  const errorStyle = (
+  const error = (
     (propsCount !== 0) &&
     ((propsCount > maxLength) ||
       (propsCount < minInputValueLength))
   );
-  const textCountStyle = errorStyle ? `${style.red}` : ``;
+  const countStyle = error
+    ? `${style.error__count}`
+    : `${style.no_error__count}`;
+  const messageStyle = error
+    ? `${style.error__message}`
+    : `${style.no_error__message}`;
 
   return (
-    <div>
-      <span className={textCountStyle}>
+    <div className={style.container}>
+      <span className={countStyle}>
         {`${propsCount} / ${maxLength}`}
-        {errorStyle && errorMessage}
       </span>
+      <span className={messageStyle}>{error && errorMessage}</span>
     </div>
   );
 };
