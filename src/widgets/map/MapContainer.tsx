@@ -60,7 +60,6 @@ export const MapContainer: FC<PropsType> = ({
   useEffect(() => {
       (async () => {
         try {
-          debugger
           if (allPropsInvalid || coordsNoNumberCityCountry) {
             return setError(errorMessage);
           }
@@ -100,8 +99,8 @@ export const MapContainer: FC<PropsType> = ({
         }
       })();
     }, [city, coords, country, lat, lng, isInvalidCoords, errorMessage,
-      isInvalidCity, allPropsInvalid, coordsNoNumber, invalidCityAndCountry,
-      lengthOfArrayCoords, getCoords]
+    allPropsInvalid, invalidCityAndCountry, lengthOfArrayCoords,
+    coordsNoNumber, coordsNoNumberCityCountry, getCoords]
   );
 
   useEffect(() => {
