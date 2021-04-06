@@ -1,3 +1,3 @@
-export {News} from './news/News';
-export {Notes} from './notes/Notes';
-export {Weather} from './weather/Weather';
+export {News} from './news';
+export {Notes} from './notes';
+export {Weather} from './weather';

@@ -1,1 +1,1 @@
-export {AccordionWithNotes} from './components';
+export {Notes} from './Notes';

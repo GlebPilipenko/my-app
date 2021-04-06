@@ -18,7 +18,6 @@ const getAppNodes = (selectors: string[]) => {
     .filter(nodes => !!nodes.length).flat();
 };
 
-
 const initApp = async (appRoot: HTMLElement) => {
   const props = appRoot.dataset;
 

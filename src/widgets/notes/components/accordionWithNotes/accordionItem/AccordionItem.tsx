@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './style.css';
-import './animationStyle.css';
+import './AnimationStyle.css';
 import {PropsType} from './typings';
 import style from './AccordionItem.module.css';
 import {getCapitalizedString} from 'src/utils';
@@ -69,7 +69,7 @@ export const AccordionItem: React.FC<PropsType> = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className={style.city__container}>
         {
           foundCity
@@ -90,6 +90,6 @@ export const AccordionItem: React.FC<PropsType> = ({
       >
         {renderNoteItem()}
       </CSSTransition>
-    </React.Fragment>
+    </>
   );
 };

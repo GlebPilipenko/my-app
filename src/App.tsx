@@ -9,6 +9,7 @@ export const App: React.FC<PropsType> = ({
   city,
   country,
 }) => {
+  console.log(country);
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
       return <div className={style.wrapper}>
