@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import {ErrorCounter} from './components/errorCounter';
+import {ErrorCounterWithMessage} from './components/errorCounterWithMessage';
 
 export const NotesForm: FC<PropsType> = ({
   city,
@@ -57,6 +57,16 @@ export const NotesForm: FC<PropsType> = ({
     ? `${style.btn__error} ${style.invalid_btn__error}`
     : `${style.btn__error} ${style.btn__save}`;
 
+  const renderErrorCounterWithMessage = (count: number, errorMessage: string,
+                                         maxLength: number, minInputValueLength: number) => {
+    return <ErrorCounterWithMessage
+      count={count}
+      errorMessage={errorMessage}
+      maxLength={maxLength}
+      minInputValueLength={minInputValueLength}
+    />;
+  };
+
   if (!showForm) {
     return (
       <div className={style.btn__container}>
@@ -80,18 +90,14 @@ export const NotesForm: FC<PropsType> = ({
       </div>
       <div className={style.input__container}>
         <h4>Add your title</h4>
-          <input
-            type="text"
-            value={title}
-            onChange={changeInputValue}
-            className={titleStyle}
-          />
-        <ErrorCounter
-          count={titleCount}
-          errorMessage={errorMessage}
-          maxLength={maxTitleLength}
-          minInputValueLength={minInputValueLength}
+        <input
+          type="text"
+          value={title}
+          onChange={changeInputValue}
+          className={titleStyle}
         />
+        {renderErrorCounterWithMessage(titleCount, errorMessage,
+          maxCityTitleLength, minInputValueLength)}
       </div>
       {!city && (
         <div className={style.input__container}>
@@ -102,12 +108,8 @@ export const NotesForm: FC<PropsType> = ({
             onChange={changeInputCityValue}
             className={cityTitleStyle}
           />
-          <ErrorCounter
-            count={cityTitleCount}
-            errorMessage={errorMessage}
-            maxLength={maxCityTitleLength}
-            minInputValueLength={minInputValueLength}
-          />
+          {renderErrorCounterWithMessage(cityTitleCount, errorMessage,
+            maxCityTitleLength, minInputValueLength)}
         </div>
       )}
       <div className={style.textarea__container}>
@@ -117,12 +119,8 @@ export const NotesForm: FC<PropsType> = ({
           onChange={changeTxtAreaValue}
           className={descriptionStyle}
         ></textarea>
-        <ErrorCounter
-          count={descriptionCount}
-          errorMessage={errorMessage}
-          maxLength={maxDescriptionLength}
-          minInputValueLength={minInputValueLength}
-        />
+        {renderErrorCounterWithMessage(descriptionCount, errorMessage,
+          maxDescriptionLength, minInputValueLength)}
       </div>
       <button
         disabled={error}

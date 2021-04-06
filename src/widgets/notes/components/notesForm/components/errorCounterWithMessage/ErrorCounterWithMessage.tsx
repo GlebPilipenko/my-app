@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {PropsType} from './typings';
 import style from './ErrorCounter.module.css';
 
-export const ErrorCounter: FC<PropsType> = ({
+export const ErrorCounterWithMessage: FC<PropsType> = ({
   count,
   maxLength,
   errorMessage,

@@ -14,7 +14,7 @@
     width: 100%;
     outline: 0;
     outline-offset: 0;
-    padding-inline-end: 60px;
+    padding-inline-end: 80px;
 }
 
 .textarea__container {
@@ -28,7 +28,7 @@
     width: 100%;
     outline: 0;
     outline-offset: 0;
-    padding-inline-end: 60px;
+    padding-inline-end: 80px;
 }
 
 .btn {
@@ -77,5 +77,5 @@
     outline: 0;
     outline-offset: 0;
     border: 1px solid red;
-    padding-inline-end: 60px;
+    padding-inline-end: 80px;
 }

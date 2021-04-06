@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {PropsType} from './typings';
 import '../accordionWithNotes/accordionItem';
 import {NotesType} from 'src/widgets/notes/typings';
 
-export const NotesItem: React.FC<PropsType> = ({
+export const NotesItem: FC<PropsType> = ({
   city,
   removeNote,
   filteredNotesByCountry,
