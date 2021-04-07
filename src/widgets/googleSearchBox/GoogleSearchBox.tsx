@@ -7,11 +7,12 @@ export const GoogleSearchBox = () => {
 
   useEffect(() => {
     searchBoxAutocomplete();
-  }, []);
+  });
 
   return <input
     value={value}
     id={'searchTextField'}
     onChange={changeInputValue}
+    autoComplete={'on'}
   />;
 };

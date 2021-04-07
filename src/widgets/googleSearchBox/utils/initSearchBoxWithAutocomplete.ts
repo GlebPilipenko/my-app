@@ -14,8 +14,9 @@ const initSearchBoxWithAutocomplete = () => (
 );
 
 export const searchBoxAutocomplete = () => {
+  const dataFromLocalStorage = getParseLocalStorageData(googleSearchBoxWidget);
+
   loader.load().then(() => {
-    const dataFromLocalStorage = getParseLocalStorageData(googleSearchBoxWidget);
     const searchBox = new google.maps.places.SearchBox(
       initSearchBoxWithAutocomplete() as HTMLInputElement
     );
@@ -29,7 +30,8 @@ export const searchBoxAutocomplete = () => {
         }
 
         setDataToLocalStorage(googleSearchBoxWidget, JSON.stringify([
-          ...dataFromLocalStorage, places[0]]));
+          ...dataFromLocalStorage, places[0]
+        ]));
       }
     });
   });
