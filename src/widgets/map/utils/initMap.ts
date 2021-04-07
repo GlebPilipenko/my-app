@@ -1,10 +1,10 @@
-import {Loader} from '@googlemaps/js-api-loader';
+import {getGoogleMapLoader} from 'src/services';
 
 const styles = require('../json/GoogleMapStyles.json');
 export let map: any;
 
 export const initMap = (lat: number, lng: number) => {
-  const loader = new Loader({apiKey: 'AIzaSyD4BdUK5hAfpPqFPZ-WDvUsxF339VKMz3s'});
+  const loader = getGoogleMapLoader();
 
   loader.load().then(() => {
     map = new google.maps.Map(document.getElementById('map') as HTMLElement,
