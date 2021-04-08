@@ -2,11 +2,13 @@
 
 html {
     min-width: 320px;
+    height: 100%;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
     color: black;
+    height: 100%;
 }
 
 *,
@@ -42,8 +44,6 @@ dd {
 }
 
 body {
-    min-height: 100vh;
-    scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
 }
@@ -60,10 +60,6 @@ a:not([class]) {
 img {
     max-width: 100%;
     display: block;
-}
-
-article > * + * {
-    margin-top: 1em;
 }
 
 input,

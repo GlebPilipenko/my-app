@@ -6,15 +6,13 @@ import {
 } from 'src/services';
 
 const googleSearchBoxWidget = LocalStorageTitles.GoogleSearchBox;
-const loader = getGoogleMapLoader();
-loader.libraries = ['places'];
 
 const initSearchBoxWithAutocomplete = () => (
   document.getElementById('searchTextField')
 );
-
 export const searchBoxAutocomplete = () => {
   const dataFromLocalStorage = getParseLocalStorageData(googleSearchBoxWidget);
+  const loader = getGoogleMapLoader();
 
   loader.load().then(() => {
     const searchBox = new google.maps.places.SearchBox(
