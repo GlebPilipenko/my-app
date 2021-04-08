@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 const ROOT_SELECTORS = [
   '[data-app="news-widget"]',
   '[data-app="notes-widget"]',
-  '[data-app="weather-widget"]'
+  '[data-app="images-widget"]',
+  '[data-app="weather-widget"]',
 ];
 
 const getAppNodes = (selectors: string[]) => {
