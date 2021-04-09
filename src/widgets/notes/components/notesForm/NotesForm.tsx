@@ -12,7 +12,7 @@ export const NotesForm: FC<PropsType> = ({
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
-  changeVisibilityForm
+  changeVisibilityForm,
 }) => {
   const noteID = `${title}${Math.random()}`;
 

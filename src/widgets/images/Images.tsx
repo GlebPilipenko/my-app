@@ -24,11 +24,17 @@ export const Images: FC<PropsType> = ({
 
     return (
       <div className={style.image_grid}>
-        {photoPath.map((path: string) => (
-          <div className={style.image_item}>
-            <img src={path} alt="images" />
-          </div>
-        ))}
+        {photoPath.map((path: string) => {
+          const key = `${path}${Date.now()}`;
+
+          return (
+            <div
+              key={key}
+              className={style.image_item}>
+              <img src={path} alt="images" />
+            </div>
+          );
+        })}
       </div>
     );
   };
