@@ -25,7 +25,7 @@ export const App: React.FC<PropsType> = ({
       </div>;
     case `${WidgetTitles.MapWidget}`:
       return <div className={style.wrapper}>
-        <MapContainer country={country} city={city} coords={coords} />
+        <MapContainer coords={coords} />
       </div>;
     default:
       return null;
