@@ -5,9 +5,10 @@ import style from './SVGDiagrams.module.css';
 import {getCapitalizedString} from 'src/utils';
 import {ColumnWithInformation} from '../columnWithInformation';
 
-export const SVGDiagrams: FC<PropsType> = ({state}) => {
-  const [, , , cases, , deaths, , recovered, , active] = state;
-  const data = [cases, deaths, recovered, active];
+export const SVGDiagrams: FC<PropsType> = ({
+  state,
+}) => {
+  const data = Object.entries(state);
 
   const axisX = 0;
   const axisY = 0;

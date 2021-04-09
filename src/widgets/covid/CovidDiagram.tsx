@@ -1,24 +1,31 @@
 import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
-import {getInfoByCovid} from 'src/api';
+import {getInfoByCovid} from 'src/api/covidApi';
 import {DefaultQueryParameters} from 'src/enums';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
 import {CovidAPIType} from 'src/api/covidApi/typings';
 
 export const CovidDiagram: FC<PropsType> = ({
-  country = DefaultQueryParameters.InvalidCountry
+  country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [error, setError] = useState<string>('');
-  const [state, setState] = useState<any | CovidAPIType[]>(null);
+  const [state, setState] = useState<{} | CovidAPIType>({});
 
-  const numCountriesInWorld = 193;
+  const stateIsEmpty = (state: {} | CovidAPIType) => {
+    for (let key in state) {
+      return false;
+    }
+    return true;
+  }
 
   useEffect(() => {
     (async () => {
       try {
         const infoByCovid = await getInfoByCovid(country);
-        setState(Object.entries(infoByCovid.data));
+        const {cases, deaths, recovered, active} = infoByCovid.data;
+
+        setState({cases, deaths, recovered, active});
       } catch (e) {
         e.response
           ? setError(e.response.data.message)
@@ -27,12 +34,8 @@ export const CovidDiagram: FC<PropsType> = ({
     })();
   }, [country]);
 
-  if (!state) {
+  if (stateIsEmpty(state)) {
     return <ErrorMessage errorMessage={error} />;
-  }
-
-  if (state.length >= numCountriesInWorld) {
-    return <ErrorMessage errorMessage={`Country not found...`} />;
   }
 
   return <SVGDiagrams state={state} />;

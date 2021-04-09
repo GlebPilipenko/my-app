@@ -1,4 +1,4 @@
-import {CovidAPIType} from 'src/api/covidApi/typings';
+import {CountryInfoType} from 'src/api/covidApi/typings';
 
 export type PropsType = {
   maxYValue: number;
@@ -7,5 +7,5 @@ export type PropsType = {
   startCoordY: number;
   axisLengthY: number;
   barPlotWidth: number;
-  data: CovidAPIType[];
+  data: [string, string | number | CountryInfoType | null][];
 };

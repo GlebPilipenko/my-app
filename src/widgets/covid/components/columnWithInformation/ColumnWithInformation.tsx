@@ -14,7 +14,7 @@ export const ColumnWithInformation: FC<PropsType> = ({
   const renderColumnWithInformation = () => {
     return (
       <>
-        {data.map(([_, dataY]: any, index: number) => {
+        {data.map(([_, dataY], index: number) => {
             const sidePadding = 10;
             const verticalPositionForText = 15;
 
@@ -27,7 +27,7 @@ export const ColumnWithInformation: FC<PropsType> = ({
               <g key={index}>
                 <g className={style.y_value__container}>
                   <text
-                    textAnchor='middle'
+                    textAnchor="middle"
                     y={verticalPositionForText}
                     x={coordsX + barPlotWidth / 2}
                     className={style.y__value}
@@ -37,11 +37,11 @@ export const ColumnWithInformation: FC<PropsType> = ({
                 </g>
                 <g>
                   <animateTransform
-                    to='0 0'
-                    dur='1s'
-                    type='translate'
+                    to="0 0"
+                    dur="1s"
+                    type="translate"
                     from={`0 ${height}`}
-                    attributeName='transform'
+                    attributeName="transform"
                   />
                   <rect
                     height={height}
@@ -51,15 +51,15 @@ export const ColumnWithInformation: FC<PropsType> = ({
                     x={coordsX + sidePadding / 2}
                   >
                     <animate
-                      from='0'
-                      dur='1s'
+                      from="0"
+                      dur="1s"
                       to={height}
-                      attributeName='height'
+                      attributeName="height"
                     />
                   </rect>
                 </g>
                 <text
-                  textAnchor='middle'
+                  textAnchor="middle"
                   x={startCoordX - 20}
                   y={startCoordY - 53}
                   className={style.quantity}
