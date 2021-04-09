@@ -20,8 +20,10 @@ export const NotesForm: FC<PropsType> = ({
 }) => {
   const save = `Save`;
   const invalidForm = `Invalid Form`;
-  const errorMessage = `Value must be between 3 and 100 inclusive...`;
   const noteID = `${title}${Math.random()}`;
+  const errorMessage = (maxLength: number) => (
+    `Value must be between 3 and ${maxLength} inclusive...`
+  );
 
   const minInputValueLength = 3;
   const maxDescriptionLength = 250;
@@ -58,7 +60,7 @@ export const NotesForm: FC<PropsType> = ({
     : `${style.btn__error} ${style.btn__save}`;
 
   const renderErrorCounterWithMessage = (count: number, errorMessage: string,
-                                         maxLength: number, minInputValueLength: number) => {
+    maxLength: number, minInputValueLength: number) => {
     return <ErrorCounterWithMessage
       count={count}
       errorMessage={errorMessage}
@@ -96,8 +98,11 @@ export const NotesForm: FC<PropsType> = ({
           onChange={changeInputValue}
           className={titleStyle}
         />
-        {renderErrorCounterWithMessage(titleCount, errorMessage,
-          maxCityTitleLength, minInputValueLength)}
+        {
+          renderErrorCounterWithMessage(
+            titleCount, errorMessage(maxTitleLength), maxCityTitleLength, minInputValueLength
+          )
+        }
       </div>
       {!city && (
         <div className={style.input__container}>
@@ -108,8 +113,11 @@ export const NotesForm: FC<PropsType> = ({
             onChange={changeInputCityValue}
             className={cityTitleStyle}
           />
-          {renderErrorCounterWithMessage(cityTitleCount, errorMessage,
-            maxCityTitleLength, minInputValueLength)}
+          {
+            renderErrorCounterWithMessage(cityTitleCount,
+              errorMessage(maxCityTitleLength), maxCityTitleLength, minInputValueLength
+            )
+          }
         </div>
       )}
       <div className={style.textarea__container}>
@@ -119,8 +127,11 @@ export const NotesForm: FC<PropsType> = ({
           onChange={changeTxtAreaValue}
           className={descriptionStyle}
         ></textarea>
-        {renderErrorCounterWithMessage(descriptionCount, errorMessage,
-          maxDescriptionLength, minInputValueLength)}
+        {
+          renderErrorCounterWithMessage(descriptionCount,
+            errorMessage(maxDescriptionLength), maxDescriptionLength, minInputValueLength
+          )
+        }
       </div>
       <button
         disabled={error}
