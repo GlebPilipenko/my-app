@@ -1,7 +1,6 @@
 import {LocalStorageTitles} from '../enums';
 import {
   getGoogleMapLoader,
-  getParseLocalStorageData,
   setDataToLocalStorage
 } from 'src/services';
 
@@ -11,7 +10,6 @@ const initSearchBoxWithAutocomplete = () => (
   document.getElementById('searchTextField')
 );
 export const searchBoxAutocomplete = () => {
-  const dataFromLocalStorage = getParseLocalStorageData(googleSearchBoxWidget);
   const loader = getGoogleMapLoader();
 
   loader.load().then(() => {
@@ -27,9 +25,7 @@ export const searchBoxAutocomplete = () => {
           return;
         }
 
-        setDataToLocalStorage(googleSearchBoxWidget, JSON.stringify([
-          ...dataFromLocalStorage, places[0]
-        ]));
+        setDataToLocalStorage(googleSearchBoxWidget, JSON.stringify([places[0]]));
       }
     });
   });

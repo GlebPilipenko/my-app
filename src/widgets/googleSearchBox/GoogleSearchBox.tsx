@@ -8,7 +8,7 @@ export const GoogleSearchBox = () => {
 
   useEffect(() => {
     searchBoxAutocomplete();
-  });
+  }, []);
 
   return (
     <div className={style.search_box__container}>
