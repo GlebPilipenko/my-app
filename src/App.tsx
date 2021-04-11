@@ -8,7 +8,7 @@ export const App: React.FC<PropsType> = ({
   app,
   city,
   coords,
-  country,
+  country
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
