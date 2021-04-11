@@ -1,23 +1,24 @@
 import {FC, useEffect, useState} from 'react';
-import {PropsType} from './typings';
+import {PropsType, StateType} from './typings';
 import {getInfoByCovid} from 'src/api/covidApi';
 import {DefaultQueryParameters} from 'src/enums';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
-import {CovidAPIType} from 'src/api/covidApi/typings';
 
 export const CovidDiagram: FC<PropsType> = ({
   country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [error, setError] = useState<string>('');
-  const [state, setState] = useState<{} | CovidAPIType>({});
+  const [state, setState] = useState<{} | StateType>({});
 
-  const stateIsEmpty = (state: {} | CovidAPIType) => {
-    for (let key in state) {
-      return false;
+  const stateIsEmpty = (state: {} | StateType) => {
+    for(let key in state) {
+      if(state.hasOwnProperty(key))
+        return false;
     }
+
     return true;
-  }
+  };
 
   useEffect(() => {
     (async () => {

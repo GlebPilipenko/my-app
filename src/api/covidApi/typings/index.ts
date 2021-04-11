@@ -1,4 +1,4 @@
-export type CountryInfoType = {
+type CountryInfoType = {
   _id: number;
   iso2: string;
   iso3: string;

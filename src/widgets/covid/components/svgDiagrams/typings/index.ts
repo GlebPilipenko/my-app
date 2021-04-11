@@ -1,5 +1,5 @@
-import {CovidAPIType} from 'src/api/covidApi/typings';
+import {StateType} from 'src/widgets/covid/typings';
 
 export type PropsType = {
-  state: {} | CovidAPIType;
+  state: {} | StateType;
 };

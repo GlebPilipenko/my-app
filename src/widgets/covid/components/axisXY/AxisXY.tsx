@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {PropsType} from './typings';
-import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
 import style from '../svgDiagrams/SVGDiagrams.module.css';
+import {getAbbreviatedYValue} from 'src/widgets/covid/utils';
 
 export const AxisXY: FC<PropsType> = ({
   maxYValue,
