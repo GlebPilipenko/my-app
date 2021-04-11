@@ -6,14 +6,14 @@ import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
 
 export const CovidDiagram: FC<PropsType> = ({
-  country = DefaultQueryParameters.InvalidCountry,
+  country = DefaultQueryParameters.InvalidCountry
 }) => {
   const [error, setError] = useState<string>('');
   const [state, setState] = useState<{} | StateType>({});
 
   const stateIsEmpty = (state: {} | StateType) => {
-    for(let key in state) {
-      if(state.hasOwnProperty(key))
+    for (let key in state) {
+      if (state.hasOwnProperty(key))
         return false;
     }
 
@@ -23,6 +23,10 @@ export const CovidDiagram: FC<PropsType> = ({
   useEffect(() => {
     (async () => {
       try {
+        if (!country) {
+          return setError(`Country not found...`);
+        }
+
         const infoByCovid = await getInfoByCovid(country);
         const {cases, deaths, recovered, active} = infoByCovid.data;
 
@@ -35,7 +39,7 @@ export const CovidDiagram: FC<PropsType> = ({
     })();
   }, [country]);
 
-  if (stateIsEmpty(state)) {
+  if (stateIsEmpty(state) || error) {
     return <ErrorMessage errorMessage={error} />;
   }
 
