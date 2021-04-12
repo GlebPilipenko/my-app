@@ -20,7 +20,6 @@
     max-width: 100%;
     margin: 0 auto;
     vertical-align: top;
-    border: 0;
 }
 
 .article__item {
@@ -84,10 +83,18 @@
     color: #49494a;
 }
 
+.url__block span {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    width: 650px;
+    text-overflow: ellipsis;
+}
+
 .article__img_container {
     width: 650px;
     height: 450px;
-    border: 5px solid #515151;
+    border: 1px solid black;
 }
 .img_container {
     overflow: hidden;

@@ -82,13 +82,15 @@ export const News: FC<PropsType> = ({
               author: articleAuthor,
               urlToImage,
               publishedAt,
-              description
-            }, index: number) => {
+              description}, index: number) => {
                 const date = new Date(publishedAt).toString();
-                const author = !articleAuthor ? '' : `By, ${articleAuthor}`;
-                const getDefaultImgUrl = () => {
-                  return urlToImage === null ? defaultImg : urlToImage;
-                };
+                const author = !articleAuthor
+                  ? `Author not found...`
+                  : `By, ${articleAuthor}`;
+
+                const getDefaultImgUrl = () => (
+                  urlToImage === null ? defaultImg : urlToImage
+                );
 
                 return (
                   <div
@@ -99,44 +101,62 @@ export const News: FC<PropsType> = ({
                     <div className={style.article__block}>
                       <div className={style.article__item}>
                         <div
-                          className={`${style.publishedAt__container} ${style.text}`}
+                          className={`
+                        ${style.text}
+                        ${style.publishedAt__container}
+                        `}
                         >
-                          <span>{getFormattedDate(getDateToTimeStamp(date))}</span>
+                        <span>
+                          {getFormattedDate(getDateToTimeStamp(date))}
+                        </span>
                         </div>
-                        <div className={`${style.title__block} ${style.text}`}>
+                        <div className={`
+                      ${style.text}
+                      ${style.title__block}
+                      `}>
                           <span>{title}</span>
                         </div>
-                        <div className={`${style.author__block} ${style.text}`}>
-                          <span className={style.author}>
-                            {author}
-                          </span>
-                        </div>
+                        {author && (
+                          <div className={`
+                        ${style.text}
+                        ${style.author__block}
+                        `}
+                          >
+                        <span className={style.author}>
+                          {author}
+                        </span>
+                          </div>
+                        )
+                        }
                         <div
-                          className={`${style.description__block} ${style.text}`}
+                          className={`
+                        ${style.text}
+                        ${style.description__block}
+                        `}
                         >
                           <span>{description}</span>
                         </div>
                         <div className={style.url__block}>
-                          <span>
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className={style.text}
-                            >
-                              Link: {url}
-                            </a>
-                          </span>
+                        <span>
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={style.text}
+                          >
+                            Link: {url}
+                          </a>
+                        </span>
                         </div>
                       </div>
                       <div
                         className={`
-                        ${style.img_container}
-                        ${style.article__img_container}
-                        `}
+                      ${style.img_container}
+                      ${style.article__img_container}
+                      `}
                       >
                         <img
-                          alt='news'
+                          alt="news"
                           src={getDefaultImgUrl()}
                           className={style.article__img}
                         />
