@@ -12,7 +12,7 @@ export const ErrorCounterWithMessage: FC<PropsType> = ({
   const error = (
     (propsCount !== 0) &&
     ((propsCount > maxLength) ||
-      (propsCount < minInputValueLength)));
+    (propsCount < minInputValueLength)));
   const countStyle = error
     ? `${style.error__count}`
     : `${style.no_error__count}`;
@@ -25,7 +25,9 @@ export const ErrorCounterWithMessage: FC<PropsType> = ({
       <span className={countStyle}>
         {`${propsCount} / ${maxLength}`}
       </span>
-      <span className={messageStyle}>{error && errorMessage}</span>
+      <span className={messageStyle}>
+        {error && errorMessage}
+      </span>
     </div>
   );
 };
