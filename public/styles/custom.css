@@ -1,0 +1,7 @@
+.carousel-slider.carousel .slide {
+    background: white;
+}
+
+.carousel-slider.carousel .slide img {
+    display: block;
+}

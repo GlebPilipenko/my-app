@@ -9,4 +9,5 @@ export enum DefaultQueryParameters {
   InvalidCity = 'invalidCity',
   InvalidCoords = 'invalidCoords',
   InvalidCountry = 'invalidCountry',
+  InvalidViewMode = 'invalidViewMode',
 }

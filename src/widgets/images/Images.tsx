@@ -1,14 +1,20 @@
 import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
+import {ViewModeTitles} from './enums';
+import style from './Images.module.css';
+import {getLowerCaseString} from 'src/utils';
 import {DefaultQueryParameters} from 'src/enums';
+import {Carousel} from 'react-responsive-carousel';
 import {ErrorMessage} from 'src/common/errorMessage';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {getImagesCity, getImagesCountry} from 'src/api/imagesApi';
 import {HitsType, ImagesAPIType} from 'src/api/imagesApi/typings';
-import style from './Images.module.css';
+
 
 export const Images: FC<PropsType> = ({
   city = DefaultQueryParameters.InvalidCity,
   country = DefaultQueryParameters.InvalidCountry,
+  viewmode = DefaultQueryParameters.InvalidViewMode,
 }) => {
   const [error, setError] = useState<string>('');
   const [state, setState] = useState<any | ImagesAPIType>(null);
@@ -19,23 +25,48 @@ export const Images: FC<PropsType> = ({
   const isInvalidCountry = (country === invalidCountry);
   const errorMessage = `Error, enter valid city or country...`;
 
+  const getLowerCaseViewMode = getLowerCaseString(viewmode);
+
   const renderPhotos = () => {
     const photoPath = state.map((obj: HitsType) => `${obj.webformatURL}`);
 
+    if (getLowerCaseViewMode === ViewModeTitles.Masonry) {
+      return (
+        <div className={style.image_grid}>
+          {photoPath.map((path: string) => {
+            const key = `${path}${Date.now()}`;
+
+            return (
+              <div
+                key={key}
+                className={style.image_item}>
+                <img src={path} alt="images" />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
     return (
-      <div className={style.image_grid}>
+      <Carousel
+        showThumbs={false}
+        infiniteLoop={true}
+        dynamicHeight={true}
+      >
         {photoPath.map((path: string) => {
           const key = `${path}${Date.now()}`;
 
           return (
             <div
               key={key}
-              className={style.image_item}>
+              className={style.container}
+            >
               <img src={path} alt="images" />
             </div>
           );
         })}
-      </div>
+      </Carousel>
     );
   };
 

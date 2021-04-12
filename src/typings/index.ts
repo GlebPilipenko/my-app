@@ -4,4 +4,5 @@ export type PropsType = {
   app?: WidgetTitles;
   city?: string;
   country?: string;
+  viewmode?: string;
 };

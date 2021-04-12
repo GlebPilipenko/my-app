@@ -8,6 +8,7 @@ export const App: React.FC<PropsType> = ({
   app,
   city,
   country,
+  viewmode,
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
@@ -24,7 +25,11 @@ export const App: React.FC<PropsType> = ({
       </div>;
     case `${WidgetTitles.ImagesWidget}`:
       return <div className={style.wrapper}>
-        <Images city={city} country={country} />
+        <Images
+          city={city}
+          country={country}
+          viewmode={viewmode}
+        />
       </div>;
     default:
       return null;
