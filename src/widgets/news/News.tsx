@@ -107,7 +107,9 @@ export const News: FC<PropsType> = ({
                           <span>{title}</span>
                         </div>
                         <div className={`${style.author__block} ${style.text}`}>
-                          <span className={style.author}>{author}</span>
+                          <span className={style.author}>
+                            {author}
+                          </span>
                         </div>
                         <div
                           className={`${style.description__block} ${style.text}`}
@@ -127,7 +129,12 @@ export const News: FC<PropsType> = ({
                           </span>
                         </div>
                       </div>
-                      <div className={style.article__img_container}>
+                      <div
+                        className={`
+                        ${style.img_container}
+                        ${style.article__img_container}
+                        `}
+                      >
                         <img
                           alt='news'
                           src={getDefaultImgUrl()}
