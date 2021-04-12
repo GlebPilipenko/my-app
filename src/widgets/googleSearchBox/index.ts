@@ -1,1 +1,1 @@
-export {GoogleSearchBox} from './GoogleSearchBox'
+export {GoogleSearchBox} from './GoogleSearchBox';
