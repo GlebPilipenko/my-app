@@ -10,7 +10,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {getImagesCity, getImagesCountry} from 'src/api/imagesApi';
 import {HitsType, ImagesAPIType} from 'src/api/imagesApi/typings';
 
-
 export const Images: FC<PropsType> = ({
   city = DefaultQueryParameters.InvalidCity,
   country = DefaultQueryParameters.InvalidCountry,
@@ -28,12 +27,13 @@ export const Images: FC<PropsType> = ({
   const getLowerCaseViewMode = getLowerCaseString(viewmode);
 
   const renderPhotos = () => {
-    const photoPath = state.map((obj: HitsType) => `${obj.webformatURL}`);
+    const arrayOfImagePaths = state
+      .map((obj: HitsType) => `${obj.webformatURL}`);
 
     if (getLowerCaseViewMode === ViewModeTitles.Masonry) {
       return (
         <div className={style.image_grid}>
-          {photoPath.map((path: string) => {
+          {arrayOfImagePaths.map((path: string) => {
             const key = `${path}${Date.now()}`;
 
             return (
@@ -54,7 +54,7 @@ export const Images: FC<PropsType> = ({
         infiniteLoop={true}
         dynamicHeight={true}
       >
-        {photoPath.map((path: string) => {
+        {arrayOfImagePaths.map((path: string) => {
           const key = `${path}${Date.now()}`;
 
           return (
