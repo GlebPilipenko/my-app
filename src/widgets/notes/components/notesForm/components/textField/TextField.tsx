@@ -1,24 +1,23 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {PropsType} from './typings';
 import style from './TextField.module.css';
-import {getValidationStyles} from './utils';
 
 export const TextField: FC<PropsType> = ({
   title,
   count,
   fieldName,
-  minLength,
   maxLength,
   fieldStyle,
+  countStyle,
   changeValue,
+  setMaxLength,
+  messageStyle,
   errorMessage,
   showTextArea,
+  setPropsCount,
+  textFieldError,
 }) => {
   const propsCount = count || 0;
-
-  const {error, countStyle, messageStyle} = getValidationStyles(
-    propsCount, maxLength, minLength
-  );
 
   const rendEntryField = () => {
     if (showTextArea) {
@@ -37,6 +36,11 @@ export const TextField: FC<PropsType> = ({
     />;
   };
 
+  useEffect(() => {
+    setPropsCount(propsCount);
+    setMaxLength(maxLength);
+  }, [propsCount, maxLength]);
+
   return (
     <div className={style.input__container}>
       <h4>{fieldName}</h4>
@@ -46,7 +50,7 @@ export const TextField: FC<PropsType> = ({
           {`${propsCount} / ${maxLength}`}
         </span>
         <span className={messageStyle}>
-          {error && errorMessage}
+          {textFieldError && errorMessage}
         </span>
       </div>
     </div>
