@@ -155,11 +155,15 @@ export const News: FC<PropsType> = ({
                       ${style.article__img_container}
                       `}
                       >
-                        <img
-                          alt="news"
-                          src={getDefaultImgUrl()}
+                        {/*<img*/}
+                        {/*  alt="news"*/}
+                        {/*  src={getDefaultImgUrl()}*/}
+                        {/*  className={style.article__img}*/}
+                        {/*/>*/}
+                        <div
+                          style={{backgroundImage: `url(${getDefaultImgUrl()})`}}
                           className={style.article__img}
-                        />
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -174,3 +178,5 @@ export const News: FC<PropsType> = ({
 
   return renderNewsItem();
 };
+
+// getDefaultImgUrl()
