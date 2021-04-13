@@ -5,4 +5,5 @@ export type PropsType = {
   city?: string;
   coords?: string;
   country?: string;
+  style_height?: string;
 };

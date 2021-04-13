@@ -7,6 +7,7 @@ import {ErrorMessage} from 'src/common/errorMessage';
 
 export const MapContainer: FC<PropsType> = ({
   coords = DefaultQueryParameters.InvalidCoords,
+  style_height = DefaultQueryParameters.InvalidHeight,
 }) => {
   const [error, setError] = useState<string>('');
   const invalidCoords = DefaultQueryParameters.InvalidCoords;
@@ -15,6 +16,14 @@ export const MapContainer: FC<PropsType> = ({
   const errorMessage = ErrorMessages.ForMap;
   const coordsNoNumber = (!isFinite(+lat) || !isFinite(+lng));
   const isInvalidCoords = ((coords === invalidCoords) || (!coords || !lat || !lng));
+
+  const getHeightValueForMap = () => {
+    if (isFinite(+style_height) && +style_height > 0) {
+      return `${+style_height}px`;
+    }
+
+    return `100vh`;
+  };
 
   useEffect(() => {
     if (isInvalidCoords) {
@@ -41,5 +50,14 @@ export const MapContainer: FC<PropsType> = ({
     return <ErrorMessage errorMessage={error} />;
   }
 
-  return <div id={'map'} style={{width: '100%', height: '100vh'}} />;
+  return (
+    <div
+      id={'map'}
+      style={{
+        width: '100%',
+        maxHeight: '100vh',
+        height: `${getHeightValueForMap()}`
+      }}
+    />
+  );
 };

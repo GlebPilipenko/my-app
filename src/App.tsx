@@ -8,7 +8,8 @@ export const App: React.FC<PropsType> = ({
   app,
   city,
   coords,
-  country
+  country,
+  style_height,
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
@@ -24,9 +25,10 @@ export const App: React.FC<PropsType> = ({
         <Notes country={country} city={city} />
       </div>;
     case `${WidgetTitles.MapWidget}`:
-      return <div className={style.wrapper}>
-        <MapContainer coords={coords} />
-      </div>;
+      return <MapContainer
+        coords={coords}
+        style_height={style_height}
+      />;
     default:
       return null;
   }
