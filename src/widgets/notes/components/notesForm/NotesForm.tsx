@@ -1,7 +1,16 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import {ErrorCounterWithMessage} from './components/errorCounterWithMessage';
+import {TextField} from './components/textField'
+import {getErrorMessage, getNoteID} from './utils';
+import {getValidationStyles} from './utils/getValidationStyles';
+import {
+  save,
+  minLength,
+  maxTitleLength,
+  maxCityTitleLength,
+  maxDescriptionLength,
+} from './constants';
 
 export const NotesForm: FC<PropsType> = ({
   city,
@@ -16,58 +25,23 @@ export const NotesForm: FC<PropsType> = ({
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
-  changeVisibilityForm
+  changeVisibilityForm,
 }) => {
-  const save = `Save`;
-  const invalidForm = `Invalid Form`;
-  const noteID = `${title}${Math.random()}`;
-  const errorMessage = (maxLength: number) => (
-    `Value must be between 3 and ${maxLength} inclusive...`
-  );
+  const [showTextArea] = useState<boolean>(false);
 
-  const minInputValueLength = 3;
-  const maxDescriptionLength = 250;
-  const maxTitleLength = 100;
-  const maxCityTitleLength = 100;
+  const noteID = getNoteID(title);
 
   const titleLength = title.length;
   const cityTitleLength = cityTitle.length;
   const descriptionLength = description.length;
 
-  const errorTitle = (
-    (titleLength < minInputValueLength) ||
-    (titleLength > maxTitleLength)
+  const {
+    error, titleStyle, cityTitleStyle,
+    descriptionStyle, errorBtnStyle
+  } = getValidationStyles(
+    titleLength, cityTitleLength, descriptionLength
   );
-  const errorCityTitle = (
-    (cityTitleLength < minInputValueLength) ||
-    (cityTitleLength > maxCityTitleLength)
-  );
-  const errorDescription = (
-    (descriptionLength < minInputValueLength) ||
-    (descriptionLength > maxDescriptionLength)
-  );
-  const error = errorTitle || errorCityTitle || errorDescription;
 
-  const titleStyle = errorTitle && titleLength !== 0 ? style.error : style.input;
-  const cityTitleStyle = errorCityTitle && cityTitleLength !== 0
-    ? style.error
-    : style.input;
-  const descriptionStyle = errorDescription && descriptionLength !== 0
-    ? style.error
-    : style.textarea;
-  const errorBtnStyle = error
-    ? `${style.btn__error} ${style.invalid_btn__error}`
-    : `${style.btn__error} ${style.btn__save}`;
-
-  const renderErrorCounterWithMessage = (count: number, errorMessage: string,
-                                         maxLength: number, minInputValueLength: number) => {
-    return <ErrorCounterWithMessage
-      count={count}
-      errorMessage={errorMessage}
-      maxLength={maxLength}
-      minInputValueLength={minInputValueLength}
-    />;
-  };
   const renderNotesForm = () => {
     return (
       <div className={style.form__container}>
@@ -78,55 +52,47 @@ export const NotesForm: FC<PropsType> = ({
             Create note
           </button>
         </div>
-        <div className={style.input__container}>
-          <h4>Add your title</h4>
-          <input
-            type="text"
-            value={title}
-            onChange={changeInputValue}
-            className={titleStyle}
-          />
-          {
-            renderErrorCounterWithMessage(
-              titleCount, errorMessage(maxTitleLength), maxCityTitleLength,
-              minInputValueLength)
-          }
-        </div>
+        <TextField
+          title={title}
+          fieldName={`Title`}
+          count={titleCount}
+          minLength={minLength}
+          maxLength={maxTitleLength}
+          fieldStyle={titleStyle}
+          showTextArea={showTextArea}
+          changeValue={changeInputValue}
+          errorMessage={getErrorMessage(maxTitleLength)}
+        />
         {!city && (
-          <div className={style.input__container}>
-            <h4>Add your city</h4>
-            <input
-              type="text"
-              value={cityTitle}
-              onChange={changeInputCityValue}
-              className={cityTitleStyle}
-            />
-            {
-              renderErrorCounterWithMessage(cityTitleCount,
-                errorMessage(maxCityTitleLength), maxCityTitleLength,
-                minInputValueLength)
-            }
-          </div>
-        )}
-        <div className={style.textarea__container}>
-          <h4>Add your description</h4>
-          <textarea
-            value={description}
-            onChange={changeTxtAreaValue}
-            className={descriptionStyle}
+          <TextField
+            title={cityTitle}
+            fieldName={`City title`}
+            count={cityTitleCount}
+            minLength={minLength}
+            maxLength={maxCityTitleLength}
+            fieldStyle={cityTitleStyle}
+            showTextArea={showTextArea}
+            changeValue={changeInputCityValue}
+            errorMessage={getErrorMessage(maxCityTitleLength)}
           />
-          {
-            renderErrorCounterWithMessage(descriptionCount,
-              errorMessage(maxDescriptionLength), maxDescriptionLength,
-              minInputValueLength)
-          }
-        </div>
+        )}
+        <TextField
+          title={description}
+          fieldName={`Add your description`}
+          count={descriptionCount}
+          minLength={minLength}
+          maxLength={maxDescriptionLength}
+          showTextArea={true}
+          fieldStyle={descriptionStyle}
+          changeValue={changeTxtAreaValue}
+          errorMessage={getErrorMessage(maxDescriptionLength)}
+        />
         <button
           disabled={error}
           onClick={() => addNotes(noteID)}
           className={errorBtnStyle}
         >
-          {error ? invalidForm : save}
+          {save}
         </button>
       </div>
     );

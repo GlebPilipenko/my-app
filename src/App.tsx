@@ -20,9 +20,7 @@ export const App: React.FC<PropsType> = ({
         <News country={country} city={city} />
       </div>;
     case `${WidgetTitles.NotesWidget}`:
-      return <div className={style.wrapper}>
-        <Notes country={country} city={city} />
-      </div>;
+      return <Notes country={country} city={city} />;
     default:
       return null;
   }
