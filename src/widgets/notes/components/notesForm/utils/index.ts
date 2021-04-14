@@ -1,2 +1,3 @@
-export {getErrorMessage} from './getErrorMessage';
 export {getNoteID} from './getNoteID';
+export {getErrorMessage} from './getErrorMessage';
+export {getValidationStyles} from './getValidationStyles';

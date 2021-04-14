@@ -2,12 +2,12 @@ import {FC} from 'react';
 import {PropsType} from './typings';
 import style from './TextField.module.css';
 import {getValidationStyles} from './utils';
+import {minLength} from 'src/widgets/notes/components/notesForm/constants';
 
 export const TextField: FC<PropsType> = ({
   title,
   count,
   fieldName,
-  minLength,
   maxLength,
   fieldStyle,
   changeValue,
@@ -30,7 +30,7 @@ export const TextField: FC<PropsType> = ({
     }
 
     return <input
-      type="text"
+      type='text'
       value={title}
       onChange={changeValue}
       className={fieldStyle}
