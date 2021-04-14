@@ -1,4 +1,1 @@
-// export {getValidationStyles} from './getValidationStyles';
-
-
-export const q = () => {}
+export {getValidationStyles} from './getValidationStyles';

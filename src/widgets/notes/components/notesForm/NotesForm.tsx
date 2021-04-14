@@ -1,11 +1,12 @@
 import {FC, useState} from 'react';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import {TextField} from './components/textField'
+import {TextField} from './components/textField';
 import {getErrorMessage, getNoteID} from './utils';
 import {getValidationStyles} from './utils/getValidationStyles';
 import {
   save,
+  minLength,
   maxTitleLength,
   maxCityTitleLength,
   maxDescriptionLength,
@@ -28,10 +29,6 @@ export const NotesForm: FC<PropsType> = ({
 }) => {
   const [showTextArea] = useState<boolean>(false);
 
-  //////////////////////////////////////////////////////////////////////////////
-  const [propsCount, setPropsCount] = useState<number>(0);
-  const [maxLength, setMaxLength] = useState<number>(0);
-  //////////////////////////////////////////////////////////////////////////////
   const noteID = getNoteID(title);
 
   const titleLength = title.length;
@@ -39,15 +36,11 @@ export const NotesForm: FC<PropsType> = ({
   const descriptionLength = description.length;
 
   const {
-    titleStyle,
-    countStyle,
-    messageStyle,
-    errorBtnStyle,
-    textFieldError,
-    cityTitleStyle,
-    notesValueError,
-    descriptionStyle,
-  } = getValidationStyles(propsCount, maxLength, titleLength, cityTitleLength, descriptionLength);
+    error, titleStyle, cityTitleStyle,
+    descriptionStyle, errorBtnStyle
+  } = getValidationStyles(
+    titleLength, cityTitleLength, descriptionLength
+  );
 
   const renderNotesForm = () => {
     return (
@@ -63,51 +56,39 @@ export const NotesForm: FC<PropsType> = ({
           title={title}
           fieldName={`Title`}
           count={titleCount}
-          countStyle={countStyle}
-          messageStyle={messageStyle}
+          minLength={minLength}
           maxLength={maxTitleLength}
           fieldStyle={titleStyle}
           showTextArea={showTextArea}
           changeValue={changeInputValue}
           errorMessage={getErrorMessage(maxTitleLength)}
-          setPropsCount={setPropsCount}
-          setMaxLength={setMaxLength}
-          textFieldError={textFieldError}
         />
         {!city && (
           <TextField
             title={cityTitle}
             fieldName={`City title`}
             count={cityTitleCount}
-            countStyle={countStyle}
-            messageStyle={messageStyle}
+            minLength={minLength}
             maxLength={maxCityTitleLength}
             fieldStyle={cityTitleStyle}
             showTextArea={showTextArea}
             changeValue={changeInputCityValue}
             errorMessage={getErrorMessage(maxCityTitleLength)}
-            setPropsCount={setPropsCount}
-            setMaxLength={setMaxLength}
-            textFieldError={textFieldError}
           />
         )}
         <TextField
           title={description}
           fieldName={`Add your description`}
           count={descriptionCount}
-          countStyle={countStyle}
-          messageStyle={messageStyle}
+          minLength={minLength}
           maxLength={maxDescriptionLength}
           showTextArea={true}
           fieldStyle={descriptionStyle}
           changeValue={changeTxtAreaValue}
           errorMessage={getErrorMessage(maxDescriptionLength)}
-          setPropsCount={setPropsCount}
-          setMaxLength={setMaxLength}
-          textFieldError={textFieldError}
         />
         <button
-          disabled={notesValueError}
+          disabled={error}
           onClick={() => addNotes(noteID)}
           className={errorBtnStyle}
         >

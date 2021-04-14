@@ -69,7 +69,7 @@ export const Notes: FC<PropsType> = ({
   }, [notesWidget, notes]);
 
   if (!country) {
-    return <ErrorMessage errorMessage={'Sorry, no notes...'} />
+    return <ErrorMessage errorMessage={'Sorry, no notes...'} />;
   }
 
   return (

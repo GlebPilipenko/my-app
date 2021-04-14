@@ -53,7 +53,7 @@
     cursor: pointer;
 }
 
-.invalid_btn__error {
+.btn__error[disabled] {
     background-color: dimgray;
     cursor: pointer;
 }

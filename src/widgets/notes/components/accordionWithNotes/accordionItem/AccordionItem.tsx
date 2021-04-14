@@ -73,8 +73,8 @@ export const AccordionItem: React.FC<PropsType> = ({
       <div className={style.city__container}>
         {
           foundCity
-          ? getCapitalizedString(foundCity)
-          : DescriptionForEmptyCity.NotesWithOutCity
+            ? getCapitalizedString(foundCity)
+            : DescriptionForEmptyCity.NotesWithOutCity
         }
         <span
           className={style.arrow}
@@ -86,7 +86,7 @@ export const AccordionItem: React.FC<PropsType> = ({
       <CSSTransition
         in={isOpenAccordion}
         timeout={1000}
-        classNames='accordion__item'
+        classNames="accordion__item"
       >
         {renderNoteItem()}
       </CSSTransition>
