@@ -1,4 +1,5 @@
-.input__container {
+.text_field__container {
+  display: block;
   width: 100%;
   margin-bottom: 15px;
   position: relative;
@@ -9,20 +10,19 @@
   margin-bottom: 10px;
 }
 
-.error__count {
-  color: red;
+.count {
   position: absolute;
   top: 40px;
   right: 20px;
   font-size: 12px;
 }
 
+.error__count {
+  color: red;
+}
+
 .no_error__count {
   color: black;
-  position: absolute;
-  top: 40px;
-  right: 20px;
-  font-size: 12px;
 }
 
 .error__message {

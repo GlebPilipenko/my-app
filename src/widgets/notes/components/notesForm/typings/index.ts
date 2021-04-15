@@ -6,9 +6,6 @@ export type PropsType = {
     showForm: boolean;
     cityTitle: string;
     description: string;
-    titleCount: number;
-    cityTitleCount: number;
-    descriptionCount: number;
     changeVisibilityForm: () => void;
     addNotes: (noteID: string) => void;
     changeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;

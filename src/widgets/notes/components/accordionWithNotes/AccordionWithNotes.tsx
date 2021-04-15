@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {PropsType} from './typings';
 import {NotesForm} from '../notesForm';
 import {NotesItem} from '../notesItem';
@@ -6,7 +6,7 @@ import {AccordionItem} from './accordionItem';
 import {NotesType} from 'src/widgets/notes/typings';
 import style from './AccordionWithNotes.module.css';
 
-export const AccordionWithNotes: React.FC<PropsType> = ({
+export const AccordionWithNotes: FC<PropsType> = ({
   city,
   notes,
   title,
@@ -14,16 +14,14 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
   addNotes,
   showForm,
   cityTitle,
-  titleCount,
   removeNote,
   description,
-  cityTitleCount,
   changeInputValue,
-  descriptionCount,
   changeTxtAreaValue,
-  changeVisibilityForm,
   changeInputCityValue,
+  changeVisibilityForm,
 }) => {
+
   const foundNotes: string[] = [];
   const filteredNotesByCountry = notes
     .filter((notes: NotesType) => notes.country === country);
@@ -60,14 +58,11 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
           addNotes={addNotes}
           showForm={showForm}
           cityTitle={cityTitle}
-          titleCount={titleCount}
           description={description}
-          cityTitleCount={cityTitleCount}
-          descriptionCount={descriptionCount}
-          changeInputValue={changeInputValue}
-          changeTxtAreaValue={changeTxtAreaValue}
-          changeInputCityValue={changeInputCityValue}
           changeVisibilityForm={changeVisibilityForm}
+          changeInputValue={changeInputValue}
+          changeInputCityValue={changeInputCityValue}
+          changeTxtAreaValue={changeTxtAreaValue}
         />
         {
           hasCity

@@ -1,10 +1,14 @@
-import {FC, useState} from 'react';
+import {FC} from 'react';
+import cn from 'classnames';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
-import {TextField} from './components/textField';
-import {getNoteID, getErrorMessage, getValidationStyles} from './utils';
+import {Input} from './components/textFields/input';
+import {TextArea} from './components/textFields/textArea';
+import {FieldValidation} from './components/fieldValidation';
+import {getErrorMessage, getNoteID, isDisabledButton} from './utils';
 import {
   save,
+  createNote,
   maxTitleLength,
   maxCityTitleLength,
   maxDescriptionLength,
@@ -16,83 +20,84 @@ export const NotesForm: FC<PropsType> = ({
   addNotes,
   showForm,
   cityTitle,
-  titleCount,
   description,
-  cityTitleCount,
-  descriptionCount,
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
   changeVisibilityForm,
 }) => {
-  const [showTextArea] = useState<boolean>(false);
-
   const noteID = getNoteID(title);
 
   const titleLength = title.length;
   const cityTitleLength = cityTitle.length;
   const descriptionLength = description.length;
 
-  const {
-    error,
-    titleStyle,
-    errorBtnStyle,
-    cityTitleStyle,
-    descriptionStyle,
-  } = getValidationStyles(titleLength, cityTitleLength, descriptionLength);
+  const noDisabledButton = isDisabledButton(
+    titleLength, cityTitleLength, descriptionLength
+  );
 
-  const renderNotesForm = () => {
-    return (
-      <div className={style.form__container}>
-        <div className={style.btn__container}>
-          <button
-            className={style.btn}
-            onClick={changeVisibilityForm}>
-            Create note
-          </button>
-        </div>
-        <TextField
-          title={title}
-          count={titleCount}
-          fieldName={`Title`}
-          fieldStyle={titleStyle}
-          maxLength={maxTitleLength}
-          showTextArea={showTextArea}
-          changeValue={changeInputValue}
-          errorMessage={getErrorMessage(maxTitleLength)}
-        />
-        {!city && (
-          <TextField
-            title={cityTitle}
-            count={cityTitleCount}
-            fieldName={`City title`}
-            fieldStyle={cityTitleStyle}
-            showTextArea={showTextArea}
-            maxLength={maxCityTitleLength}
-            changeValue={changeInputCityValue}
-            errorMessage={getErrorMessage(maxCityTitleLength)}
-          />
-        )}
-        <TextField
-          title={description}
-          showTextArea={true}
-          count={descriptionCount}
-          fieldStyle={descriptionStyle}
-          maxLength={maxDescriptionLength}
-          changeValue={changeTxtAreaValue}
-          fieldName={`Add your description`}
-          errorMessage={getErrorMessage(maxDescriptionLength)}
-        />
+  const renderNotesForm = () => (
+    <div className={style.form__container}>
+      <div className={style.btn__container}>
         <button
-          disabled={error}
-          className={errorBtnStyle}
-          onClick={() => addNotes(noteID)}
-        >
-          {save}
+          className={style.btn}
+          onClick={changeVisibilityForm}>
+          {createNote}
         </button>
       </div>
-    );
-  };
+      <FieldValidation
+        fieldName={`Title`}
+        valueLength={titleLength}
+        maxValueLength={maxTitleLength}
+        errorMessage={`${getErrorMessage(maxTitleLength)}`}
+      >
+        <Input
+          value={title}
+          valueLength={titleLength}
+          onChange={changeInputValue}
+          maxValueLength={maxTitleLength}
+        />
+      </FieldValidation>
+      {!city && (
+        <FieldValidation
+          fieldName={`City`}
+          valueLength={cityTitleLength}
+          maxValueLength={maxCityTitleLength}
+          errorMessage={`${getErrorMessage(maxCityTitleLength)}`}
+        >
+          <Input
+            value={cityTitle}
+            valueLength={cityTitleLength}
+            onChange={changeInputCityValue}
+            maxValueLength={maxCityTitleLength}
+          />
+        </FieldValidation>
+      )}
+      <FieldValidation
+        fieldName={`Description`}
+        valueLength={descriptionLength}
+        maxValueLength={maxDescriptionLength}
+        errorMessage={`${getErrorMessage(maxDescriptionLength)}`}
+      >
+        <TextArea
+          value={description}
+          onChange={changeTxtAreaValue}
+          valueLength={descriptionLength}
+          maxValueLength={maxDescriptionLength}
+        />
+      </FieldValidation>
+      <button
+        disabled={!noDisabledButton}
+        onClick={() => addNotes(noteID)}
+        className={cn({
+          [`${style.btn_save} ${style.btn_save__error}`]: !noDisabledButton,
+          [`${style.btn_save} ${style.btn_save__no_error}`]: noDisabledButton,
+        })}
+      >
+        {save}
+      </button>
+    </div>
+  );
 
   if (!showForm) {
     return (
@@ -100,7 +105,7 @@ export const NotesForm: FC<PropsType> = ({
         <button
           className={style.btn}
           onClick={changeVisibilityForm}>
-          Create note
+          {createNote}
         </button>
       </div>
     );

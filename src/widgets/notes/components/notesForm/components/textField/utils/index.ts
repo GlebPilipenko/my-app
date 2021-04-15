@@ -1,1 +1,0 @@
-export {getValidationStyles} from './getValidationStyles';
