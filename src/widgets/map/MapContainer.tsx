@@ -4,26 +4,50 @@ import {PropsType} from './typings';
 import {ErrorMessages} from 'src/enums';
 import {DefaultQueryParameters} from 'src/enums';
 import {ErrorMessage} from 'src/common/errorMessage';
+import {
+  unitVw,
+  unitVh,
+  unitPx,
+  unitRem,
+  unitPercent,
+  defaultWidth,
+  defaultHeight,
+} from './constants';
 
 export const MapContainer: FC<PropsType> = ({
   coords = DefaultQueryParameters.InvalidCoords,
-  style_height = DefaultQueryParameters.InvalidHeight,
+  styles = DefaultQueryParameters.InvalidHeight,
 }) => {
   const [error, setError] = useState<string>('');
-  const invalidCoords = DefaultQueryParameters.InvalidCoords;
 
+  const invalidCoords = DefaultQueryParameters.InvalidCoords;
+  const value = unitPx || unitVh || unitVw || unitRem || unitPercent;
+
+  const defaultStyles = {
+    width: defaultWidth,
+    height: defaultHeight
+  };
   const [lat, lng] = coords.split(',');
   const errorMessage = ErrorMessages.ForMap;
   const coordsNoNumber = (!isFinite(+lat) || !isFinite(+lng));
-  const isInvalidCoords = ((coords === invalidCoords) || (!coords || !lat || !lng));
+  const isInvalidCoords = (
+    (coords === invalidCoords) || (!coords || !lat || !lng)
+  );
+  const getValidStyle = () => {
+    const propsStyles = JSON.parse(styles);
+    const arrayOfKeys = Object.values(propsStyles);
 
-  const getHeightValueForMap = () => {
-    if (isFinite(+style_height) && +style_height > 0) {
-      return `${+style_height}px`;
+    const arrayOfBoolean = arrayOfKeys.map((el: any) => isFinite(el));
+    const isValueFalse = arrayOfBoolean.some(bool => !bool);
+    const substrInStr = arrayOfKeys
+      .map((el: any) => el.indexOf(value)).some((el: number) => el !== -1);
+
+    if (isValueFalse && substrInStr) {
+      return propsStyles;
     }
 
-    return `100vh`;
-  };
+    return defaultStyles;
+  }
 
   useEffect(() => {
     if (isInvalidCoords) {
@@ -50,14 +74,5 @@ export const MapContainer: FC<PropsType> = ({
     return <ErrorMessage errorMessage={error} />;
   }
 
-  return (
-    <div
-      id={'map'}
-      style={{
-        width: '100%',
-        maxHeight: '100vh',
-        height: `${getHeightValueForMap()}`
-      }}
-    />
-  );
+  return <div id={'map'} style={getValidStyle()} />;
 };
