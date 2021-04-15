@@ -104,7 +104,8 @@ export const NotesForm: FC<PropsType> = ({
       <div className={style.btn__container}>
         <button
           className={style.btn}
-          onClick={changeVisibilityForm}>
+          onClick={changeVisibilityForm}
+        >
           {createNote}
         </button>
       </div>

@@ -10,14 +10,14 @@ export const Input: FC<PropsType> = ({
   valueLength,
   maxValueLength
 }) => {
-  const dataIsValid: boolean = isValid(valueLength, maxValueLength);
+  const valueIsValid: boolean = isValid(valueLength, maxValueLength);
 
   return <input
     type='text'
     value={value}
     onChange={onChange}
     className={cn(style.textField, {
-      [style.error__textField]: !dataIsValid && valueLength !== 0,
+      [style.error__textField]: !valueIsValid && valueLength !== 0,
     })}
   />;
 };
