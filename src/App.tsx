@@ -23,9 +23,7 @@ export const App: FC<PropsType> = ({
         <Notes country={country} city={city} />
       </div>;
     case `${WidgetTitles.CovidWidget}`:
-      return <div className={style.wrapper}>
-        <CovidDiagram country={country} />
-      </div>;
+      return <CovidDiagram country={country} />;
     default:
       return null;
   }
