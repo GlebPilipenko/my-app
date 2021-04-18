@@ -8,7 +8,7 @@ export const TextArea: FC<PropsType> = ({
   value,
   onChange,
   valueLength,
-  maxValueLength
+  maxValueLength,
 }) => {
   const valueIsValid: boolean = isValid(valueLength, maxValueLength);
 
