@@ -1,18 +1,22 @@
 import {FC, useEffect, useState} from 'react';
 import {initMap} from './utils';
 import {PropsType} from './typings';
-import style from './MapContainer.module.css'
+import style from './MapContainer.module.css';
 import {ErrorMessage} from 'src/common/errorMessage';
 import {ErrorMessages, DefaultQueryParameters} from 'src/enums';
 
 export const MapContainer: FC<PropsType> = ({
+  styles,
   coords = DefaultQueryParameters.InvalidCoords,
-  styles = DefaultQueryParameters.InvalidHeight,
 }) => {
   const [error, setError] = useState<string>('');
 
   const invalidCoords = DefaultQueryParameters.InvalidCoords;
 
+  const defaultStyles = {
+    'width': '50vw',
+    'height': '50vh'
+  };
   const [lat, lng] = coords.split(',');
   const errorMessage = ErrorMessages.ForMap;
   const coordsNoNumber = (!isFinite(+lat) || !isFinite(+lng));
@@ -47,7 +51,10 @@ export const MapContainer: FC<PropsType> = ({
 
   return <div
     id={'map'}
+    style={styles
+      ? JSON.parse(styles)
+      : defaultStyles
+    }
     className={style.map}
-    style={JSON.parse(styles)}
   />;
 };
