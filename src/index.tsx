@@ -4,9 +4,10 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 const ROOT_SELECTORS = [
+  '[data-app="map-widget"]',
   '[data-app="news-widget"]',
   '[data-app="notes-widget"]',
-  '[data-app="weather-widget"]'
+  '[data-app="weather-widget"]',
 ];
 
 const getAppNodes = (selectors: string[]) => {
