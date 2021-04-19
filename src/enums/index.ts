@@ -7,7 +7,6 @@ export enum WidgetTitles {
 
 export enum DefaultQueryParameters {
   InvalidCoords = 'invalidCoords',
-  InvalidHeight = 'invalidHeight',
 }
 
 export enum ErrorMessages {

@@ -31,8 +31,8 @@ export const NotesForm: FC<PropsType> = ({
   const titleLength = title.length;
   const descriptionLength = description.length;
   const getCityTitleLength = () => cityTitle.length;
-  const cityTitleLength = city ? city.length : getCityTitleLength();
 
+  const cityTitleLength = city ? city.length : getCityTitleLength();
   const noDisabledButton = isDisabledButton(
     titleLength, cityTitleLength, descriptionLength
   );
