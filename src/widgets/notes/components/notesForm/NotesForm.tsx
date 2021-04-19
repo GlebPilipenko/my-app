@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import cn from 'classnames';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
@@ -28,6 +28,14 @@ export const NotesForm: FC<PropsType> = ({
 }) => {
   const noteID = getNoteID(title);
 
+  const [state, setState] = useState<any>({
+    tl: null,
+    ctl: null,
+    dtl: null
+  });
+
+  console.log(state);
+
   const titleLength = title.length;
   const cityTitleLength = cityTitle.length;
   const descriptionLength = description.length;
@@ -46,13 +54,14 @@ export const NotesForm: FC<PropsType> = ({
         </button>
       </div>
       <FieldValidation
-        fieldName={`Title`}
+        setState={setState}
         valueLength={titleLength}
         maxValueLength={maxTitleLength}
         errorMessage={`${getErrorMessage(maxTitleLength)}`}
       >
         <Input
           value={title}
+          fieldName={`Title`}
           valueLength={titleLength}
           onChange={changeInputValue}
           maxValueLength={maxTitleLength}
@@ -60,13 +69,14 @@ export const NotesForm: FC<PropsType> = ({
       </FieldValidation>
       {!city && (
         <FieldValidation
-          fieldName={`City`}
+          setState={setState}
           valueLength={cityTitleLength}
           maxValueLength={maxCityTitleLength}
           errorMessage={`${getErrorMessage(maxCityTitleLength)}`}
         >
           <Input
             value={cityTitle}
+            fieldName={`City`}
             valueLength={cityTitleLength}
             onChange={changeInputCityValue}
             maxValueLength={maxCityTitleLength}
@@ -74,28 +84,29 @@ export const NotesForm: FC<PropsType> = ({
         </FieldValidation>
       )}
       <FieldValidation
-        fieldName={`Description`}
+        setState={setState}
         valueLength={descriptionLength}
         maxValueLength={maxDescriptionLength}
         errorMessage={`${getErrorMessage(maxDescriptionLength)}`}
       >
         <TextArea
           value={description}
+          fieldName={`Description`}
           onChange={changeTxtAreaValue}
           valueLength={descriptionLength}
           maxValueLength={maxDescriptionLength}
         />
       </FieldValidation>
-      <button
-        disabled={!noDisabledButton}
-        onClick={() => addNotes(noteID)}
-        className={cn({
-          [`${style.btn_save} ${style.btn_save__error}`]: !noDisabledButton,
-          [`${style.btn_save} ${style.btn_save__no_error}`]: noDisabledButton,
-        })}
-      >
-        {save}
-      </button>
+        <button
+          disabled={!noDisabledButton}
+          onClick={() => addNotes(noteID)}
+          className={cn({
+            [`${style.btn_save} ${style.btn_save__error}`]: !noDisabledButton,
+            [`${style.btn_save} ${style.btn_save__no_error}`]: noDisabledButton,
+          })}
+        >
+          {save}
+        </button>
     </div>
   );
 

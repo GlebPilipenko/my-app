@@ -1,1 +1,1 @@
-export const getNoteID = (title: string) => `${title}${Math.random()}`;
+export const getNoteID = (title: string) => `${title}${Date.now()}`;

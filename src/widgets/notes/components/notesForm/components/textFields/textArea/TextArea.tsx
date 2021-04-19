@@ -7,16 +7,22 @@ import {isValid} from '../../fieldValidation/utils';
 export const TextArea: FC<PropsType> = ({
   value,
   onChange,
+  fieldName,
   valueLength,
   maxValueLength,
 }) => {
   const valueIsValid: boolean = isValid(valueLength, maxValueLength);
 
-  return <textarea
-    value={value}
-    onChange={onChange}
-    className={cn(style.textField, {
-      [style.error__textField]: !valueIsValid && valueLength !== 0,
-    })}
-  />;
+  return (
+    <>
+      <h4>{fieldName}</h4>
+      <textarea
+        value={value}
+        onChange={onChange}
+        className={cn(style.textField, {
+          [style.error__textField]: !valueIsValid && valueLength !== 0,
+        })}
+      />
+    </>
+  );
 };
