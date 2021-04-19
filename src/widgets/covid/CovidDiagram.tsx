@@ -6,7 +6,7 @@ import {ErrorMessage} from 'src/common/errorMessage';
 import {SVGDiagrams} from './components/svgDiagrams';
 
 export const CovidDiagram: FC<PropsType> = ({
-  country = DefaultQueryParameters.InvalidCountry
+  country = DefaultQueryParameters.InvalidCountry,
 }) => {
   const [error, setError] = useState<string>('');
   const [state, setState] = useState<{} | StateType>({});

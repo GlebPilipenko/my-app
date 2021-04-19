@@ -1,5 +1,4 @@
 import {FC} from 'react';
-import style from './App.module.css';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
 import {News, Notes, Weather, MapContainer, CovidDiagram} from './widgets';
