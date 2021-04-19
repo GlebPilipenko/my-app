@@ -4,5 +4,5 @@ export type PropsType = {
   value: string;
   valueLength: number;
   maxValueLength: number;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 };
