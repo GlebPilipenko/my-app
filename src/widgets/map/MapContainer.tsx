@@ -11,14 +11,13 @@ export const MapContainer: FC<PropsType> = ({
 }) => {
   const [error, setError] = useState<string>('');
 
-  const invalidCoords = DefaultQueryParameters.InvalidCoords;
-
   const defaultStyles = {
     'width': '50vw',
     'height': '50vh'
   };
   const [lat, lng] = coords.split(',');
   const errorMessage = ErrorMessages.ForMap;
+  const invalidCoords = DefaultQueryParameters.InvalidCoords;
   const coordsNoNumber = (!isFinite(+lat) || !isFinite(+lng));
   const isInvalidCoords = (
     (coords === invalidCoords) || (!coords || !lat || !lng)

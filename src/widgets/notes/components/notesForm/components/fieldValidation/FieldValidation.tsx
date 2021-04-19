@@ -22,10 +22,12 @@ export const FieldValidation: FC<PropsType> = ({
          })}>
            {`${valueLength} / ${maxValueLength}`}
          </span>
-        <span className={cn({
-          [style.no_error__message]: dataIsValid,
-          [style.error__message]: !dataIsValid,
-        })}>
+        <span className={
+          cn({
+            [style.no_error__message]: dataIsValid,
+            [style.error__message]: !dataIsValid
+          })}
+        >
           {
             (valueLength === 0)
             ? null
