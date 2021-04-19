@@ -7,12 +7,12 @@ const newsApi = axios.create({
 
 const apikey = process.env.REACT_APP_NEWS_API_KEY as string;
 
-const getQueryParams = (query: string, apikey: string) => {
-  return `everything?qInTitle="${query}"&language=en&pageSize=5&apiKey=${apikey}`;
-};
+const getQueryParams = (query: string, apikey: string) => (
+  `everything?qInTitle="${query}"&language=en&pageSize=5&apiKey=${apikey}`
+);
 
-export const getNewsCity = (city: string) => newsApi.get<NewsAPIType>(
-  getQueryParams(city, apikey));
+export const getNewsCity = (city: string) => newsApi
+  .get<NewsAPIType>(getQueryParams(city, apikey));
 
-export const getNewsCountry = (country: string) => newsApi.get<NewsAPIType>(
-  getQueryParams(country, apikey));
+export const getNewsCountry = (country: string) => newsApi
+  .get<NewsAPIType>(getQueryParams(country, apikey));
