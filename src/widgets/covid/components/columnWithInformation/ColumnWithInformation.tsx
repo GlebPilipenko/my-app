@@ -9,7 +9,7 @@ export const ColumnWithInformation: FC<PropsType> = ({
   startCoordX,
   startCoordY,
   axisLengthY,
-  barPlotWidth
+  barPlotWidth,
 }) => {
   const renderColumnWithInformation = () => {
     return (
