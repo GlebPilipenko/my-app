@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC} from 'react';
 import cn from 'classnames';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
@@ -28,17 +28,10 @@ export const NotesForm: FC<PropsType> = ({
 }) => {
   const noteID = getNoteID(title);
 
-  const [state, setState] = useState<any>({
-    tl: null,
-    ctl: null,
-    dtl: null
-  });
-
-  console.log(state);
-
   const titleLength = title.length;
-  const cityTitleLength = cityTitle.length;
   const descriptionLength = description.length;
+  const getCityTitleLength = () => cityTitle.length;
+  const cityTitleLength = city ? city.length : getCityTitleLength();
 
   const noDisabledButton = isDisabledButton(
     titleLength, cityTitleLength, descriptionLength
@@ -54,7 +47,6 @@ export const NotesForm: FC<PropsType> = ({
         </button>
       </div>
       <FieldValidation
-        setState={setState}
         valueLength={titleLength}
         maxValueLength={maxTitleLength}
         errorMessage={`${getErrorMessage(maxTitleLength)}`}
@@ -69,22 +61,20 @@ export const NotesForm: FC<PropsType> = ({
       </FieldValidation>
       {!city && (
         <FieldValidation
-          setState={setState}
-          valueLength={cityTitleLength}
+          valueLength={getCityTitleLength()}
           maxValueLength={maxCityTitleLength}
           errorMessage={`${getErrorMessage(maxCityTitleLength)}`}
         >
           <Input
             value={cityTitle}
             fieldName={`City`}
-            valueLength={cityTitleLength}
+            valueLength={getCityTitleLength()}
             onChange={changeInputCityValue}
             maxValueLength={maxCityTitleLength}
           />
         </FieldValidation>
       )}
       <FieldValidation
-        setState={setState}
         valueLength={descriptionLength}
         maxValueLength={maxDescriptionLength}
         errorMessage={`${getErrorMessage(maxDescriptionLength)}`}

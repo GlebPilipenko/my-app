@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import cn from 'classnames';
 import {isValid} from './utils';
 import {PropsType} from './typings';
@@ -6,20 +6,11 @@ import style from './FieldValidation.module.css';
 
 export const FieldValidation: FC<PropsType> = ({
   children,
-                                                 setState,
   valueLength,
   errorMessage,
   maxValueLength,
 }) => {
   const dataIsValid: boolean = isValid(valueLength, maxValueLength);
-
-  useEffect(() => {
-    setState({
-      tl: dataIsValid,
-      ctl: dataIsValid,
-      dtl: dataIsValid,
-    });
-  }, [dataIsValid, setState]);
 
   return (
     <label className={style.text_field__container}>

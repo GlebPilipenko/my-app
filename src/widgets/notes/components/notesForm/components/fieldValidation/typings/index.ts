@@ -5,5 +5,4 @@ export type PropsType = {
   valueLength: number;
   errorMessage: string;
   maxValueLength: number;
-  setState: (value: any) => void;
 };
