@@ -1,8 +1,17 @@
-import {ChangeEvent, useState} from 'react';
 
-export const useInputValue = (initValue: string) => {
-  const [value, setValue] = useState<any>(initValue);
-  const onChangeHandler = (e: ChangeEvent<any>) => setValue(e.currentTarget.value);
+import {ChangeEvent, useState} from 'react';
+import {ReturnUseInputValueType} from './typings';
+
+export const useInputValue = (initValue: string): ReturnUseInputValueType => {
+  const [value, setValue] = useState<string>(initValue);
+
+  const onChangeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.currentTarget.value;
+
+    setValue(value);
+  };
 
   return [value, setValue, onChangeHandler];
 };
