@@ -1,4 +1,5 @@
 export enum WidgetTitles {
+  MapWidget = 'map-widget',
   NewsWidget = 'news-widget',
   NotesWidget = 'notes-widget',
   ImagesWidget = 'images-widget',
@@ -10,4 +11,9 @@ export enum DefaultQueryParameters {
   InvalidCoords = 'invalidCoords',
   InvalidCountry = 'invalidCountry',
   InvalidViewMode = 'invalidViewMode',
+}
+
+export enum ErrorMessages {
+  ForMap = `Error, enter valid coords, coordinates should be from -85° and to
+   85° and via the ' , '`,
 }
