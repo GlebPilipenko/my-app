@@ -5,11 +5,11 @@ import {News, Notes, Weather, Images, MapContainer} from './widgets';
 
 export const App: FC<PropsType> = ({
   app,
+  mode,
   city,
   coords,
   styles,
   country,
-  viewmode,
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
@@ -21,7 +21,7 @@ export const App: FC<PropsType> = ({
     case `${WidgetTitles.MapWidget}`:
       return <MapContainer coords={coords} styles={styles} />;
     case `${WidgetTitles.ImagesWidget}`:
-      return <Images city={city} country={country} viewmode={viewmode} />
+      return <Images city={city} country={country} mode={mode} />
     default:
       return null;
   }
