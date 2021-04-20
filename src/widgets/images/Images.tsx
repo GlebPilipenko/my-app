@@ -2,7 +2,7 @@ import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {ViewModeTitles} from './enums';
 import style from './Images.module.css';
-import {useInputValue} from 'src/hooks';
+import {useErrorValue} from 'src/hooks';
 import {errorMessage, requestIsBlocked} from 'src/constants';
 import {getLowerCaseString} from 'src/utils';
 import {DefaultQueryParameters} from 'src/enums';
@@ -17,7 +17,7 @@ export const Images: FC<PropsType> = ({
   country = DefaultQueryParameters.InvalidCountry,
   viewmode = DefaultQueryParameters.InvalidViewMode,
 }) => {
-  const [error, setError] = useInputValue(``);
+  const [error, setError] = useErrorValue(``);
   const [state, setState] = useState<ImagesAPIType[]>([]);
   debugger
 
