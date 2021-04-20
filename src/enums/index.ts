@@ -7,7 +7,11 @@ export enum WidgetTitles {
 }
 
 export enum DefaultQueryParameters {
-  InvalidCity = 'invalidCity',
   InvalidCoords = 'invalidCoords',
-  InvalidCountry = 'invalidCountry',
+  InvalidHeight = 'invalidHeight',
+}
+
+export enum ErrorMessages {
+  ForMap = `Error, enter valid coords, coordinates should be from -85° and to
+   85° and via the ' , '`,
 }

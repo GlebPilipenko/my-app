@@ -2,13 +2,15 @@
 
 html {
     min-width: 320px;
-    height: 100%;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
     color: black;
-    height: 100%;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
 }
 
 *,
@@ -41,11 +43,6 @@ blockquote,
 dl,
 dd {
     margin: 0;
-}
-
-body {
-    text-rendering: optimizeSpeed;
-    line-height: 1.5;
 }
 
 ul[class],
