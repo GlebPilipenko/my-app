@@ -2,6 +2,8 @@ import {FC, useEffect, useState} from 'react';
 import {PropsType} from './typings';
 import {ViewModeTitles} from './enums';
 import style from './Images.module.css';
+import {useInputValue} from 'src/hooks';
+import {errorMessage, requestIsBlocked} from 'src/constants';
 import {getLowerCaseString} from 'src/utils';
 import {DefaultQueryParameters} from 'src/enums';
 import {Carousel} from 'react-responsive-carousel';
@@ -15,15 +17,15 @@ export const Images: FC<PropsType> = ({
   country = DefaultQueryParameters.InvalidCountry,
   viewmode = DefaultQueryParameters.InvalidViewMode,
 }) => {
-  const [error, setError] = useState<string>('');
-  const [state, setState] = useState<any | ImagesAPIType>(null);
+  const [error, setError] = useInputValue(``);
+  const [state, setState] = useState<ImagesAPIType[]>([]);
+  debugger
 
   const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
+
   const isInvalidCity = (city === invalidCity);
   const isInvalidCountry = (country === invalidCountry);
-  const errorMessage = `Error, enter valid city or country...`;
-
   const getLowerCaseViewMode = getLowerCaseString(viewmode);
 
   const renderPhotos = () => {
@@ -40,7 +42,7 @@ export const Images: FC<PropsType> = ({
               <div
                 key={key}
                 className={style.image_item}>
-                <img src={path} alt="images" />
+                <img src={path} alt='images' />
               </div>
             );
           })}
@@ -62,7 +64,10 @@ export const Images: FC<PropsType> = ({
               key={key}
               className={style.container}
             >
-              <img src={path} alt="images" />
+              <img
+                src={path}
+                alt='images'
+              />
             </div>
           );
         })}
@@ -100,12 +105,12 @@ export const Images: FC<PropsType> = ({
         }
 
       } catch (e) {
-        !e.response ? setError('Your request is blocked')
+        !e.response ? setError(requestIsBlocked)
           : setError(e.response.data.message);
       }
     })();
-  }, [city, country, isInvalidCity, isInvalidCountry,
-    invalidCity, invalidCountry, errorMessage]);
+  }, [city, country,
+    isInvalidCity, isInvalidCountry, invalidCity, invalidCountry, setError]);
 
   if (!state || state.length === 0) {
     return <ErrorMessage errorMessage={error} />;
