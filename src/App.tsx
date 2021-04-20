@@ -1,9 +1,9 @@
-import React from 'react';
+import {FC} from 'react';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
 import {News, Notes, Weather, MapContainer, GoogleSearchBox} from './widgets';
 
-export const App: React.FC<PropsType> = ({
+export const App: FC<PropsType> = ({
   app,
   city,
   coords,

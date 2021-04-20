@@ -1,8 +1,5 @@
 import {LocalStorageTitles} from '../enums';
-import {
-  getGoogleMapLoader,
-  setDataToLocalStorage
-} from 'src/services';
+import {getGoogleMapLoader, setDataToLocalStorage} from 'src/services';
 
 const googleSearchBoxWidget = LocalStorageTitles.GoogleSearchBox;
 

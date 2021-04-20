@@ -1,3 +1,2 @@
-export {getGoogleMapLoader} from './googleMapLoader';
+export {getGoogleMapLoader} from './getGoogleMapLoader';
 export {setDataToLocalStorage, getParseLocalStorageData} from './localStorage';
-

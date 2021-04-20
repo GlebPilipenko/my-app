@@ -52,7 +52,7 @@ export const NotesForm: FC<PropsType> = ({
             value={description}
             onChange={changeTxtAreaValue}
             className={style.textarea}
-          ></textarea>
+          />
         </div>
         <button
           className={`${style.btn} ${style.btn__save}`}
