@@ -27,7 +27,7 @@ export const Images: FC<PropsType> = ({
   const isInvalidCountry = (country === invalidCountry);
   const getLowerCaseViewMode = getLowerCaseString(mode);
 
-  const setPhotos = useCallback((result: HitsType[]) => {
+  const setPhotosInState = useCallback((result: HitsType[]) => {
     if (result.length === 0) {
       return setError(errorMessage);
     }
@@ -75,18 +75,16 @@ export const Images: FC<PropsType> = ({
   useEffect(() => {
     (async () => {
       try {
-        if ((!city || isInvalidCity) && (!country || isInvalidCountry)) {
-          return setError(errorMessage);
-        }
-
-        await getResponse(city, country, setPhotos);
-
+        await getResponse(
+          city, country, isInvalidCity, invalidCountry, isInvalidCountry,
+          setError, setPhotosInState
+        );
       } catch (e) {
         !e.response ? setError(requestIsBlocked)
           : setError(e.response.data.message);
       }
     })();
-  }, [city, country, setPhotos, setError,
+  }, [city, country, setPhotosInState, setError,
     isInvalidCity, isInvalidCountry, invalidCity, invalidCountry]);
 
   if (!state || state.length === 0) {
