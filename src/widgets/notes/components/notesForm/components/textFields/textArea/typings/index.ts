@@ -4,6 +4,6 @@ export type PropsType = {
   value: string;
   fieldName: string;
   valueLength: number;
-  maxValueLength: number;
+  isValidValue: boolean;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 };
