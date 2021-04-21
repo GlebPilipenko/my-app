@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {PropsType} from '../typings';
+import {PropsType} from './typings';
 import style from './CarouselComponent.module.css';
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';

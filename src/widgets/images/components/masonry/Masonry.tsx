@@ -1,14 +1,17 @@
 import {FC} from 'react';
-import {PropsType} from '../typings';
+import {PropsType} from './typings';
 import style from './Masonry.module.css';
 import {HitsType} from 'src/api/imagesApi/typings';
 
-export const Masonry: FC<PropsType> = ({data}) => {
+export const Masonry: FC<PropsType> = ({data, numberOfColumns}) => {
   const arrayOfImagePaths = data.map((obj: HitsType) => `${obj.webformatURL}`);
 
   return (
     <div>
-      <div className={style.image_grid}>
+      <div
+        style={{columnCount: (+numberOfColumns)}}
+        className={style.image_grid}
+      >
         {arrayOfImagePaths.map((path: string) => {
           const key = `${path}${Date.now()}`;
 

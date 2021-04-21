@@ -15,6 +15,8 @@ export const App: FC<PropsType> = ({
   city,
   coords,
   styles,
+  column,
+  portion,
   country,
   masonry,
   carousel,
@@ -31,6 +33,8 @@ export const App: FC<PropsType> = ({
     case `${WidgetTitles.ImagesWidget}`:
       return <Images
         city={city}
+        column={column}
+        portion={portion}
         country={country}
         masonry={masonry}
         carousel={carousel}

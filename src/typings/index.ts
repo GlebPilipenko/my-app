@@ -4,8 +4,10 @@ export type PropsType = {
   city?: string;
   coords?: string;
   styles?: string;
+  column?: string;
+  portion?: string;
   masonry?: string;
-  carousel?: string;
   country?: string;
+  carousel?: string;
   app?: WidgetTitles;
 };
