@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {FC, useState} from 'react';
 import './style.css';
 import './AnimationStyle.css';
 import {PropsType} from './typings';
@@ -8,7 +8,7 @@ import {DescriptionForEmptyCity} from './enums';
 import {NotesType} from 'src/widgets/notes/typings';
 import {CSSTransition} from 'react-transition-group';
 
-export const AccordionItem: React.FC<PropsType> = ({
+export const AccordionItem: FC<PropsType> = ({
   city,
   foundCity,
   removeNote,

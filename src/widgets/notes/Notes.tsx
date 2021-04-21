@@ -8,8 +8,8 @@ import {useVisibilityForm, useInputValue} from 'src/hooks';
 import {setDataToLocalStorage, getParseLocalStorageData} from 'src/services';
 
 export const Notes: FC<PropsType> = ({
-  city: cityToLowerCase = '',
-  country: countryToLowerCase = '',
+  city: cityToLowerCase = ``,
+  country: countryToLowerCase = ``,
 }) => {
   const notesWidget = LocalStorageTitles.NotesWidget;
 
@@ -69,21 +69,18 @@ export const Notes: FC<PropsType> = ({
   }, [notesWidget, notes]);
 
   if (!country) {
-    return <ErrorMessage errorMessage={'Sorry, no notes...'} />;
+    return <ErrorMessage errorMessage={`Sorry, no notes...`} />;
   }
 
   return (
     <AccordionWithNotes
       city={city}
       notes={notes}
-      title={title}
       country={country}
       showForm={showForm}
       addNotes={addNotes}
-      cityTitle={cityTitle}
       removeNote={removeNote}
       titleCount={titleCount}
-      description={description}
       cityTitleCount={cityTitleCount}
       descriptionCount={descriptionCount}
       changeInputValue={changeInputValue}
