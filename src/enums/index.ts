@@ -1,15 +1,16 @@
 export enum WidgetTitles {
-  MapWidget = `map-widget`,
-  NewsWidget = `news-widget`,
-  NotesWidget = `notes-widget`,
+  MapWidget = 'map-widget',
+  NewsWidget = 'news-widget',
+  NotesWidget = 'notes-widget',
+  CovidWidget = 'covid-widget',
   ImagesWidget = `images-widget`,
-  WeatherWidget = `weather-widget`,
+  WeatherWidget = 'weather-widget',
 }
 
 export enum DefaultQueryParameters {
   InvalidCity = `invalidCity`,
-  InvalidCoords = `invalidCoords`,
-  InvalidCountry = `invalidCountry`,
+  InvalidCoords = 'invalidCoords',
+  InvalidCountry = 'invalidCountry',
   InvalidViewMode = `invalidViewMode`,
 }
 

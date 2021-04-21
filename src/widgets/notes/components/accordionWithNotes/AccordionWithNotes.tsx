@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {PropsType} from './typings';
 import {NotesForm} from '../notesForm';
 import {NotesItem} from '../notesItem';
@@ -6,7 +6,7 @@ import {AccordionItem} from './accordionItem';
 import {NotesType} from 'src/widgets/notes/typings';
 import style from './AccordionWithNotes.module.css';
 
-export const AccordionWithNotes: React.FC<PropsType> = ({
+export const AccordionWithNotes: FC<PropsType> = ({
   city,
   notes,
   title,
@@ -27,7 +27,7 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
 
   const renderNotesAccordion = () => foundNotes
     .map((foundCity: string, index: number) => {
-      return (
+        return (
           <React.Fragment key={index}>
             <AccordionItem
               city={city}
@@ -66,9 +66,9 @@ export const AccordionWithNotes: React.FC<PropsType> = ({
         {
           hasCity
             ? <NotesItem
-                city={city}
-                removeNote={removeNote}
-                filteredNotesByCountry={filteredNotesByCountry}
+              city={city}
+              removeNote={removeNote}
+              filteredNotesByCountry={filteredNotesByCountry}
             />
             : renderNotesAccordion()
         }

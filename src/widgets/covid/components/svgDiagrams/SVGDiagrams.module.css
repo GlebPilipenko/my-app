@@ -1,0 +1,81 @@
+.wrapper {
+    width: 100%;
+    padding-top: 30px;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.svg {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: visible;
+    padding-left: 20px;
+}
+
+.graphs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.info__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    padding: 0 65px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .info__container {
+        /*padding: 0 6vw;*/
+        padding: 0 7vw 0 10vw;
+    }
+
+    .info__item {
+        font-size: 2.5vw;
+    }
+
+    .y__value {
+        font-size: 20px;
+    }
+
+    .quantity {
+        font-size: 22px;
+    }
+
+    .axis_Y__text {
+        text-align: right;
+        white-space: nowrap;
+        font-size: 2.5vw;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .axis_Y__text {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .axis_Y__text {
+        font-size: 20px;
+    }
+}
+
+.rect {
+    fill-opacity: .3;
+    fill: tomato;
+    stroke: tomato;
+    stroke-width: 2;
+}

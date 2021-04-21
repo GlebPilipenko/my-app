@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {PropsType} from './typings';
+import {getCapitalizedString} from 'src/utils';
 import style from './InformationOfCity.module.css';
 import {WeatherType} from 'src/api/weatherApi/typings';
-import {getCapitalizedString} from '../../../../utils';
 import {getFormattedDate} from 'src/utils/getFormattedDate';
 
 export const InformationOfCity: FC<PropsType> = ({state}) => {
