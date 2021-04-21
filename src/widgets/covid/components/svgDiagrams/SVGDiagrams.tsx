@@ -22,10 +22,9 @@ export const SVGDiagrams: FC<PropsType> = ({
   const axisLengthX = SVG_WIDTH - startCoordX * 2;
   const axisLengthY = SVG_HEIGHT - startCoordY * 2;
 
+  const minYValue = 0;
   const maxYValue = data.reduce(
     (currMax, [_, dataY]) => Math.max(currMax, dataY as number), 0);
-  const minYValue = data.reduce(
-    (currMin, [_, dataY]) => Math.min(currMin, dataY as number), 0);
 
   const barPlotWidth = axisLengthX / data.length;
 
