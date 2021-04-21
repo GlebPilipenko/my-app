@@ -12,11 +12,12 @@ import {
 
 export const App: FC<PropsType> = ({
   app,
-  mode,
   city,
   coords,
   styles,
   country,
+  masonry,
+  carousel,
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
@@ -28,7 +29,12 @@ export const App: FC<PropsType> = ({
     case `${WidgetTitles.MapWidget}`:
       return <MapContainer coords={coords} styles={styles} />;
     case `${WidgetTitles.ImagesWidget}`:
-      return <Images city={city} country={country} mode={mode} />
+      return <Images
+        city={city}
+        country={country}
+        masonry={masonry}
+        carousel={carousel}
+      />
     case `${WidgetTitles.CovidWidget}`:
       return <CovidDiagram country={country} />;
     default:

@@ -9,9 +9,16 @@ export const getResponse = async (
   invalidCountry: string,
   isInvalidCountry: boolean,
   setError: (value: string) => void,
+  isInvalidMasonryViewMode: boolean,
+  isInvalidCarouselViewMode: boolean,
   setPhotosInState: (response: HitsType[]) => void,
 ) => {
-  if ((!city || isInvalidCity) && (!country || isInvalidCountry)) {
+  const isInvalidValue = (
+    (isInvalidMasonryViewMode && isInvalidCarouselViewMode) ||
+    ((!city || isInvalidCity) && (!country || isInvalidCountry))
+  );
+
+  if (isInvalidValue) {
     return setError(errorMessage);
   }
 

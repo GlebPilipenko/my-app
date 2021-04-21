@@ -1,95 +1,67 @@
 import {FC, useCallback, useEffect, useState} from 'react';
-import {getResponse} from './utils';
 import {PropsType} from './typings';
-import {ViewModeTitles} from './enums';
-import style from './Images.module.css';
 import {useErrorValue} from 'src/hooks';
-import {getLowerCaseString} from 'src/utils';
 import {DefaultQueryParameters} from 'src/enums';
-import {Carousel} from 'react-responsive-carousel';
 import {HitsType} from 'src/api/imagesApi/typings';
 import {ErrorMessage} from 'src/common/errorMessage';
+import {Masonry, CarouselComponent} from './components';
+import {getResponse, getHelperConstants} from './utils';
 import {errorMessage, requestIsBlocked} from 'src/constants';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export const Images: FC<PropsType> = ({
   city = DefaultQueryParameters.InvalidCity,
-  mode = DefaultQueryParameters.InvalidViewMode,
   country = DefaultQueryParameters.InvalidCountry,
+  masonry: propsMasonry = DefaultQueryParameters.InvalidMasonryViewMode,
+  carousel: propsCarousel = DefaultQueryParameters.InvalidCarouselViewMode,
 }) => {
   const [error, setError] = useErrorValue(``);
-  const [state, setState] = useState<HitsType[]>([]);
+  const [data, setData] = useState<HitsType[]>([]);
 
-  const invalidCity = DefaultQueryParameters.InvalidCity;
-  const invalidCountry = DefaultQueryParameters.InvalidCountry;
-
-  const isInvalidCity = (city === invalidCity);
-  const isInvalidCountry = (country === invalidCountry);
-  const getLowerCaseViewMode = getLowerCaseString(mode);
+  const {
+    invalidCity, isInvalidCity, invalidCountry, isInvalidCountry,
+    isValidMasonryViewMode, isValidCarouselViewMode, isInvalidMasonryViewMode,
+    isInvalidCarouselViewMode
+  } = getHelperConstants(city, country, propsMasonry, propsCarousel);
 
   const setPhotosInState = useCallback((result: HitsType[]) => {
     if (result.length === 0) {
       return setError(errorMessage);
     }
 
-    return setState(result);
+    return setData(result);
   }, [setError]);
-  const renderPhotos = () => {
-    const arrayOfImagePaths = state.map((obj: HitsType) => `${obj.webformatURL}`);
-
-    if (getLowerCaseViewMode === ViewModeTitles.Masonry) {
-      return (
-        <div className={style.image_grid}>
-          {arrayOfImagePaths.map((path: string) => {
-            const key = `${path}${Date.now()}`;
-
-            return (
-              <div key={key} className={style.image_item}>
-                <img src={path} alt='images' />
-              </div>
-            );
-          })}
-        </div>
-      );
+  const renderImages = () => {
+    if ((!propsCarousel || isInvalidCarouselViewMode) && isValidMasonryViewMode) {
+      return <Masonry data={data} />;
     }
 
-    return (
-      <Carousel
-        showThumbs={false}
-        infiniteLoop={true}
-        dynamicHeight={true}
-      >
-        {arrayOfImagePaths.map((path: string) => {
-          const key = `${path}${Date.now()}`;
+    if ((!propsMasonry || isInvalidMasonryViewMode) && isValidCarouselViewMode) {
+      return <CarouselComponent data={data} />;
+    }
 
-          return (
-            <div key={key} className={style.container}>
-              <img src={path} alt='images' />
-            </div>
-          );
-        })}
-      </Carousel>
-    );
+    return <CarouselComponent data={data} />;
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        await getResponse(
-          city, country, isInvalidCity, invalidCountry, isInvalidCountry,
-          setError, setPhotosInState
-        );
-      } catch (e) {
-        !e.response ? setError(requestIsBlocked)
-          : setError(e.response.data.message);
-      }
-    })();
-  }, [city, country, setPhotosInState, setError,
-    isInvalidCity, isInvalidCountry, invalidCity, invalidCountry]);
+      (async () => {
+        try {
+          await getResponse(
+            city, country, isInvalidCity, invalidCountry, isInvalidCountry,
+            setError, isInvalidMasonryViewMode, isInvalidCarouselViewMode, setPhotosInState
+          );
+        } catch (e) {
+          !e.response ? setError(requestIsBlocked)
+            : setError(e.response.data.message);
+        }
+      })();
+    }, [city, country, setPhotosInState, setError, isInvalidCity,
+    isInvalidCountry, isInvalidMasonryViewMode, isInvalidCarouselViewMode,
+    invalidCity, invalidCountry]
+  );
 
-  if (!state || state.length === 0) {
+  if (!data || data.length === 0) {
     return <ErrorMessage errorMessage={error} />;
   }
 
-  return renderPhotos();
+  return renderImages();
 };

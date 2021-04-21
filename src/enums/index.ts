@@ -11,7 +11,8 @@ export enum DefaultQueryParameters {
   InvalidCity = `invalidCity`,
   InvalidCoords = 'invalidCoords',
   InvalidCountry = 'invalidCountry',
-  InvalidViewMode = `invalidViewMode`,
+  InvalidMasonryViewMode = 'invalidMasonryViewMode',
+  InvalidCarouselViewMode = 'invalidCarouselViewMode'
 }
 
 export enum ErrorMessages {
