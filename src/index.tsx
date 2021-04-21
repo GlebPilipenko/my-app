@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 const ROOT_SELECTORS = [
   '[data-app="map-widget"]',
   '[data-app="news-widget"]',
+  '[data-app="covid-widget"]',
   '[data-app="notes-widget"]',
   '[data-app="weather-widget"]',
 ];

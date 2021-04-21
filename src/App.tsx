@@ -1,9 +1,9 @@
-import React from 'react';
+import {FC} from 'react';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
-import {News, Notes, Weather, MapContainer} from './widgets';
+import {News, Notes, Weather, MapContainer, CovidDiagram} from './widgets';
 
-export const App: React.FC<PropsType> = ({
+export const App: FC<PropsType> = ({
   app,
   city,
   coords,
@@ -19,6 +19,8 @@ export const App: React.FC<PropsType> = ({
       return <Notes country={country} city={city} />;
     case `${WidgetTitles.MapWidget}`:
       return <MapContainer coords={coords} styles={styles} />;
+    case `${WidgetTitles.CovidWidget}`:
+      return <CovidDiagram country={country} />;
     default:
       return null;
   }

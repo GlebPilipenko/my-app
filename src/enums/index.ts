@@ -2,12 +2,13 @@ export enum WidgetTitles {
   MapWidget = 'map-widget',
   NewsWidget = 'news-widget',
   NotesWidget = 'notes-widget',
+  CovidWidget = 'covid-widget',
   WeatherWidget = 'weather-widget',
 }
 
 export enum DefaultQueryParameters {
   InvalidCoords = 'invalidCoords',
-  InvalidHeight = 'invalidHeight',
+  InvalidCountry = 'invalidCountry',
 }
 
 export enum ErrorMessages {

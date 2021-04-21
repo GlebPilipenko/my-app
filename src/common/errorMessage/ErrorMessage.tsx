@@ -1,11 +1,8 @@
-import React from 'react';
+import {FC} from 'react';
+import {PropsType} from './typings';
 import style from './ErrorMessage.module.css';
 
-type PropsType = {
-  errorMessage: null | string;
-};
-
-export const ErrorMessage: React.FC<PropsType> = ({errorMessage}) => {
+export const ErrorMessage: FC<PropsType> = ({errorMessage}) => {
   return (
     <div className={style.error__container}>
       <div className={style.error__block}>
