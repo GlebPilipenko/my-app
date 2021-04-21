@@ -31,11 +31,11 @@ export const Images: FC<PropsType> = ({
     return setData(result);
   }, [setError]);
   const renderImages = () => {
-    if ((!propsCarousel || isInvalidCarouselViewMode) && isValidMasonryViewMode) {
+    if (isValidMasonryViewMode) {
       return <Masonry data={data} />;
     }
 
-    if ((!propsMasonry || isInvalidMasonryViewMode) && isValidCarouselViewMode) {
+    if (isValidCarouselViewMode) {
       return <CarouselComponent data={data} />;
     }
 
@@ -59,7 +59,7 @@ export const Images: FC<PropsType> = ({
     invalidCity, invalidCountry]
   );
 
-  if (!data || data.length === 0) {
+  if (data.length === 0) {
     return <ErrorMessage errorMessage={error} />;
   }
 

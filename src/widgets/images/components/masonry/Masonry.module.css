@@ -6,6 +6,12 @@
 
 @media screen and (max-width: 768px) {
     .image_grid {
+        column-count: 3;
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .image_grid {
         column-count: 2;
     }
 }

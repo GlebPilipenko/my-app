@@ -8,8 +8,8 @@ export const getHelperConstants = (
   propsMasonry: string,
   propsCarousel: string,
 ) => {
-  const isValidCarouselViewMode = (propsCarousel === getLowerCaseString(carousel));
   const isValidMasonryViewMode = (propsMasonry === getLowerCaseString(masonry));
+  const isValidCarouselViewMode = (propsCarousel === getLowerCaseString(carousel));
 
   const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
