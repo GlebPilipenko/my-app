@@ -8,10 +8,7 @@ export type PropsType = {
   showForm: boolean;
   cityTitle: string;
   notes: NotesType[];
-  titleCount: number;
   description: string;
-  cityTitleCount: number;
-  descriptionCount: number;
   changeVisibilityForm: () => void;
   addNotes: (noteID: string) => void;
   removeNote: (noteID: string) => void;

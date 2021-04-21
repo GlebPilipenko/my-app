@@ -59,10 +59,10 @@ export const AccordionWithNotes: FC<PropsType> = ({
           showForm={showForm}
           cityTitle={cityTitle}
           description={description}
-          changeVisibilityForm={changeVisibilityForm}
           changeInputValue={changeInputValue}
-          changeInputCityValue={changeInputCityValue}
           changeTxtAreaValue={changeTxtAreaValue}
+          changeVisibilityForm={changeVisibilityForm}
+          changeInputCityValue={changeInputCityValue}
         />
         {
           hasCity

@@ -20,9 +20,9 @@ export const Notes: FC<PropsType> = ({
     getParseLocalStorageData(notesWidget)
   );
 
-  const [titleCount, title, setTitle, changeInputValue] = useInputValue('');
-  const [cityTitleCount, cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
-  const [descriptionCount, description, setDescription, changeTxtAreaValue] = useInputValue('');
+  const [title, setTitle, changeInputValue] = useInputValue('');
+  const [cityTitle, setCityTitle, changeInputCityValue] = useInputValue('');
+  const [description, setDescription, changeTxtAreaValue] = useInputValue('');
   const [showForm, setShowForm, changeVisibilityForm] = useVisibilityForm(false);
 
   const addNotes = (noteID: string) => {
@@ -76,13 +76,13 @@ export const Notes: FC<PropsType> = ({
     <AccordionWithNotes
       city={city}
       notes={notes}
+      title={title}
       country={country}
       showForm={showForm}
       addNotes={addNotes}
+      cityTitle={cityTitle}
       removeNote={removeNote}
-      titleCount={titleCount}
-      cityTitleCount={cityTitleCount}
-      descriptionCount={descriptionCount}
+      description={description}
       changeInputValue={changeInputValue}
       changeTxtAreaValue={changeTxtAreaValue}
       changeInputCityValue={changeInputCityValue}
