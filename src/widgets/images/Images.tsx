@@ -50,10 +50,30 @@ export const Images: FC<PropsType> = ({
     }
 
     if (isValidCarouselViewMode) {
-      return <CarouselComponent data={data} />;
+      return (
+        <CarouselComponent
+          city={city}
+          page={page}
+          data={data}
+          country={country}
+          portion={portion}
+          setData={setData}
+          setError={setError}
+        />
+      );
     }
 
-    return <CarouselComponent data={data} />;
+    return (
+      <CarouselComponent
+        city={city}
+        page={page}
+        data={data}
+        country={country}
+        portion={portion}
+        setData={setData}
+        setError={setError}
+      />
+    );
   };
 
   useEffect(() => {

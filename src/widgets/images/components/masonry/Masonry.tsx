@@ -1,10 +1,11 @@
 import {FC, useEffect} from 'react';
 import {Button} from '../button';
-import {PropsType} from './typings';
+import {PropsType} from '../typings';
 import {useCountValue} from 'src/hooks';
 import style from './Masonry.module.css';
 import {HitsType} from 'src/api/imagesApi/typings';
 import {getNextResponsePortion} from '../utils/getNextResponsePortion';
+import {DefaultPropsParameters} from '../../../../enums';
 
 export const Masonry: FC<PropsType> = ({
   city,
@@ -14,7 +15,7 @@ export const Masonry: FC<PropsType> = ({
   setData,
   portion,
   setError,
-  numberOfColumns
+  numberOfColumns = DefaultPropsParameters.DefaultColumnCount,
 }) => {
   const [count, setCount] = useCountValue(0);
 

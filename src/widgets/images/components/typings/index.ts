@@ -6,7 +6,7 @@ export type PropsType = {
   country: string;
   portion: string;
   data: HitsType[];
-  numberOfColumns: string;
+  numberOfColumns?: string;
   setError: (value: string) => void;
   setData: (state: HitsType[]) => void;
 };
