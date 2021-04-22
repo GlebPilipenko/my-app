@@ -1,1 +1,1 @@
-export {getImagesCountry, getImages} from './imagesAPI';
+export {getImages} from './imagesAPI';

@@ -21,16 +21,30 @@
     display: grid;
     grid-template-rows: 1fr auto;
     break-inside: avoid;
-}
-
-img {
-    max-width: 100%;
-    display: block;
+    overflow: hidden;
 }
 
 .image_item > img {
     grid-row: 1 / -1;
     grid-column: 1;
+}
+
+.image_item > img {
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    -webkit-transition: all 1s ease-out;
+}
+
+img:hover{
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
 }
 
 .image_item a {

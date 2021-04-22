@@ -7,12 +7,20 @@ const imagesAPI = axios.create({
 
 const apikey = process.env.REACT_APP_IMAGES_API_KEY as string;
 
-const getQueryParams = (
-  firstParam: string = '', secondParam: string, apikey: string, portion: string
-) => `?key=${apikey}&q=${firstParam}%20${secondParam}&image_type=photo&per_page=${portion}`;
+const getQueryParams = (firstQueryParam: string, secondQueryParam: string,
+  apikey: string, isFirstRender: boolean, portion: string, page?: string
+) => {
+  if (!isFirstRender) {
+    return `?key=${apikey}&q=${firstQueryParam}%20${
+      secondQueryParam}&image_type=photo&per_page=${portion}&page=${page}`
+  }
 
-export const getImagesCountry = (country: string, portion: string) =>
-  imagesAPI.get<ImagesAPIType>(getQueryParams('', country, apikey, portion));
+  return `?key=${apikey}&q=${firstQueryParam}%20${
+    secondQueryParam}&image_type=photo&per_page=${portion}`;
+};
 
-export const getImages = (city: string, country: string, portion: string) =>
-  imagesAPI.get<ImagesAPIType>(getQueryParams(city, country, apikey, portion));
+export const getImages = (
+  city: string, country: string, isFirstRender: boolean, portion: string, page?: string
+) => imagesAPI.get<ImagesAPIType>(
+  getQueryParams(city, country, apikey, isFirstRender, portion, page)
+);

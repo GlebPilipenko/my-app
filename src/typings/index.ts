@@ -2,6 +2,7 @@ import {WidgetTitles} from 'src/enums';
 
 export type PropsType = {
   city?: string;
+  page?: string;
   coords?: string;
   styles?: string;
   column?: string;

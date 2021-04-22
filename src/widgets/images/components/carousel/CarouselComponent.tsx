@@ -7,6 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 export const CarouselComponent: FC<PropsType> = ({data}) => (
   <Carousel
     showThumbs={false}
+    showStatus={false}
     infiniteLoop={true}
     dynamicHeight={true}
   >

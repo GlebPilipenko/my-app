@@ -1,6 +1,6 @@
 import {getLowerCaseString} from 'src/utils';
 import {carousel, masonry} from '../constants';
-import {DefaultQueryParameters} from 'src/enums';
+import {DefaultPropsParameters, DefaultQueryParameters} from 'src/enums';
 
 export const getHelperConstants = (
   city: string,
@@ -13,8 +13,8 @@ export const getHelperConstants = (
 
   const invalidCity = DefaultQueryParameters.InvalidCity;
   const invalidCountry = DefaultQueryParameters.InvalidCountry;
-  const invalidMasonryViewMode = DefaultQueryParameters.InvalidMasonryViewMode;
-  const invalidCarouselViewMode = DefaultQueryParameters.InvalidCarouselViewMode;
+  const invalidMasonryViewMode = DefaultPropsParameters.InvalidMasonryViewMode;
+  const invalidCarouselViewMode = DefaultPropsParameters.InvalidCarouselViewMode;
 
   const isInvalidCity = (city === invalidCity);
   const isInvalidCountry = (country === invalidCountry);
