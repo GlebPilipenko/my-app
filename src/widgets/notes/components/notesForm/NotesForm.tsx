@@ -12,7 +12,7 @@ export const NotesForm: FC<PropsType> = ({
   changeInputValue,
   changeTxtAreaValue,
   changeInputCityValue,
-  changeVisibilityForm
+  changeVisibilityForm,
 }) => {
   const noteID = `${title}${Math.random()}`;
 
@@ -39,7 +39,7 @@ export const NotesForm: FC<PropsType> = ({
           <div className={style.input__container}>
             <h4>Add your city</h4>
             <input
-              type="text"
+              type='text'
               value={cityTitle}
               className={style.input}
               onChange={changeInputCityValue}
