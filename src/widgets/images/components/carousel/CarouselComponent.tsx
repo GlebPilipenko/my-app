@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import {Button} from '../button';
 import {PropsType} from './typings';
+import {getHelperConstants} from './utils';
 import style from './CarouselComponent.module.css';
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -8,17 +9,19 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 export const CarouselComponent: FC<PropsType> = ({
   data,
   count,
+  portion,
   showNextResponsePortion,
 }) => {
+  const {isShowThumbs, isShowIndicator} = getHelperConstants(count, portion);
 
   return (
     <>
       <Carousel
-        showThumbs={false}
         showStatus={false}
         infiniteLoop={true}
         dynamicHeight={true}
-        showIndicators={count < 4}
+        showThumbs={isShowThumbs}
+        showIndicators={isShowIndicator}
       >
         {data.map(({webformatURL: webFormatURL}) => {
           const key = `${webFormatURL}${Date.now()}`;

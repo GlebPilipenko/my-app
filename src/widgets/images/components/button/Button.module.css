@@ -1,8 +1,19 @@
 .btn_container {
     display: flex;
     justify-content: center;
+    padding-top: 30px;
 }
 
 .btn {
-    padding: 5px 45px;
+    padding: 5px 80px;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+    background: tomato;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: #ff4444;
 }

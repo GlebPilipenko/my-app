@@ -58,6 +58,7 @@ export const Images: FC<PropsType> = ({
         <CarouselComponent
           data={data}
           count={count}
+          portion={portion}
           showNextResponsePortion={showNextResponsePortion}
         />
       );
@@ -67,6 +68,7 @@ export const Images: FC<PropsType> = ({
       <CarouselComponent
         data={data}
         count={count}
+        portion={portion}
         showNextResponsePortion={showNextResponsePortion}
       />
     );
