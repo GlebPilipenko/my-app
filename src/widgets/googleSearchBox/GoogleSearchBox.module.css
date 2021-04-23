@@ -1,5 +1,16 @@
 .search_box__container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 15px;
+}
+
+input {
     width: 100%;
-    text-align: center;
-    padding: 30px 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 }

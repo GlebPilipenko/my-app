@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/google.maps": "3.44.3"
+    "@types/google.maps": "3.44.3",
+    "@types/node": "^14.14.41"
   }
 }

@@ -1,2 +1,2 @@
 export {useInputValue} from './useInputValue';
-export {useVisibilityForm} from './useVisibilityForm';
+export {useVisibilityForm} from './useVisibilityForm'
