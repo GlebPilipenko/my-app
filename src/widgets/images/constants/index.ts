@@ -1,2 +1,4 @@
-export const carousel = `carousel`;
+export const isFirstRender = true;
+
 export const masonry = `masonry`;
+export const carousel = `carousel`;

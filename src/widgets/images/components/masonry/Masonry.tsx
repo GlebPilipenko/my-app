@@ -1,32 +1,16 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {Button} from '../button';
-import {PropsType} from '../typings';
-import {useCountValue} from 'src/hooks';
+import {PropsType} from './typings';
 import style from './Masonry.module.css';
+import {DefaultPropsParameters} from 'src/enums';
 import {HitsType} from 'src/api/imagesApi/typings';
-import {getNextResponsePortion} from '../utils/getNextResponsePortion';
-import {DefaultPropsParameters} from '../../../../enums';
 
 export const Masonry: FC<PropsType> = ({
-  city,
-  page,
   data,
-  country,
-  setData,
-  portion,
-  setError,
+  showNextResponsePortion,
   numberOfColumns = DefaultPropsParameters.DefaultColumnCount,
 }) => {
-  const [count, setCount] = useCountValue(0);
-
   const getArrayOfImagePaths = () => data.map((obj: HitsType) => `${obj.webformatURL}`);
-  const showNextResponsePortion = () => getNextResponsePortion(
-    city, country, data, page, portion, count, setError, setData
-  );
-
-  useEffect(() => {
-    setCount(count + 1);
-  }, [data]);
 
   return (
     <>

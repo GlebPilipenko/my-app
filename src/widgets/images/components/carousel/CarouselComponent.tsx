@@ -1,30 +1,15 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {Button} from '../button';
-import {PropsType} from '../typings';
-import {useCountValue} from 'src/hooks';
+import {PropsType} from './typings';
 import style from './CarouselComponent.module.css';
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import {getNextResponsePortion} from '../utils/getNextResponsePortion';
 
 export const CarouselComponent: FC<PropsType> = ({
-  city,
   data,
-  page,
-  country,
-  portion,
-  setData,
-  setError,
+  count,
+  showNextResponsePortion,
 }) => {
-  const [count, setCount] = useCountValue(0);
-
-  const showNextResponsePortion = () => getNextResponsePortion(
-    city, country, data, page, portion, count, setError, setData
-  );
-
-  useEffect(() => {
-    setCount(count + 1);
-  }, [data]);
 
   return (
     <>

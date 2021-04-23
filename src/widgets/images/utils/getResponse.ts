@@ -1,5 +1,6 @@
 import {getImages} from 'src/api';
 import {errorMessage} from 'src/constants';
+import {isFirstRender} from '../constants';
 import {HitsType} from 'src/api/imagesApi/typings';
 
 export const getResponse = async (
@@ -28,10 +29,10 @@ export const getResponse = async (
   }
 
   if (city && country && !isInvalidCountry) {
-    const result = await getImages(city, country, true, portion);
+    const result = await getImages(city, country, isFirstRender, portion);
 
     if (result.data.hits.length === 0) {
-      const result = await getImages(city, country, true, portion);
+      const result = await getImages(city, country, isFirstRender, portion);
       await setPhotosInState(result.data.hits);
     }
 
@@ -39,7 +40,7 @@ export const getResponse = async (
   }
 
   if (country) {
-    const result = await getImages(city, country, true, portion);
+    const result = await getImages(city, country, isFirstRender, portion);
     await setPhotosInState(result.data.hits);
   }
 
