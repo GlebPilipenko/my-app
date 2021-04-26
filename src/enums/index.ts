@@ -4,6 +4,7 @@ export enum WidgetTitles {
   NotesWidget = 'notes-widget',
   CovidWidget = 'covid-widget',
   WeatherWidget = 'weather-widget',
+  GoogleSearchBox = 'googleSearchBox-widget',
 }
 
 export enum DefaultQueryParameters {

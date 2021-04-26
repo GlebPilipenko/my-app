@@ -9,6 +9,7 @@ const ROOT_SELECTORS = [
   '[data-app="covid-widget"]',
   '[data-app="notes-widget"]',
   '[data-app="weather-widget"]',
+  '[data-app="googleSearchBox-widget"]'
 ];
 
 const getAppNodes = (selectors: string[]) => {

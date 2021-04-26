@@ -1,7 +1,14 @@
 import {FC} from 'react';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
-import {News, Notes, Weather, MapContainer, CovidDiagram} from './widgets';
+import {
+  News,
+  Notes,
+  Weather,
+  MapContainer,
+  CovidDiagram,
+  GoogleSearchBox
+} from './widgets';
 
 export const App: FC<PropsType> = ({
   app,
@@ -21,6 +28,8 @@ export const App: FC<PropsType> = ({
       return <MapContainer coords={coords} styles={styles} />;
     case `${WidgetTitles.CovidWidget}`:
       return <CovidDiagram country={country} />;
+    case `${WidgetTitles.GoogleSearchBox}`:
+      return <GoogleSearchBox />;
     default:
       return null;
   }

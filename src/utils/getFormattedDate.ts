@@ -9,6 +9,4 @@ export const getFormattedDate = (dt: string | number) => {
   return `${mm}/${dd}/${yyyy}`;
 };
 
-export const getDateToTimeStamp = (strDate: string) => (
-  Date.parse(strDate) / oneThousand
-);
+export const getDateToTimeStamp = (strDate: string) => Date.parse(strDate) / oneThousand;
