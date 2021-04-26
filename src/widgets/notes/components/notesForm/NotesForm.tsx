@@ -6,7 +6,7 @@ import {Context, valueIsValid} from './context';
 import {Input} from './components/textFields/input';
 import {TextArea} from './components/textFields/textArea';
 import {FieldValidation} from './components/fieldValidation';
-import {getErrorMessage, getNoteID, isValidTxtFields} from './utils';
+import {getErrorMessage, getNoteID, getHelperConstants} from './utils';
 import {
   save,
   createNote,
@@ -29,16 +29,10 @@ export const NotesForm: FC<PropsType> = ({
 }) => {
   const noteID = getNoteID(title);
 
-  const titleLength = title.length;
-  const descriptionLength = description.length;
-  const getCityTitleLength = () => cityTitle.length;
-  const cityTitleLength = city ? city.length : getCityTitleLength();
-
-  const {isValidTitleValue, isValidCityTitleValue, isValidDescriptionValue
-  } = isValidTxtFields(titleLength, cityTitleLength, descriptionLength);
-
-  const isDisabled =
-    isValidTitleValue && isValidCityTitleValue && isValidDescriptionValue;
+  const {
+    isDisabled, titleLength, descriptionLength, isValidTitleValue,
+    getCityTitleLength, isValidCityTitleValue, isValidDescriptionValue
+  } = getHelperConstants(city, title, cityTitle, description);
 
   const renderNotesForm = () => (
     <Context.Provider value={valueIsValid}>
