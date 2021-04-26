@@ -1,14 +1,26 @@
 import {FC} from 'react';
 import {PropsType} from 'src/typings';
 import {WidgetTitles} from 'src/enums';
-import {News, Notes, Weather, MapContainer, CovidDiagram} from './widgets';
+import {
+  News,
+  Notes,
+  Images,
+  Weather,
+  CovidDiagram,
+  MapContainer,
+} from './widgets';
 
 export const App: FC<PropsType> = ({
   app,
   city,
+  page,
   coords,
   styles,
+  column,
+  portion,
   country,
+  masonry,
+  carousel,
 }) => {
   switch (app) {
     case `${WidgetTitles.WeatherWidget}`:
@@ -19,6 +31,16 @@ export const App: FC<PropsType> = ({
       return <Notes country={country} city={city} />;
     case `${WidgetTitles.MapWidget}`:
       return <MapContainer coords={coords} styles={styles} />;
+    case `${WidgetTitles.ImagesWidget}`:
+      return <Images
+        city={city}
+        page={page}
+        column={column}
+        portion={portion}
+        country={country}
+        masonry={masonry}
+        carousel={carousel}
+      />
     case `${WidgetTitles.CovidWidget}`:
       return <CovidDiagram country={country} />;
     default:

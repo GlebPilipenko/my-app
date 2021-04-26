@@ -1,0 +1,49 @@
+import {getImages} from 'src/api';
+import {errorMessage} from 'src/constants';
+import {isFirstRender} from '../constants';
+import {HitsType} from 'src/api/imagesApi/typings';
+
+export const getResponse = async (
+  city: string,
+  country: string,
+  portion: string,
+  isInvalidCity: boolean,
+  invalidCountry: string,
+  isInvalidCountry: boolean,
+  setError: (value: string) => void,
+  isInvalidMasonryViewMode: boolean,
+  isInvalidCarouselViewMode: boolean,
+  setPhotosInState: (response: HitsType[]) => void,
+) => {
+  const isInvalidValue = (
+    (isInvalidMasonryViewMode && isInvalidCarouselViewMode) ||
+    ((!city || isInvalidCity) && (!country || isInvalidCountry))
+  );
+
+  if (isInvalidValue) {
+    return setError(errorMessage);
+  }
+
+  if (+portion < 3) {
+    return setError(errorMessage);
+  }
+
+  if (city && country && !isInvalidCountry) {
+    const result = await getImages(city, country, isFirstRender, portion);
+
+    if (result.data.hits.length === 0) {
+      const result = await getImages(city, country, isFirstRender, portion);
+      await setPhotosInState(result.data.hits);
+    }
+
+    return setPhotosInState(result.data.hits);
+  }
+
+  if (country) {
+    const result = await getImages(city, country, isFirstRender, portion);
+    await setPhotosInState(result.data.hits);
+  }
+
+  return setPhotosInState([]);
+};
+

@@ -8,6 +8,7 @@ const ROOT_SELECTORS = [
   '[data-app="news-widget"]',
   '[data-app="covid-widget"]',
   '[data-app="notes-widget"]',
+  '[data-app="images-widget"]',
   '[data-app="weather-widget"]',
 ];
 
