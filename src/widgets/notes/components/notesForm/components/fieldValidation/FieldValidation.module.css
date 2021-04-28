@@ -1,0 +1,38 @@
+.text_field__container {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  padding: 10px 0;
+}
+
+.count__container {
+  margin-bottom: 10px;
+}
+
+.count {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  font-size: 12px;
+}
+
+.error__count {
+  color: red;
+}
+
+.no_error__count {
+  color: black;
+}
+
+.error__message {
+  color: red;
+  position: absolute;
+  font-size: 14px;
+}
+
+.no_error__message {
+  color: black;
+  position: absolute;
+  font-size: 14px;
+}

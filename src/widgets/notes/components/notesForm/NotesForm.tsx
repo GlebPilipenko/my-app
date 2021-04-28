@@ -1,6 +1,19 @@
 import {FC} from 'react';
+import cn from 'classnames';
 import {PropsType} from './typings';
 import style from './NotesForm.module.css';
+import {Context, valueIsValid} from './context';
+import {Input} from './components/textFields/input';
+import {TextArea} from './components/textFields/textArea';
+import {FieldValidation} from './components/fieldValidation';
+import {getErrorMessage, getNoteID, getHelperConstants} from './utils';
+import {
+  save,
+  createNote,
+  maxTitleLength,
+  maxCityTitleLength,
+  maxDescriptionLength,
+} from './constants';
 
 export const NotesForm: FC<PropsType> = ({
   city,
@@ -14,66 +27,93 @@ export const NotesForm: FC<PropsType> = ({
   changeInputCityValue,
   changeVisibilityForm,
 }) => {
-  const noteID = `${title}${Math.random()}`;
+  const noteID = getNoteID(title);
 
-  const renderForm = () => {
-    return (
+  const {
+    isDisabled, titleLength, descriptionLength, isValidTitleValue,
+    getCityTitleLength, isValidCityTitleValue, isValidDescriptionValue
+  } = getHelperConstants(city, title, cityTitle, description);
+
+  const renderNotesForm = () => (
+    <Context.Provider value={valueIsValid}>
       <div className={style.form__container}>
         <div className={style.btn__container}>
           <button
             className={style.btn}
-            onClick={changeVisibilityForm}>
-            Create note
+            onClick={changeVisibilityForm}
+          >
+            {createNote}
           </button>
         </div>
-        <div className={style.input__container}>
-          <h4>Add your title</h4>
-          <input
-            type="text"
+        <FieldValidation
+          valueLength={titleLength}
+          maxValueLength={maxTitleLength}
+          errorMessage={`${getErrorMessage(maxTitleLength)}`}
+        >
+          <Input
             value={title}
-            className={style.input}
+            fieldName={`Title`}
+            valueLength={titleLength}
             onChange={changeInputValue}
+            maxValueLength={maxTitleLength}
+            isValidValue={isValidTitleValue}
           />
-        </div>
+        </FieldValidation>
         {!city && (
-          <div className={style.input__container}>
-            <h4>Add your city</h4>
-            <input
-              type='text'
+          <FieldValidation
+            valueLength={getCityTitleLength()}
+            maxValueLength={maxCityTitleLength}
+            errorMessage={`${getErrorMessage(maxCityTitleLength)}`}
+          >
+            <Input
               value={cityTitle}
-              className={style.input}
+              fieldName={`City`}
               onChange={changeInputCityValue}
+              valueLength={getCityTitleLength()}
+              maxValueLength={maxCityTitleLength}
+              isValidValue={isValidCityTitleValue}
             />
-          </div>
+          </FieldValidation>
         )}
-        <div className={style.textarea__container}>
-          <h4>Add your description</h4>
-          <textarea
+        <FieldValidation
+          valueLength={descriptionLength}
+          maxValueLength={maxDescriptionLength}
+          errorMessage={`${getErrorMessage(maxDescriptionLength)}`}
+        >
+          <TextArea
             value={description}
+            fieldName={`Description`}
             onChange={changeTxtAreaValue}
-            className={style.textarea}
+            valueLength={descriptionLength}
+            isValidValue={isValidDescriptionValue}
           />
-        </div>
+        </FieldValidation>
         <button
-          className={`${style.btn} ${style.btn__save}`}
-          onClick={() => addNotes(noteID)}>
-          Save
+          disabled={!isDisabled}
+          onClick={() => addNotes(noteID)}
+          className={cn({
+            [`${style.btn_save} ${style.btn_save__error}`]: !isDisabled,
+            [`${style.btn_save} ${style.btn_save__no_error}`]: isDisabled,
+          })}
+        >
+          {save}
         </button>
       </div>
-    );
-  };
+    </Context.Provider>
+  );
 
   if (!showForm) {
     return (
       <div className={style.btn__container}>
         <button
           className={style.btn}
-          onClick={changeVisibilityForm}>
-          Create note
+          onClick={changeVisibilityForm}
+        >
+          {createNote}
         </button>
       </div>
     );
   }
 
-  return renderForm();
+  return renderNotesForm();
 };

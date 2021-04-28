@@ -18,9 +18,10 @@ export const AccordionWithNotes: FC<PropsType> = ({
   description,
   changeInputValue,
   changeTxtAreaValue,
-  changeVisibilityForm,
   changeInputCityValue,
+  changeVisibilityForm,
 }) => {
+
   const foundNotes: string[] = [];
   const filteredNotesByCountry = notes
     .filter((notes: NotesType) => notes.country === country);
@@ -60,8 +61,8 @@ export const AccordionWithNotes: FC<PropsType> = ({
           description={description}
           changeInputValue={changeInputValue}
           changeTxtAreaValue={changeTxtAreaValue}
-          changeInputCityValue={changeInputCityValue}
           changeVisibilityForm={changeVisibilityForm}
+          changeInputCityValue={changeInputCityValue}
         />
         {
           hasCity
